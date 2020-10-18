@@ -1,7 +1,7 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { User } from "src/users/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
-import { Notification } from "src/notifications/notification.entity";
+import { Note } from "src/notes/note.entity";
 
 @Entity('animal')
 export class Animal extends BaseEntity {
@@ -27,6 +27,6 @@ export class Animal extends BaseEntity {
     @OneToMany(() => Vaccine, vaccine => vaccine.animal)
     vaccines: Vaccine[];
 
-    @OneToMany(() => Notification, notification => notification.animal)
-    notifications: Notification[];
+    @OneToMany(() => Note, notification => notification.animal)
+    notifications: Note[];
 }

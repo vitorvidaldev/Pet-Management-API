@@ -1,12 +1,12 @@
 import { PipeTransform, BadRequestException } from "@nestjs/common";
-import { NotificationFrequency } from "../notification-frequency.enum";
+import { NoteFrequency } from "../note-frequency.enum";
 
-export class NotificationFrequencyValidationPipe implements PipeTransform {
+export class NoteFrequencyValidationPipe implements PipeTransform {
     readonly allowedNotifications = [
-        NotificationFrequency.DAY,
-        NotificationFrequency.WEEK,
-        NotificationFrequency.MONTH,
-        NotificationFrequency.NONE,
+        NoteFrequency.DAY,
+        NoteFrequency.WEEK,
+        NoteFrequency.MONTH,
+        NoteFrequency.NONE,
     ];
 
     transform(value: any) {

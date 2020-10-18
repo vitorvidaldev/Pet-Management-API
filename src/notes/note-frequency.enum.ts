@@ -1,4 +1,4 @@
-export enum NotificationFrequency {
+export enum NoteFrequency {
     DAY = 'Dia',
     WEEK = 'Semana',
     MONTH = 'Mes',

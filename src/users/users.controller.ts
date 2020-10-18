@@ -16,15 +16,7 @@ export class UsersController {
         return this.usersService.getUsers();
     }
 
-    @ApiOperation({ summary: 'Retorna o id do usuário que possui dado email' })
-    @ApiParam({ name: 'email', description: 'email de identificação de um usuário' })
-    @ApiResponse({ status: 200, description: 'Retorna o id do usuário.' })
-    @Get('email/:email')
-    getUserId(@Param('email') email: string): Promise<string> {
-        return this.usersService.getUserId(email);
-    }
-
-    @ApiOperation({ summary: 'Retorna o usuário que possui dado email' })
+    @ApiOperation({ summary: 'Retorna o usuário que possui dado id.' })
     @ApiParam({ name: 'id', description: 'id de identificação de um usuário' })
     @ApiResponse({ status: 200, description: 'Retorna o usuário.' })
     @Get(':id')
@@ -35,18 +27,18 @@ export class UsersController {
     @ApiOperation({ summary: 'Realiza o cadastro de um novo usuário' })
     @ApiResponse({ status: 201, description: 'Retorna o usuário cadastrado.' })
     @ApiResponse({ status: 400, description: 'O email ou a senha enviados estão incorretos.' })
-    @Post('signup')
+    @Post()
     @UsePipes(ValidationPipe)
-    signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
+    createUser(@Body() createUserDto: CreateUserDto): Promise<User> {
         return this.usersService.createUser(createUserDto);
     }
 
     @ApiOperation({ summary: 'Realiza o login do usuário' })
     @ApiResponse({ status: 201, description: 'Retorna o token de acesso do usuário.' })
     @ApiResponse({ status: 401, description: 'O email ou a senha enviados estão incorretos.' })
-    @Post('signin')
-    signIn(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<boolean> {
-        return this.usersService.signIn(createUserDto);
+    @Post('login')
+    login(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<boolean> {
+        return this.usersService.login(createUserDto);
     }
 
     @ApiOperation({ summary: 'Exclusão de um usuário cadastrado.' })

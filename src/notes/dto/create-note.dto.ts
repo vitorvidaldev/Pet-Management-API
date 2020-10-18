@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsNotEmpty, IsIn, IsUUID } from "class-validator";
-import { NotificationFrequency } from "../notification-frequency.enum";
+import { NoteFrequency } from "../note-frequency.enum";
 
-export class CreateNotificationDto {
+export class CreateNoteDto {
     @ApiProperty({ description: 'Título da notificação', example: 'Comprar ração' })
     @IsString()
     @IsNotEmpty()
@@ -21,8 +21,8 @@ export class CreateNotificationDto {
     @ApiProperty({ description: 'Repetição da notificação', example: 'Dia' })
     @IsString()
     @IsNotEmpty()
-    @IsIn([NotificationFrequency.DAY, NotificationFrequency.WEEK, NotificationFrequency.MONTH, NotificationFrequency.NONE])
-    frequency: NotificationFrequency;
+    @IsIn([NoteFrequency.DAY, NoteFrequency.WEEK, NoteFrequency.MONTH, NoteFrequency.NONE])
+    frequency: NoteFrequency;
 
     @ApiProperty({ description: 'id do animal.', example: 'c58080ec-991a-459a-98db-ac5604375e28' })
     @IsString()

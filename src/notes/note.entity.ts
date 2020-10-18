@@ -2,7 +2,7 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDa
 import { Animal } from "src/animals/animal.entity";
 
 @Entity('notificacao')
-export class Notification extends BaseEntity {
+export class Note extends BaseEntity {
 
     @PrimaryGeneratedColumn('uuid', { name: 'id_notificacao' })
     id: string;

@@ -17,17 +17,6 @@ export class UsersService {
         return await this.userRepository.createQueryBuilder('user').getMany();
     }
 
-    async getUserId(email: string): Promise<string> {
-        email = email.toLowerCase();
-        const found = await this.userRepository.findOne({ where: { email } });
-
-        if (!found) {
-            throw new NotFoundException('O usuário com email ' + email + ' não foi encontrado.');
-        }
-
-        return found.id;
-    }
-
     async getUserById(id: string): Promise<User> {
         const found = await this.userRepository.findOne(id);
         if (!found) {
@@ -36,8 +25,8 @@ export class UsersService {
         return found;
     }
 
-    async createUser(userCredentialsDto: CreateUserDto): Promise<User> {
-        const { email, password } = userCredentialsDto;
+    async createUser(createUserDto: CreateUserDto): Promise<User> {
+        const { email, password } = createUserDto;
 
         const user = new User();
         user.email = email;
@@ -47,10 +36,10 @@ export class UsersService {
         return await this.userRepository.create(user).save();
     }
 
-    async signIn(userCredentialsDto: CreateUserDto): Promise<boolean> {
-        const email = await this.validateUserPassword(userCredentialsDto);
+    async login(loginUserDto: CreateUserDto): Promise<boolean> {
+        const user = await this.validateUserPassword(loginUserDto);
 
-        if (!email) {
+        if (!user) {
             throw new UnauthorizedException('O email ou senha fornecidos estão incorretos');
         }
 
@@ -69,6 +58,6 @@ export class UsersService {
     }
 
     async deleteUser(id: string): Promise<void> {
-        const user = await this.userRepository.delete(id);
+        await this.userRepository.delete(id);
     }
 }

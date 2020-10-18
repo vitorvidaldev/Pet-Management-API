@@ -1,27 +1,27 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateNotificationDto } from './dto/create-notification.dto';
-import { Notification } from './notification.entity';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { Note } from './note.entity';
 import { Repository } from 'typeorm';
 import { AnimalsService } from 'src/animals/animals.service';
 
 @Injectable()
-export class NotificationsService {
+export class NotesService {
 
     constructor(
-        @InjectRepository(Notification)
-        private notificationRepository: Repository<Notification>,
+        @InjectRepository(Note)
+        private notificationRepository: Repository<Note>,
         private animalService: AnimalsService,
     ) { }
 
-    async getNotifications(animalId: string): Promise<Notification[]> {
+    async getNotifications(animalId: string): Promise<Note[]> {
         const query = this.notificationRepository.createQueryBuilder('notification').where('notification.animal = :animaId', { animalId: animalId });
 
         const notifications = await query.getMany();
         return notifications;
     }
 
-    async getNotificationById(id: string): Promise<Notification> {
+    async getNotificationById(id: string): Promise<Note> {
         const found = await this.notificationRepository.findOne(id);
 
         if (!found) {
@@ -31,12 +31,12 @@ export class NotificationsService {
         return found;
     }
 
-    async createNotification(createNotificationDto: CreateNotificationDto): Promise<Notification> {
+    async createNotification(createNotificationDto: CreateNoteDto): Promise<Note> {
         const { title, description, notificationDate, frequency, animalId } = createNotificationDto;
 
         const animal = await this.animalService.getAnimalById(animalId);
 
-        const notification = new Notification();
+        const notification = new Note();
         notification.title = title;
         notification.description = description;
         notification.notificationDate = notificationDate;

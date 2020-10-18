@@ -7,20 +7,17 @@ export class Vaccine extends BaseEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'id_vacina' })
     id: number;
 
+    @Column({ name: 'nome_vacina' })
+    name: string;
+
     @Column({ name: 'especie_animal' })
     species: string;
 
     @Column({ name: 'raca' })
     race: string;
 
-    @Column({ name: 'nome_vacina' })
-    name: string;
-
     @Column({ name: 'meses_apos_nascimento' })
     monthsAfterBirth: number;
-
-    @Column()
-    animalId: number;
 
     @ManyToOne(() => Animal, animal => animal.vaccines, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'animal_id_animal' })

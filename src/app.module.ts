@@ -4,9 +4,9 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { UsersModule } from './users/users.module';
 import { AnimalsModule } from './animals/animals.module';
 import { VaccinesModule } from './vaccines/vaccines.module';
-import { NotificationsModule } from './notifications/notifications.module';
+import { NotesModule } from './notes/note.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AnimalsModule, VaccinesModule, NotificationsModule],
+  imports: [TypeOrmModule.forRoot(typeOrmConfig), UsersModule, AnimalsModule, VaccinesModule, NotesModule],
 })
 export class AppModule { }

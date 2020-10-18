@@ -1,6 +1,6 @@
 import { Controller, Body, ValidationPipe, Post, UsePipes, Get, Param, ParseUUIDPipe, Delete } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
 
@@ -37,16 +37,16 @@ export class UsersController {
     @ApiResponse({ status: 400, description: 'O email ou a senha enviados estão incorretos.' })
     @Post('signup')
     @UsePipes(ValidationPipe)
-    signUp(@Body() userCredentialsDto: UserCredentialsDto): Promise<User> {
-        return this.usersService.signUp(userCredentialsDto);
+    signUp(@Body() createUserDto: CreateUserDto): Promise<User> {
+        return this.usersService.createUser(createUserDto);
     }
 
     @ApiOperation({ summary: 'Realiza o login do usuário' })
     @ApiResponse({ status: 201, description: 'Retorna o token de acesso do usuário.' })
     @ApiResponse({ status: 401, description: 'O email ou a senha enviados estão incorretos.' })
     @Post('signin')
-    signIn(@Body(ValidationPipe) userCredentialsDto: UserCredentialsDto): Promise<boolean> {
-        return this.usersService.signIn(userCredentialsDto);
+    signIn(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<boolean> {
+        return this.usersService.signIn(createUserDto);
     }
 
     @ApiOperation({ summary: 'Exclusão de um usuário cadastrado.' })

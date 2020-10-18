@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserCredentialsDto } from './dto/user-credentials.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -14,10 +14,7 @@ export class UsersService {
     ) { }
 
     async getUsers(): Promise<User[]> {
-        const query = await this.userRepository.createQueryBuilder('user');
-
-        const users = await query.getMany();
-        return users;
+        return await this.userRepository.createQueryBuilder('user').getMany();
     }
 
     async getUserId(email: string): Promise<string> {
@@ -39,7 +36,7 @@ export class UsersService {
         return found;
     }
 
-    async signUp(userCredentialsDto: UserCredentialsDto): Promise<User> {
+    async createUser(userCredentialsDto: CreateUserDto): Promise<User> {
         const { email, password } = userCredentialsDto;
 
         const user = new User();
@@ -50,7 +47,7 @@ export class UsersService {
         return await this.userRepository.create(user).save();
     }
 
-    async signIn(userCredentialsDto: UserCredentialsDto): Promise<boolean> {
+    async signIn(userCredentialsDto: CreateUserDto): Promise<boolean> {
         const email = await this.validateUserPassword(userCredentialsDto);
 
         if (!email) {
@@ -60,7 +57,7 @@ export class UsersService {
         return true;
     }
 
-    async validateUserPassword(userCredentialsDto: UserCredentialsDto) {
+    async validateUserPassword(userCredentialsDto: CreateUserDto) {
         const { email, password } = userCredentialsDto;
         const user = await this.userRepository.findOne({ email });
 

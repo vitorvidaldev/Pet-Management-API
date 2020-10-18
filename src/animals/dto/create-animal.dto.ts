@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsNotEmpty, IsIn } from "class-validator";
+import { IsString, IsNotEmpty, IsIn, IsUUID } from "class-validator";
 import { AnimalSpecies } from "../animal-species.enum";
 
 export class CreateAnimalDto {
@@ -27,5 +27,6 @@ export class CreateAnimalDto {
     @ApiProperty({ description: 'id do usuário', example: 'b0bf8219-c00b-4838-853f-0d0c6834850c' })
     @IsString()
     @IsNotEmpty()
+    @IsUUID()
     userId: string;
 }

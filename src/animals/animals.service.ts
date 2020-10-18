@@ -30,18 +30,11 @@ export class AnimalsService {
     }
 
     async getAnimals(userId: string): Promise<Animal[]> {
-        const query = this.animalRepository.createQueryBuilder('animal');
-        const user = await this.userService.getUserById(userId);
-
-        if (user) {
-            query.andWhere('animal.user = :userId', {
+        return await this.animalRepository.createQueryBuilder('animal')
+            .leftJoinAndSelect('animal.user', 'user')
+            .andWhere('animal.user = :userId', {
                 userId: userId,
-            });
-        }
-
-        const animals = await query.getMany();
-
-        return animals;
+            }).getMany();
     }
 
     async getAnimalById(id: string): Promise<Animal> {

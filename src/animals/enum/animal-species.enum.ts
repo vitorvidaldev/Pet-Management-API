@@ -1,6 +1,6 @@
 export enum AnimalSpecies {
     CACHORRO = 'Cachorro',
     GATO = 'Gato',
-    NAOINFORMAR = 'Nao Informar',
+    NAO_INFORMAR = 'Não Informar',
     OUTRO = 'Outro',
 }

@@ -36,14 +36,19 @@ export class UsersService {
         return await this.userRepository.create(user).save();
     }
 
-    async login(loginUserDto: CreateUserDto): Promise<boolean> {
-        const user = await this.validateUserPassword(loginUserDto);
+    async login(loginUserDto: CreateUserDto): Promise<User> {
+        const login = await this.validateUserPassword(loginUserDto);
 
-        if (!user) {
+        if (!login) {
             throw new UnauthorizedException('O email ou senha fornecidos estão incorretos');
         }
 
-        return true;
+        const user = await this.userRepository.createQueryBuilder('user')
+            .andWhere('user.email = :email', {
+                email: loginUserDto.email,
+            }).getOne();
+
+        return user;
     }
 
     async validateUserPassword(userCredentialsDto: CreateUserDto) {

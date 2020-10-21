@@ -2,6 +2,7 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMan
 import { User } from "src/users/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
 import { Note } from "src/notes/note.entity";
+import { AnimalSpecies } from "./enum/animal-species.enum";
 
 @Entity('animal')
 export class Animal extends BaseEntity {
@@ -15,7 +16,7 @@ export class Animal extends BaseEntity {
     birthDate: string;
 
     @Column({ name: 'especie_animal' })
-    species: string;
+    species: AnimalSpecies;
 
     @Column({ name: 'raca' })
     race: string;

@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsNotEmpty, IsIn, IsUUID } from "class-validator";
-import { AnimalSpecies } from "../animal-species.enum";
+import { AnimalSpecies } from "../enum/animal-species.enum";
 
 export class CreateAnimalDto {
     @ApiProperty({ description: 'Nome do animal', example: 'Omar' })
@@ -16,7 +16,7 @@ export class CreateAnimalDto {
     @ApiProperty({ description: 'Espécies cadastradas', example: 'Cachorro' })
     @IsString()
     @IsNotEmpty()
-    @IsIn([AnimalSpecies.CACHORRO, AnimalSpecies.GATO, AnimalSpecies.NAOINFORMAR, AnimalSpecies.OUTRO])
+    @IsIn([AnimalSpecies.CACHORRO, AnimalSpecies.GATO, AnimalSpecies.NAO_INFORMAR, AnimalSpecies.OUTRO])
     species: AnimalSpecies;
 
     @ApiProperty({ description: 'Raça do animal', example: 'teste' })

@@ -10,43 +10,43 @@ export class NotesService {
 
     constructor(
         @InjectRepository(Note)
-        private notificationRepository: Repository<Note>,
+        private noteRepository: Repository<Note>,
         private animalService: AnimalsService,
     ) { }
 
-    async getNotifications(animalId: string): Promise<Note[]> {
-        const query = this.notificationRepository.createQueryBuilder('notification').where('notification.animal = :animaId', { animalId: animalId });
-
-        const notifications = await query.getMany();
-        return notifications;
-    }
-
-    async getNotificationById(id: string): Promise<Note> {
-        const found = await this.notificationRepository.findOne(id);
-
-        if (!found) {
-            throw new NotFoundException('Notificação com ID ' + id + ' não foi encontrada');
-        }
-
-        return found;
-    }
-
-    async createNotification(createNotificationDto: CreateNoteDto): Promise<Note> {
-        const { title, description, notificationDate, frequency, animalId } = createNotificationDto;
+    async createNote(createnoteDto: CreateNoteDto): Promise<Note> {
+        const { noteType, title, description, noteDate, frequency, animalId } = createnoteDto;
 
         const animal = await this.animalService.getAnimalById(animalId);
 
-        const notification = new Note();
-        notification.title = title;
-        notification.description = description;
-        notification.notificationDate = notificationDate;
-        notification.frequency = frequency;
-        notification.animal = animal;
+        const note = new Note();
+        note.noteType = noteType;
+        note.title = title;
+        note.description = description;
+        note.noteDate = noteDate;
+        note.frequency = frequency;
+        note.animal = animal;
 
-        return await this.notificationRepository.create(notification).save();
+        return await this.noteRepository.create(note).save();
     }
 
-    async deleteNotification(id: string): Promise<void> {
-        const result = await this.notificationRepository.delete(id);
+    async getNotes(animalId: string): Promise<Note[]> {
+        return await this.noteRepository.createQueryBuilder('note')
+            .leftJoinAndSelect('note.animal', 'animal')
+            .andWhere('note.animal = :animalId', {
+                animalId: animalId,
+            }).getMany();
+    }
+
+    async getNoteById(id: string): Promise<Note> {
+        const found = await this.noteRepository.findOne(id);
+        if (!found) {
+            throw new NotFoundException('Nota com id ' + id + ' não foi encontrada');
+        }
+        return found;
+    }
+
+    async deleteNote(id: string): Promise<void> {
+        await this.noteRepository.delete(id);
     }
 }

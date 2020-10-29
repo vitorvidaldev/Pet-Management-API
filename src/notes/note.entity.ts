@@ -1,11 +1,14 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from "typeorm";
 import { Animal } from "src/animals/animal.entity";
 
-@Entity('notificacao')
+@Entity('nota')
 export class Note extends BaseEntity {
 
-    @PrimaryGeneratedColumn('uuid', { name: 'id_notificacao' })
+    @PrimaryGeneratedColumn('uuid', { name: 'id_nota' })
     id: string;
+
+    @Column({ name: 'tipo' })
+    noteType: string;
 
     @Column({ name: 'titulo' })
     title: string;
@@ -16,13 +19,13 @@ export class Note extends BaseEntity {
     @CreateDateColumn({ name: 'data_criacao' })
     creationDate: string;
 
-    @Column({ name: 'data_notificacao' })
-    notificationDate: string;
+    @Column({ name: 'data_nota' })
+    noteDate: string;
 
-    @Column({ name: 'frequencia_de_notificacao' })
+    @Column({ name: 'frequencia_de_nota' })
     frequency: string;
 
-    @ManyToOne(() => Animal, animal => animal.notifications, { onDelete: "CASCADE" })
+    @ManyToOne(() => Animal, animal => animal.notes, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'animal_id_animal' })
     animal: Animal;
 }

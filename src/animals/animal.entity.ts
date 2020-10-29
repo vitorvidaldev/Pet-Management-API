@@ -28,6 +28,6 @@ export class Animal extends BaseEntity {
     @OneToMany(() => Vaccine, vaccine => vaccine.animal)
     vaccines: Vaccine[];
 
-    @OneToMany(() => Note, notification => notification.animal)
-    notifications: Note[];
+    @OneToMany(() => Note, note => note.animal)
+    notes: Note[];
 }

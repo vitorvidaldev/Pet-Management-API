@@ -3,22 +3,27 @@ import { IsString, IsNotEmpty, IsIn, IsUUID } from "class-validator";
 import { NoteFrequency } from "../note-frequency.enum";
 
 export class CreateNoteDto {
-    @ApiProperty({ description: 'Título da notificação', example: 'Comprar ração' })
+    @ApiProperty({ description: 'Tipo da nota', example: 'Dar banho' })
+    @IsString()
+    @IsNotEmpty()
+    noteType: string;
+
+    @ApiProperty({ description: 'Título da nota', example: 'Comprar ração' })
     @IsString()
     @IsNotEmpty()
     title: string;
 
-    @ApiProperty({ description: 'Descrição da notificação', example: 'Ir no mercado comprar ração' })
+    @ApiProperty({ description: 'Descrição da nota', example: 'Ir no mercado comprar ração' })
     @IsString()
     @IsNotEmpty()
     description: string;
 
-    @ApiProperty({ description: 'Data da notificação', example: '02/10/2020' })
+    @ApiProperty({ description: 'Data da nota', example: '02/10/2020' })
     @IsString()
     @IsNotEmpty()
-    notificationDate: string;
+    noteDate: string;
 
-    @ApiProperty({ description: 'Repetição da notificação', example: 'Dia' })
+    @ApiProperty({ description: 'Repetição da nota', example: 'Dia' })
     @IsString()
     @IsNotEmpty()
     @IsIn([NoteFrequency.DAY, NoteFrequency.WEEK, NoteFrequency.MONTH, NoteFrequency.NONE])

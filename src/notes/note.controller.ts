@@ -2,34 +2,42 @@ import { Controller, Post, UsePipes, ValidationPipe, Body, Get, Param, Delete, P
 import { NotesService } from './note.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { Note } from './note.entity';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Notificações')
+@ApiTags('Notas')
 @Controller('notes')
 export class NotesController {
+    constructor(private notesService: NotesService) { }
 
-    constructor(private notificationsService: NotesService) { }
-
-    @ApiOperation({ summary: 'Cria nova notificação para o animal que possui dado id.' })
-    @ApiResponse({ status: 201, description: 'Cria uma nova notificação para o animal com dado id.' })
+    @ApiOperation({ summary: 'Cria nova nota para o animal que possui dado id.' })
+    @ApiResponse({ status: 201, description: 'Cria uma nova nota para o animal com dado id.' })
     @Post()
     @UsePipes(ValidationPipe)
-    createNotification(@Body() createNotificationDto: CreateNoteDto): Promise<Note> {
-        return this.notificationsService.createNotification(createNotificationDto);
+    createNote(@Body() createnoteDto: CreateNoteDto): Promise<Note> {
+        return this.notesService.createNote(createnoteDto);
     }
 
+    @ApiOperation({ summary: 'Retorna todas as nota de um dado animal' })
+    @ApiParam({ name: 'animalId', description: 'id de um animal' })
+    @ApiResponse({ status: 200, description: 'Retorna uma lista de notas' })
     @Get('animal/:animalId')
-    getNotifications(@Param('animalId', new ParseUUIDPipe()) id: string): Promise<Note[]> {
-        return this.notificationsService.getNotifications(id);
+    getNotes(@Param('animalId', new ParseUUIDPipe()) id: string): Promise<Note[]> {
+        return this.notesService.getNotes(id);
     }
 
+    @ApiOperation({ summary: 'Retorna uma nota que possui dado id' })
+    @ApiParam({ name: 'id', description: 'id de uma nota' })
+    @ApiResponse({ status: 200, description: 'Retorna uma nota' })
     @Get(':id')
-    getNotificationById(@Param('id', new ParseUUIDPipe()) id: string): Promise<Note> {
-        return this.notificationsService.getNotificationById(id);
+    getNoteById(@Param('id', new ParseUUIDPipe()) id: string): Promise<Note> {
+        return this.notesService.getNoteById(id);
     }
 
+    @ApiOperation({ summary: 'Exclui uma nota que possui dado id' })
+    @ApiParam({ name: 'id', description: 'id de uma nota' })
+    @ApiResponse({ status: 200, description: 'Retorna void' })
     @Delete(':id')
-    deleteNotification(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
-        return this.notificationsService.deleteNotification(id);
+    deleteNote(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
+        return this.notesService.deleteNote(id);
     }
 }

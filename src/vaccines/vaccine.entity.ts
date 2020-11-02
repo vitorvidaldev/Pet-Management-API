@@ -17,7 +17,7 @@ export class Vaccine extends BaseEntity {
     race: string;
 
     @Column({ name: 'meses_apos_nascimento' })
-    monthsAfterBirth: number;
+    monthsAfterBirth: string;
 
     @ManyToOne(() => Animal, animal => animal.vaccines, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'animal_id_animal' })

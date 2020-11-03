@@ -32,5 +32,4 @@ export class VaccinesService {
             monthsAfterBirth: createVaccineDto.monthsAfterBirth,
         }).save();
     }
-
 }

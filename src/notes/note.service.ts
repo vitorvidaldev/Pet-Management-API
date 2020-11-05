@@ -20,7 +20,7 @@ export class NotesService {
         const animal = await this.animalService.getAnimalById(animalId);
 
         const note = new Note();
-        note.noteType = noteType;
+        note.noteType = noteType.toLowerCase();
         note.title = title;
         note.description = description;
         note.noteDate = noteDate;
@@ -41,7 +41,7 @@ export class NotesService {
     async getNoteById(id: string): Promise<Note> {
         const found = await this.noteRepository.findOne(id);
         if (!found) {
-            throw new NotFoundException('Nota com id ' + id + ' não foi encontrada');
+            throw new NotFoundException(`Nota com id ${id} não foi encontrada`);
         }
         return found;
     }

@@ -12,5 +12,5 @@ export class GetVaccinesDto {
     @IsString()
     @IsOptional()
     @IsNotEmpty()
-    race: string;
+    breed: string;
 }

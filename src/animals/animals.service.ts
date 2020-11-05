@@ -15,16 +15,14 @@ export class AnimalsService {
     ) { }
 
     async createAnimal(createAnimalDto: CreateAnimalDto): Promise<Animal> {
-        const { name, birthDate, species, race, userId } = createAnimalDto;
-
-        const user = await this.userService.getUserById(userId);
+        const { name, birthDate, species, breed, userId } = createAnimalDto;
 
         const animal = new Animal();
         animal.name = name;
         animal.birthDate = birthDate;
-        animal.species = species;
-        animal.race = race;
-        animal.user = user;
+        animal.species = species.toLowerCase();
+        animal.breed = breed.toLowerCase();
+        animal.user = await this.userService.getUserById(userId);
 
         return await this.animalRepository.create(animal).save();
     }
@@ -44,10 +42,6 @@ export class AnimalsService {
     }
 
     async deleteAnimal(id: string): Promise<void> {
-        const result = await this.animalRepository.delete(id);
-
-        if (result.affected === 0) {
-            throw new NotFoundException('Animal com id ' + id + ' não foi encontrado');
-        }
+        await this.animalRepository.delete(id);
     }
 }

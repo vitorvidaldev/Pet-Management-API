@@ -21,6 +21,12 @@ export class VaccinesService {
             });
         }
 
+        if (filterDto.breed) {
+            query.andWhere('vaccines.species LIKE :species', {
+                species: filterDto.species,
+            });
+        }
+
         return await query.getMany();
     }
 
@@ -28,7 +34,7 @@ export class VaccinesService {
         return await this.vaccineRepository.create({
             name: createVaccineDto.name,
             species: createVaccineDto.species,
-            race: createVaccineDto.race,
+            breed: createVaccineDto.breed,
             monthsAfterBirth: createVaccineDto.monthsAfterBirth,
         }).save();
     }

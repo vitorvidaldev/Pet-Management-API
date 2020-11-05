@@ -20,7 +20,7 @@ export class Note extends BaseEntity {
     creationDate: string;
 
     @Column({ name: 'data_nota' })
-    noteDate: string;
+    noteDate: Date;
 
     @Column({ name: 'frequencia_de_nota' })
     frequency: string;

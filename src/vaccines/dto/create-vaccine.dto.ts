@@ -15,7 +15,7 @@ export class CreateVaccineDto {
     @ApiProperty({ description: 'Raça do animal', example: 'Raça do animal' })
     @IsString()
     @IsNotEmpty()
-    race: string;
+    breed: string;
 
     @ApiProperty({ description: 'Meses após nascimento', example: 'Meses após nascimento' })
     @IsNotEmpty()

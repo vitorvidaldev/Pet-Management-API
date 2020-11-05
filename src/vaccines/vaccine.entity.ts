@@ -14,7 +14,7 @@ export class Vaccine extends BaseEntity {
     species: string;
 
     @Column({ name: 'raca' })
-    race: string;
+    breed: string;
 
     @Column({ name: 'meses_apos_nascimento' })
     monthsAfterBirth: string;

@@ -11,20 +11,20 @@ export class CreateAnimalDto {
     @ApiProperty({ description: 'Data de nascimento', example: '2/10/2020' })
     @IsString()
     @IsNotEmpty()
-    birthDate: string;
+    birthDate: Date;
 
-    @ApiProperty({ description: 'Espécies cadastradas', example: 'Cachorro' })
+    @ApiProperty({ description: 'Espécies cadastradas', example: 'Espécie do animal' })
     @IsString()
     @IsNotEmpty()
     @IsIn([AnimalSpecies.CACHORRO, AnimalSpecies.GATO, AnimalSpecies.NAO_INFORMAR, AnimalSpecies.OUTRO])
     species: AnimalSpecies;
 
-    @ApiProperty({ description: 'Raça do animal', example: 'teste' })
+    @ApiProperty({ description: 'Raça do animal', example: 'Raça de um animal' })
     @IsString()
     @IsNotEmpty()
-    race: string;
+    breed: string;
 
-    @ApiProperty({ description: 'id do usuário', example: 'b0bf8219-c00b-4838-853f-0d0c6834850c' })
+    @ApiProperty({ description: 'id do usuário', example: 'id de um usuário' })
     @IsString()
     @IsNotEmpty()
     @IsUUID()

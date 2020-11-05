@@ -21,15 +21,15 @@ export class CreateNoteDto {
     @ApiProperty({ description: 'Data da nota', example: '02/10/2020' })
     @IsString()
     @IsNotEmpty()
-    noteDate: string;
+    noteDate: Date;
 
     @ApiProperty({ description: 'Repetição da nota', example: 'Dia' })
     @IsString()
     @IsNotEmpty()
     @IsIn([NoteFrequency.DAY, NoteFrequency.WEEK, NoteFrequency.MONTH, NoteFrequency.NONE])
-    frequency: NoteFrequency;
+    frequency: string;
 
-    @ApiProperty({ description: 'id do animal.', example: 'c58080ec-991a-459a-98db-ac5604375e28' })
+    @ApiProperty({ description: 'id do animal.', example: 'id de um animal' })
     @IsString()
     @IsNotEmpty()
     @IsUUID()

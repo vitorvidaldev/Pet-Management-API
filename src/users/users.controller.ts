@@ -37,7 +37,7 @@ export class UsersController {
     @ApiResponse({ status: 201, description: 'Retorna o token de acesso do usuário.' })
     @ApiResponse({ status: 401, description: 'O email ou a senha enviados estão incorretos.' })
     @Post('login')
-    login(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<User> {
+    login(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<{ accessToken: string }> {
         return this.usersService.login(createUserDto);
     }
 

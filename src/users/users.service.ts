@@ -1,9 +1,11 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayload } from './jwt-payload.interface';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +13,7 @@ export class UsersService {
     constructor(
         @InjectRepository(User)
         private userRepository: Repository<User>,
+        private jwtService: JwtService,
     ) { }
 
     async getUsers(): Promise<User[]> {
@@ -22,6 +25,7 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException('Usuário com id ' + id + ' não foi encontrado.');
         }
+        delete found.signature;
         return found;
     }
 
@@ -32,26 +36,34 @@ export class UsersService {
         user.email = email;
         user.signature = await bcrypt.genSalt();
         user.password = await bcrypt.hash(password, user.signature);
+        let result;
 
-        return await this.userRepository.create(user).save();
+        try {
+            result = await this.userRepository.create(user).save();
+        } catch (error) {
+            // console.log(error);
+            throw new ConflictException(`Já existe o cadastro de um usário com o email ${email}`);
+
+        }
+        delete result.signature;
+        return result;
     }
 
-    async login(loginUserDto: CreateUserDto): Promise<User> {
-        const login = await this.validateUserPassword(loginUserDto);
+    // TODO: Adicionar JWT e retornar o token de acesso para o front-end
+    async login(loginUserDto: CreateUserDto): Promise<{ accessToken: string }> {
+        const email = await this.validateUserPassword(loginUserDto);
 
-        if (!login) {
+        if (!email) {
             throw new UnauthorizedException('O email ou senha fornecidos estão incorretos');
         }
 
-        const user = await this.userRepository.createQueryBuilder('user')
-            .andWhere('user.email = :email', {
-                email: loginUserDto.email,
-            }).getOne();
+        const payload: JwtPayload = { email };
+        const accessToken = await this.jwtService.sign(payload);
 
-        return user;
+        return { accessToken };
     }
 
-    async validateUserPassword(userCredentialsDto: CreateUserDto) {
+    async validateUserPassword(userCredentialsDto: CreateUserDto): Promise<string> {
         const { email, password } = userCredentialsDto;
         const user = await this.userRepository.findOne({ email });
 

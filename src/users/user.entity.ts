@@ -1,21 +1,17 @@
 import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { Animal } from "src/animals/animal.entity";
-import { ApiProperty, ApiTags } from "@nestjs/swagger";
 
-@ApiTags('Usuários')
 @Entity('usuario')
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'id_usuario' })
-    @ApiProperty({ description: 'id de identificação' })
     id: string;
 
-    @Column({ name: 'email', length: 40 })
-    @ApiProperty({ description: 'email do usuário' })
+    // O sistema só permite o cadastro de uma conta por email
+    @Column({ name: 'email', length: 40, unique: true })
     email: string;
 
     @Column({ name: 'senha', length: 200 })
-    @ApiProperty({ description: 'senha do usuário' })
     password: string;
 
     @Column({ name: 'assinatura' })

@@ -2,7 +2,6 @@ import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMan
 import { User } from "src/users/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
 import { Note } from "src/notes/note.entity";
-import { AnimalSpecies } from "./enum/animal-species.enum";
 
 @Entity('animal')
 export class Animal extends BaseEntity {
@@ -13,13 +12,13 @@ export class Animal extends BaseEntity {
     name: string;
 
     @Column({ name: 'data_nascimento' })
-    birthDate: string;
+    birthDate: Date;
 
     @Column({ name: 'especie_animal' })
-    species: AnimalSpecies;
+    species: string;
 
     @Column({ name: 'raca' })
-    race: string;
+    breed: string;
 
     @ManyToOne(() => User, user => user.animals, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'usuario_id_usuario' })

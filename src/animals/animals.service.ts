@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAnimalDto } from './dto/create-animal.dto';
 import { Animal } from './animal.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/users/user.entity';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class AnimalsService {
@@ -11,9 +11,10 @@ export class AnimalsService {
     constructor(
         @InjectRepository(Animal)
         private animalRepository: Repository<Animal>,
+        private userService: UsersService,
     ) { }
 
-    async createAnimal(createAnimalDto: CreateAnimalDto, user: User): Promise<Animal> {
+    async createAnimal(createAnimalDto: CreateAnimalDto): Promise<Animal> {
         const { name, birthDate, species, breed } = createAnimalDto;
 
         const animal = new Animal();
@@ -21,25 +22,31 @@ export class AnimalsService {
         animal.birthDate = birthDate;
         animal.species = species.toLowerCase();
         animal.breed = breed.toLowerCase();
-        animal.user = user;
+        animal.user = await this.userService.getUserById(createAnimalDto.userId);
 
         return await this.animalRepository.create(animal).save();
     }
 
-    async getAnimals(user: User): Promise<Animal[]> {
+    async getAnimals(): Promise<Animal[]> {
         return await this.animalRepository.createQueryBuilder('animal')
             .leftJoinAndSelect('animal.user', 'user')
-            .where('animal.user = :user', { user: user })
             .getMany();
     }
 
-    async getAnimalById(id: string, user: User): Promise<Animal> {
-        const animal = await this.animalRepository.findOne({ where: { id: id, user: user } });
+    async getUserAnimals(userId: string): Promise<Animal[]> {
+        return await this.animalRepository.createQueryBuilder('animal')
+            .leftJoinAndSelect('animal.user', 'user')
+            .where('animal.user = :userId', { userId: userId })
+            .getMany();
+    }
+
+    async getAnimalById(id: string): Promise<Animal> {
+        const animal = await this.animalRepository.findOne(id);
         if (!animal) throw new NotFoundException('O animal com id ' + id + ' não foi encontrado');
         return animal;
     }
 
-    async deleteAnimal(id: string, user: User): Promise<void> {
-        await this.animalRepository.delete({ id, user: user });
+    async deleteAnimal(id: string): Promise<void> {
+        await this.animalRepository.delete(id);
     }
 }

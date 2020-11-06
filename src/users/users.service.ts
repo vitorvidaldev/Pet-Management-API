@@ -25,7 +25,6 @@ export class UsersService {
         if (!found) {
             throw new NotFoundException('Usuário com id ' + id + ' não foi encontrado.');
         }
-        delete found.signature;
         return found;
     }
 
@@ -45,11 +44,9 @@ export class UsersService {
             throw new ConflictException(`Já existe o cadastro de um usário com o email ${email}`);
 
         }
-        delete result.signature;
         return result;
     }
 
-    // TODO: Adicionar JWT e retornar o token de acesso para o front-end
     async login(loginUserDto: CreateUserDto): Promise<{ accessToken: string }> {
         const email = await this.validateUserPassword(loginUserDto);
 
@@ -58,7 +55,7 @@ export class UsersService {
         }
 
         const payload: JwtPayload = { email };
-        const accessToken = await this.jwtService.sign(payload);
+        const accessToken = this.jwtService.sign(payload);
 
         return { accessToken };
     }

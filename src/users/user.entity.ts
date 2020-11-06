@@ -8,8 +8,7 @@ export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'id_usuario' })
     id: string;
 
-    // O sistema só permite o cadastro de uma conta por email
-    @Column({ name: 'email', length: 40, unique: true })
+    @Column()
     email: string;
 
     @Column({ name: 'senha', length: 200 })

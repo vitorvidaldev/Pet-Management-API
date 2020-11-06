@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     ) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'topSecret',
+            secretOrKey: 'topSecret51',
         });
     }
 
@@ -23,7 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user = await this.userRepository.findOne({ email });
 
         if (!user) {
-            throw new UnauthorizedException('teste');
+            throw new UnauthorizedException();
         }
 
         return user;

@@ -9,7 +9,6 @@ import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       secret: 'topSecret',
@@ -17,9 +16,10 @@ import { JwtStrategy } from './jwt.strategy';
         expiresIn: 3600,
       },
     }),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy],
-  exports: [UsersService, JwtStrategy],
+  exports: [UsersService, JwtStrategy, PassportModule],
 })
 export class UsersModule { }

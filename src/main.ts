@@ -9,6 +9,10 @@ async function bootstrap() {
     .setTitle('Aplicativo para gestão de animais de estimação')
     .setDescription('API desenvolvida pelo aluno Vitor Vidal como parte de seu trabalho de conclusão de curso')
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      'jwt',
+    )
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);

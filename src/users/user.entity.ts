@@ -1,8 +1,9 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany, Unique } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { Animal } from "src/animals/animal.entity";
 
 @Entity('usuario')
+@Unique(['email'])
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn('uuid', { name: 'id_usuario' })
     id: string;

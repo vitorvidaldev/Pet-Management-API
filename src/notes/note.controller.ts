@@ -1,10 +1,13 @@
-import { Controller, Post, UsePipes, ValidationPipe, Body, Get, Param, Delete, ParseUUIDPipe } from '@nestjs/common';
+import { Controller, Post, UsePipes, ValidationPipe, Body, Get, Param, Delete, ParseUUIDPipe, UseGuards } from '@nestjs/common';
 import { NotesService } from './note.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { Note } from './note.entity';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Notas')
+@UseGuards(AuthGuard())
+@ApiResponse({ status: 401, description: 'Usuário não autorizado' })
 @Controller('notes')
 export class NotesController {
     constructor(private notesService: NotesService) { }

@@ -3,7 +3,6 @@ import { Animal } from "src/animals/animal.entity";
 
 @Entity('nota')
 export class Note extends BaseEntity {
-
     @PrimaryGeneratedColumn('uuid', { name: 'id_nota' })
     id: string;
 
@@ -25,6 +24,7 @@ export class Note extends BaseEntity {
     @Column({ name: 'frequencia_de_nota' })
     frequency: string;
 
+    // "Cascade" obriga a exclusão de dados conectados
     @ManyToOne(() => Animal, animal => animal.notes, { onDelete: "CASCADE" })
     @JoinColumn({ name: 'animal_id_animal' })
     animal: Animal;

@@ -6,7 +6,7 @@ import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@ne
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Animais')
-// @ApiResponse({ status: 401, description: 'Usuário não autorizado' })
+@ApiResponse({ status: 401, description: 'Usuário não autorizado' })
 @Controller('animals')
 @UseGuards(AuthGuard())
 export class AnimalsController {

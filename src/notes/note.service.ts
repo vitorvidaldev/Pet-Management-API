@@ -17,7 +17,7 @@ export class NotesService {
     async createNote(createnoteDto: CreateNoteDto): Promise<Note> {
         const { noteType, title, description, noteDate, frequency, animalId } = createnoteDto;
 
-        // const animal = await this.animalService.getAnimalById(animalId);
+        const animal = await this.animalService.getAnimalById(animalId);
 
         const note = new Note();
         note.noteType = noteType.toLowerCase();
@@ -25,7 +25,7 @@ export class NotesService {
         note.description = description;
         note.noteDate = noteDate;
         note.frequency = frequency;
-        // note.animal = animal;
+        note.animal = animal;
 
         return await this.noteRepository.create(note).save();
     }

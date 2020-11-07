@@ -42,7 +42,7 @@ export class AnimalsService {
 
     async getAnimalById(id: string): Promise<Animal> {
         const animal = await this.animalRepository.findOne(id);
-        if (!animal) throw new NotFoundException('O animal com id ' + id + ' não foi encontrado');
+        if (!animal) throw new NotFoundException(`O animal com id ${id} não foi encontrado`);
         return animal;
     }
 

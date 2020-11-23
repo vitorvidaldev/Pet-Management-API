@@ -47,25 +47,25 @@ export class UsersService {
         return result;
     }
 
-    async login(loginUserDto: CreateUserDto): Promise<{ accessToken: string }> {
-        const email = await this.validateUserPassword(loginUserDto);
+    async login(loginUserDto: CreateUserDto): Promise<{ accessToken: string, user: User }> {
+        const user = await this.validateUserPassword(loginUserDto);
 
-        if (!email) {
+        if (!user.email) {
             throw new UnauthorizedException('O email ou senha fornecidos estão incorretos');
         }
 
-        const payload: JwtPayload = { email };
+        const payload: JwtPayload = { email: user.email };
         const accessToken = this.jwtService.sign(payload);
 
-        return { accessToken };
+        return { accessToken, user };
     }
 
-    async validateUserPassword(userCredentialsDto: CreateUserDto): Promise<string> {
+    async validateUserPassword(userCredentialsDto: CreateUserDto): Promise<User> {
         const { email, password } = userCredentialsDto;
         const user = await this.userRepository.findOne({ email });
 
         if (user && await user.validatePassword(password)) {
-            return user.email;
+            return user;
         } else {
             return null;
         }

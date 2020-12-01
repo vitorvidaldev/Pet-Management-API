@@ -26,6 +26,7 @@ export class AnimalsController {
     @Get()
     @ApiBearerAuth('jwt')
     getAnimals(): Promise<Animal[]> {
+        console.log('request');
         return this.animalsService.getAnimals();
     }
 

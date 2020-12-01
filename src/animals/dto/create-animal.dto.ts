@@ -9,9 +9,8 @@ export class CreateAnimalDto {
     name: string;
 
     @ApiProperty({ description: 'Data de nascimento', example: '2/10/2020' })
-    @IsString()
     @IsNotEmpty()
-    birthDate: Date;
+    birthDate: string;
 
     @ApiProperty({ description: 'Espécies cadastradas', example: 'Espécie do animal' })
     @IsString()

@@ -11,8 +11,8 @@ export class Animal extends BaseEntity {
     @Column({ name: 'nome' })
     name: string;
 
-    @Column({ name: 'data_nascimento' })
-    birthDate: Date;
+    @Column({ name: 'data_nascimento', type: 'timestamp' })
+    birthDate: string;
 
     @Column({ name: 'especie_animal' })
     species: string;

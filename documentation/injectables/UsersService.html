@@ -568,7 +568,7 @@
                     <div>
                     </div>
                     <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;string&gt;</code>
+                        <b>Returns : </b>        <code><a href="../classes/User.html" target="_self" >Promise&lt;User&gt;</a></code>
 
                     </div>
                     <div class="io-description">
@@ -633,25 +633,25 @@ export class UsersService {
         return result;
     }
 
-    async login(loginUserDto: CreateUserDto): Promise&lt;{ accessToken: string }&gt; {
-        const email &#x3D; await this.validateUserPassword(loginUserDto);
+    async login(loginUserDto: CreateUserDto): Promise&lt;{ accessToken: string, user: User }&gt; {
+        const user &#x3D; await this.validateUserPassword(loginUserDto);
 
-        if (!email) {
+        if (!user.email) {
             throw new UnauthorizedException(&#x27;O email ou senha fornecidos estão incorretos&#x27;);
         }
 
-        const payload: JwtPayload &#x3D; { email };
+        const payload: JwtPayload &#x3D; { email: user.email };
         const accessToken &#x3D; this.jwtService.sign(payload);
 
-        return { accessToken };
+        return { accessToken, user };
     }
 
-    async validateUserPassword(userCredentialsDto: CreateUserDto): Promise&lt;string&gt; {
+    async validateUserPassword(userCredentialsDto: CreateUserDto): Promise&lt;User&gt; {
         const { email, password } &#x3D; userCredentialsDto;
         const user &#x3D; await this.userRepository.findOne({ email });
 
         if (user &amp;&amp; await user.validatePassword(password)) {
-            return user.email;
+            return user;
         } else {
             return null;
         }

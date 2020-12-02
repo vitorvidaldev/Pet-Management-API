@@ -219,8 +219,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="54"
-                            class="link-to-prism">src/animals/animals.controller.ts:54</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="55"
+                            class="link-to-prism">src/animals/animals.controller.ts:55</a></div>
                 </td>
             </tr>
 
@@ -296,8 +296,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="45"
-                            class="link-to-prism">src/animals/animals.controller.ts:45</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="46"
+                            class="link-to-prism">src/animals/animals.controller.ts:46</a></div>
                 </td>
             </tr>
 
@@ -419,8 +419,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">src/animals/animals.controller.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="37"
+                            class="link-to-prism">src/animals/animals.controller.ts:37</a></div>
                 </td>
             </tr>
 
@@ -499,6 +499,7 @@ export class AnimalsController {
     @Get()
     @ApiBearerAuth(&#x27;jwt&#x27;)
     getAnimals(): Promise&lt;Animal[]&gt; {
+        console.log(&#x27;request&#x27;);
         return this.animalsService.getAnimals();
     }
 

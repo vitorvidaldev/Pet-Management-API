@@ -502,7 +502,7 @@ export class UsersController {
     @ApiResponse({ status: 400, description: &#x27;O email ou a senha enviados estão incorretos.&#x27; })
     @Post()
     @UsePipes(ValidationPipe)
-    createUser(@Body() createUserDto: CreateUserDto): Promise&lt;User&gt; {
+    createUser(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise&lt;User&gt; {
         return this.usersService.createUser(createUserDto);
     }
 

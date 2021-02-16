@@ -26,6 +26,7 @@ import { VaccinesService } from "./vaccines.service";
 export class VaccinesController {
   constructor(private vaccinesService: VaccinesService) {}
 
+  // TODO: Fix it later. Changed because of testing
   @ApiOperation({ summary: "Retorna as vacinas cadastradas" })
   @ApiResponse({
     status: 200,
@@ -33,10 +34,10 @@ export class VaccinesController {
   })
   @Get()
   @ApiBearerAuth("jwt")
-  getVaccines(
-    @Query(ValidationPipe) filterDto: GetVaccinesDto
-  ): Promise<Vaccine[]> {
-    return this.vaccinesService.getVaccines(filterDto);
+  getVaccines(): // @Query(ValidationPipe) filterDto: GetVaccinesDto
+  Promise<Vaccine[]> {
+    // return this.vaccinesService.getVaccines(filterDto);
+    return this.vaccinesService.getVaccines();
   }
 
   @ApiOperation({ summary: "Cadastro de novas vacinas no banco de dados" })

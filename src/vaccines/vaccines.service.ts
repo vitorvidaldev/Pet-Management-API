@@ -12,20 +12,21 @@ export class VaccinesService {
     private vaccineRepository: Repository<Vaccine>
   ) {}
 
-  async getVaccines(filterDto: GetVaccinesDto): Promise<Vaccine[]> {
+  async getVaccines(): // filterDto: GetVaccinesDto
+  Promise<Vaccine[]> {
     const query = this.vaccineRepository.createQueryBuilder("vaccines");
 
-    if (filterDto.species) {
-      query.andWhere("vaccines.species LIKE :species", {
-        species: filterDto.species,
-      });
-    }
+    // if (filterDto.species) {
+    //   query.andWhere("vaccines.species LIKE :species", {
+    //     species: filterDto.species,
+    //   });
+    // }
 
-    if (filterDto.breed) {
-      query.andWhere("vaccines.species LIKE :species", {
-        species: filterDto.species,
-      });
-    }
+    // if (filterDto.breed) {
+    //   query.andWhere("vaccines.species LIKE :species", {
+    //     species: filterDto.species,
+    //   });
+    // }
 
     return await query.getMany();
   }

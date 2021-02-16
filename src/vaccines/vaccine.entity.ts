@@ -11,7 +11,7 @@ import { Animal } from "src/animals/animal.entity";
 @Entity("vacina")
 export class Vaccine extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { name: "id_vacina" })
-  id!: number;
+  id?: number;
 
   @Column({ name: "nome_vacina" })
   name!: string;
@@ -31,5 +31,5 @@ export class Vaccine extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "animal_id_animal" })
-  animal!: Animal;
+  animal?: Animal;
 }

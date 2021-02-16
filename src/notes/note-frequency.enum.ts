@@ -1,6 +1,6 @@
 export enum NoteFrequency {
-    DAY = 'Dia',
-    WEEK = 'Semana',
-    MONTH = 'Mês',
-    NONE = 'Nao repetir',
+  DAY = "Dia",
+  WEEK = "Semana",
+  MONTH = "Mês",
+  NONE = "Nao repetir",
 }

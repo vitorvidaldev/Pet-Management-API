@@ -9,24 +9,24 @@ import {
 } from "typeorm";
 import { User } from "src/users/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
-import { Note } from "src/notes/note.entity";
+import { Note } from "src/notes/notes.entity";
 
 @Entity("animal")
 export class Animal extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { name: "id_animal" })
-  id: string;
+  id!: string;
 
   @Column({ name: "nome" })
-  name: string;
+  name!: string;
 
   @Column({ name: "data_nascimento", type: "timestamp" })
-  birthDate: string;
+  birthDate!: string;
 
   @Column({ name: "especie_animal" })
-  species: string;
+  species!: string;
 
   @Column({ name: "raca" })
-  breed: string;
+  breed!: string;
 
   @ManyToOne(
     () => User,
@@ -34,17 +34,17 @@ export class Animal extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "usuario_id_usuario" })
-  user: User;
+  user!: User;
 
   @OneToMany(
     () => Vaccine,
     (vaccine) => vaccine.animal
   )
-  vaccines: Vaccine[];
+  vaccines!: Vaccine[];
 
   @OneToMany(
     () => Note,
     (note) => note.animal
   )
-  notes: Note[];
+  notes!: Note[];
 }

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateNoteDto } from "./dto/create-note.dto";
-import { Note } from "./note.entity";
+import { Note } from "./notes.entity";
 import { Repository } from "typeorm";
 import { AnimalsService } from "src/animals/animals.service";
 

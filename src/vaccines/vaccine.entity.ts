@@ -11,19 +11,19 @@ import { Animal } from "src/animals/animal.entity";
 @Entity("vacina")
 export class Vaccine extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { name: "id_vacina" })
-  id: number;
+  id!: number;
 
   @Column({ name: "nome_vacina" })
-  name: string;
+  name!: string;
 
   @Column({ name: "especie_animal" })
-  species: string;
+  species!: string;
 
   @Column({ name: "raca" })
-  breed: string;
+  breed!: string;
 
   @Column({ name: "meses_apos_nascimento" })
-  monthsAfterBirth: string;
+  monthsAfterBirth!: string;
 
   @ManyToOne(
     () => Animal,
@@ -31,5 +31,5 @@ export class Vaccine extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "animal_id_animal" })
-  animal: Animal;
+  animal!: Animal;
 }

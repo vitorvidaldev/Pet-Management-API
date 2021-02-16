@@ -13,7 +13,7 @@ export class VaccinesService {
   ) {}
 
   async getVaccines(filterDto: GetVaccinesDto): Promise<Vaccine[]> {
-    const query = await this.vaccineRepository.createQueryBuilder("vaccines");
+    const query = this.vaccineRepository.createQueryBuilder("vaccines");
 
     if (filterDto.species) {
       query.andWhere("vaccines.species LIKE :species", {

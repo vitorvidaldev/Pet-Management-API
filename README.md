@@ -6,9 +6,11 @@
 
 ## Descrição
 
-A API para a gestão de animais de estimação.
+A API para a gestão de animais de estimação, utilizando Typescript, PostgreSQL, NodeJs e NestJs.
 
-## Instalação
+## Inicialização do repositório
+
+Execute o comando a seguir para instalar as dependências do projeto.
 
 ```bash
 $ npm install

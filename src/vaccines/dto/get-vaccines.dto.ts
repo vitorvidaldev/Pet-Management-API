@@ -6,11 +6,11 @@ export class GetVaccinesDto {
   @IsString()
   @IsOptional()
   @IsNotEmpty()
-  species: string;
+  species!: string;
 
   @ApiPropertyOptional({ description: "Raça do animal" })
   @IsString()
   @IsOptional()
   @IsNotEmpty()
-  breed: string;
+  breed!: string;
 }

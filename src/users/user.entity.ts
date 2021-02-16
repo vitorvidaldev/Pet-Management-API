@@ -13,22 +13,22 @@ import { Animal } from "src/animals/animal.entity";
 @Unique(["email"])
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { name: "id_usuario" })
-  id: string;
+  id!: string;
 
   @Column()
-  email: string;
+  email!: string;
 
   @Column({ name: "senha", length: 200 })
-  password: string;
+  password!: string;
 
   @Column({ name: "assinatura" })
-  signature: string;
+  signature!: string;
 
   @OneToMany(
     () => Animal,
     (animal) => animal.user
   )
-  animals: Animal[];
+  animals!: Animal[];
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.signature);

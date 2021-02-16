@@ -10,9 +10,9 @@ import {
   ParseUUIDPipe,
   UseGuards,
 } from "@nestjs/common";
-import { NotesService } from "./note.service";
+import { NotesService } from "./notes.service";
 import { CreateNoteDto } from "./dto/create-note.dto";
-import { Note } from "./note.entity";
+import { Note } from "./notes.entity";
 import {
   ApiBearerAuth,
   ApiOperation,

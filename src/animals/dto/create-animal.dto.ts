@@ -6,11 +6,11 @@ export class CreateAnimalDto {
   @ApiProperty({ description: "Nome do animal", example: "Omar" })
   @IsString()
   @IsNotEmpty()
-  name: string;
+  name!: string;
 
   @ApiProperty({ description: "Data de nascimento", example: "2/10/2020" })
   @IsNotEmpty()
-  birthDate: string;
+  birthDate!: string;
 
   @ApiProperty({
     description: "Espécies cadastradas",
@@ -24,16 +24,16 @@ export class CreateAnimalDto {
     AnimalSpecies.NAO_INFORMAR,
     AnimalSpecies.OUTRO,
   ])
-  species: AnimalSpecies;
+  species!: AnimalSpecies;
 
   @ApiProperty({ description: "Raça do animal", example: "Raça de um animal" })
   @IsString()
   @IsNotEmpty()
-  breed: string;
+  breed!: string;
 
   @ApiProperty({ description: "id de um usuário", example: "id de um usuário" })
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  userId: string;
+  userId!: string;
 }

@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { NotesController } from "./note.controller";
-import { NotesService } from "./note.service";
+import { NotesController } from "./notes.controller";
+import { NotesService } from "./notes.service";
 import { AnimalsModule } from "src/animals/animals.module";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { Note } from "./note.entity";
+import { Note } from "./notes.entity";
 import { UsersModule } from "src/users/users.module";
 
 @Module({

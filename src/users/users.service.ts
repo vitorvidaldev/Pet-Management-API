@@ -2,6 +2,7 @@ import {
   ConflictException,
   Injectable,
   NotFoundException,
+  PreconditionFailedException,
   UnauthorizedException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -77,9 +78,9 @@ export class UsersService {
 
     if (user && (await user.validatePassword(password))) {
       return user;
-    } else {
-      return null;
     }
+
+    throw new PreconditionFailedException();
   }
 
   async deleteUser(id: string): Promise<void> {

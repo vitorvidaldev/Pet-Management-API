@@ -4,7 +4,7 @@ import { typeOrmConfig } from "./config/typeorm.config";
 import { UsersModule } from "./users/users.module";
 import { AnimalsModule } from "./animals/animals.module";
 import { VaccinesModule } from "./vaccines/vaccines.module";
-import { NotesModule } from "./notes/note.module";
+import { NotesModule } from "./notes/notes.module";
 
 @Module({
   imports: [

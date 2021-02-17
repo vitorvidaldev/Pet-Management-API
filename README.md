@@ -1,38 +1,38 @@
-# API para a gestão de animais de estimação
+# Pet Management API
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+An pet management API, developed with:
 
-## Descrição
+- Typescript
+- PostgreSQL
+- NodeJs
+- NestJs
+- Docker
 
-A API para a gestão de animais de estimação, utilizando Typescript, PostgreSQL, NodeJs, NestJs e Docker.
+## Environment Configuration
 
-## Executando com Docker
+This file assumes Nodejs, Nestjs and Docker are already installed.
 
-O projeto pode ser executado usando Docker, por meio do comando a seguir.
+After downloading this repository, run the following command to install all necessary dependencies.
+
+```
+npm install
+```
+
+PostgreSQL and Adminer can be executed with the following command.
 
 ```
 docker-compose up
 ```
 
-!!!IMPORTANTE!!!
-
-Ao finalizar os testes, é necessário executar o seguinte comando.
+_Remember to end the containers processes once your done, with the following command._
 
 ```
 docker-compose down
 ```
 
-## Para executar a aplicação
+If it's the first time running the `docker-compose up`command in this repository, you'll have to create a database called `tcc`. Access (http://localhost:8080) to create the database.
 
-Execute o comando a seguir para instalar as dependências do projeto.
-
-```bash
-$ npm install
-```
-
-Os comandos a seguir também estão habilitados no arquivo `package.json`.
+## Available commands
 
 ```bash
 # development
@@ -45,7 +45,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Testes
+## Tests
 
 ```bash
 # unit tests
@@ -58,6 +58,6 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Licença
+## License
 
-Nest usa [a licença MIT](LICENSE).
+Nest uses [the MIT license](LICENSE).

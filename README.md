@@ -6,9 +6,25 @@
 
 ## Descrição
 
-A API para a gestão de animais de estimação, utilizando Typescript, PostgreSQL, NodeJs e NestJs.
+A API para a gestão de animais de estimação, utilizando Typescript, PostgreSQL, NodeJs, NestJs e Docker.
 
-## Inicialização do repositório
+## Executando com Docker
+
+O projeto pode ser executado usando Docker, por meio do comando a seguir.
+
+```
+docker-compose up
+```
+
+!!!IMPORTANTE!!!
+
+Ao finalizar os testes, é necessário executar o seguinte comando.
+
+```
+docker-compose down
+```
+
+## Para executar a aplicação
 
 Execute o comando a seguir para instalar as dependências do projeto.
 
@@ -16,7 +32,7 @@ Execute o comando a seguir para instalar as dependências do projeto.
 $ npm install
 ```
 
-## Para executar a aplicação
+Os comandos a seguir também estão habilitados no arquivo `package.json`.
 
 ```bash
 # development

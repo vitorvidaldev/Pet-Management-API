@@ -1,26 +1,18 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { VaccinesController } from "./vaccines.controller";
-import { VaccinesService } from "./vaccines.service";
 
-describe("Vaccines Controller", () => {
-  let vaccinesController: VaccinesController;
-  let vaccinesService: VaccinesService;
+describe("Data Controller", () => {
+  let controller: VaccinesController;
 
-  // beforeEach(async () => {
-  //   const module: TestingModule = await Test.createTestingModule({
-  //     controllers: [VaccinesController],
-  //     providers: [VaccinesService],
-  //   }).compile();
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [VaccinesController],
+    }).compile();
 
-  //   vaccinesController = module.get<VaccinesController>(VaccinesController);
-  //   vaccinesService = module.get<VaccinesService>(VaccinesService);
-  // });
+    controller = module.get<VaccinesController>(VaccinesController);
+  });
 
-  // it("should be defined", () => {
-  //   expect(controller).toBeDefined();
-  // });
-
-  // describe("Get vaccines", () => {
-  //   it("should return an array of vaccines", async () => {});
-  // });
+  it("should be defined", () => {
+    expect(controller).toBeDefined();
+  });
 });

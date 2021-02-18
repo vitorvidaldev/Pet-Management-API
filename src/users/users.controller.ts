@@ -12,7 +12,7 @@ import {
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { User } from "./user.entity";
+import { User } from "./entity/user.entity";
 
 @ApiTags("Usuários")
 @Controller("users")
@@ -49,7 +49,7 @@ export class UsersController {
   @UsePipes(ValidationPipe)
   createUser(
     @Body(ValidationPipe) createUserDto: CreateUserDto
-  ): Promise<User> {
+  ): Promise<Partial<User>> {
     return this.usersService.createUser(createUserDto);
   }
 

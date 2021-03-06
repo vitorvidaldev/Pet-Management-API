@@ -17,14 +17,5 @@ services:
     ports:
       - 8080:8080
 
-  # node:
-  #   build:
-  #     context: .
-  #   depends_on:
-  #     - postgres
-  #     - adminer
-  #   ports:
-  #     - "3000:3000"
-
 volumes:
   db:

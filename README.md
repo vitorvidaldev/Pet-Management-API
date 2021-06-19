@@ -60,4 +60,4 @@ $ npm run test:cov
 
 ## License
 
-Nest uses [the MIT license](LICENSE).
+This project uses [the MIT license](LICENSE).

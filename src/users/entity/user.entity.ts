@@ -10,19 +10,19 @@ import {
 import * as bcrypt from "bcrypt";
 import { Animal } from "src/animals/animal.entity";
 
-@Entity("usuario")
+@Entity("User")
 @Unique(["email"])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_usuario" })
+  @PrimaryGeneratedColumn("uuid", { name: "id_user" })
   id: string;
 
   @Column()
   email: string;
 
-  @Column({ name: "senha", length: 200 })
+  @Column({ name: "password", length: 200 })
   password: string;
 
-  @Column({ name: "assinatura" })
+  @Column({ name: "signature" })
   signature: string;
 
   @CreateDateColumn({

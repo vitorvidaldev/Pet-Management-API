@@ -19,7 +19,7 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   async getUsers(): Promise<User[]> {
     return this.userRepository.createQueryBuilder("user").getMany();
@@ -29,7 +29,7 @@ export class UsersService {
     const found = await this.userRepository.findOne(id);
     if (!found) {
       throw new NotFoundException(
-        "Usuário com id " + id + " não foi encontrado."
+        "User with id " + id + " was not found."
       );
     }
     return found;
@@ -48,7 +48,7 @@ export class UsersService {
       result = await this.userRepository.create(user).save();
     } catch (error) {
       throw new ConflictException(
-        `Já existe o cadastro de um usário com o email ${email}`
+        `A user is already registered with the email ${email}`
       );
     }
     return result;
@@ -61,7 +61,7 @@ export class UsersService {
 
     if (!user.email) {
       throw new UnauthorizedException(
-        "O email ou senha fornecidos estão incorretos"
+        "The email or password provided is incorrect"
       );
     }
 

@@ -9,31 +9,28 @@ import {
 } from "typeorm";
 import { Animal } from "src/animals/animal.entity";
 
-@Entity("nota")
+@Entity("note")
 export class Note extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_nota" })
+  @PrimaryGeneratedColumn("uuid", { name: "id_note" })
   id!: string;
 
-  @Column({ name: "tipo" })
+  @Column({ name: "type" })
   noteType!: string;
 
-  @Column({ name: "titulo" })
+  @Column({ name: "title" })
   title!: string;
 
-  @Column({ name: "descricao" })
+  @Column({ name: "description" })
   description!: string;
 
-  @CreateDateColumn({ name: "data_criacao" })
+  @CreateDateColumn({ name: "creation_date" })
   creationDate!: string;
 
-  @Column({ name: "data_nota" })
+  @Column({ name: "trigger_date" })
   noteDate!: Date;
 
-  @Column({ name: "frequencia_de_nota" })
+  @Column({ name: "frequency" })
   frequency!: string;
-
-  // "Cascade" obriga a exclusão de dados conectados
-  // "Cascade" obriga a exclusão de dados conectados
 
   @ManyToOne(
     () => Animal,

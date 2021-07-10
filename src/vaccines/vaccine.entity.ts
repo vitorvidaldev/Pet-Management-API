@@ -8,21 +8,21 @@ import {
 } from "typeorm";
 import { Animal } from "src/animals/animal.entity";
 
-@Entity("vacina")
+@Entity("vaccine")
 export class Vaccine extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_vacina" })
+  @PrimaryGeneratedColumn("uuid", { name: "id_vaccine" })
   id?: number;
 
-  @Column({ name: "nome_vacina" })
+  @Column({ name: "name" })
   name!: string;
 
-  @Column({ name: "especie_animal" })
+  @Column({ name: "species" })
   species!: string;
 
-  @Column({ name: "raca" })
+  @Column({ name: "breed" })
   breed!: string;
 
-  @Column({ name: "meses_apos_nascimento" })
+  @Column({ name: "months_after_birth" })
   monthsAfterBirth!: string;
 
   @ManyToOne(

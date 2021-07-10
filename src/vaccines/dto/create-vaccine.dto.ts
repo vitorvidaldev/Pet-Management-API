@@ -2,27 +2,27 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString } from "class-validator";
 
 export class CreateVaccineDto {
-  @ApiProperty({ description: "Nome da vacina", example: "nome da vacina" })
+  @ApiProperty({ description: "Vaccine name", example: "vaccine name" })
   @IsString()
   @IsNotEmpty()
   name!: string;
 
   @ApiProperty({
-    description: "Espécie do animal",
-    example: "especie do animal"
+    description: "animal species",
+    example: "animal species"
   })
   @IsString()
   @IsNotEmpty()
   species!: string;
 
-  @ApiProperty({ description: "Raça do animal", example: "Raça do animal" })
+  @ApiProperty({ description: "animal breed", example: "animal breed" })
   @IsString()
   @IsNotEmpty()
   breed!: string;
 
   @ApiProperty({
-    description: "Meses após nascimento",
-    example: "Meses após nascimento"
+    description: "Months after birth",
+    example: "Months after birth"
   })
   @IsNotEmpty()
   monthsAfterBirth!: string;

@@ -11,8 +11,8 @@ export class VaccinesService {
     private vaccineRepository: Repository<Vaccine>
   ) {}
 
-  async getVaccines(): // filterDto: GetVaccinesDto
-  Promise<Vaccine[]> {
+  // TODO: Add filter to the request
+  async getVaccines(): Promise<Vaccine[]> {
     const query = this.vaccineRepository.createQueryBuilder("vaccines");
 
     return query.getMany();

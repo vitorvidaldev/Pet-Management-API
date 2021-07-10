@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const options = new DocumentBuilder()
-    .setTitle("Aplicativo para gestão de animais de estimação")
+    .setTitle("Pet Management API")
     .setDescription("Pet Management API")
     .setVersion("1.0")
     .addBearerAuth(

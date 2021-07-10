@@ -11,7 +11,7 @@ export class AnimalsService {
     @InjectRepository(Animal)
     private animalRepository: Repository<Animal>,
     private userService: UsersService
-  ) {}
+  ) { }
 
   async createAnimal(createAnimalDto: CreateAnimalDto): Promise<Animal> {
     const { name, birthDate, species, breed } = createAnimalDto;
@@ -44,7 +44,7 @@ export class AnimalsService {
   async getAnimalById(id: string): Promise<Animal> {
     const animal = await this.animalRepository.findOne(id);
     if (!animal)
-      throw new NotFoundException(`O animal com id ${id} não foi encontrado`);
+      throw new NotFoundException(`The pet with id ${id} was not found`);
     return animal;
   }
 

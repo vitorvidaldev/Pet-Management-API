@@ -50,19 +50,5 @@ describe("UsersService", () => {
       expect(await service.createUser(mockedUserDto)).toEqual(mockedUser);
       expect(repositoryMock.create).toHaveBeenCalledWith(mockedUser);
     });
-
-    // it("should throw error if user exists", async () => {
-    //   repositoryMock.findOne.mockReturnValue(mockedUser);
-    //   try {
-    //     await service.createUser(mockedUserDto);
-    //   } catch (e) {
-    //     expect(e).toEqual(
-    //       new HttpException(
-    //         "Already exist user with this email",
-    //         HttpStatus.CONFLICT
-    //       )
-    //     );
-    //   }
-    // });
   });
 });

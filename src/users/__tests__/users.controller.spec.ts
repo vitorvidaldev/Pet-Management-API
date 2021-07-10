@@ -53,20 +53,5 @@ describe("Users Controller", () => {
 
       expect(await controller.createUser(mockedUser as User)).toBe(mockedUser);
     });
-
-    // it("should return HttpStatus Conflict", async () => {
-    //   jest
-    //     .spyOn(service, "createUser")
-    //     .mockRejectedValue(
-    //       new HttpException(
-    //         `Already exist user with email`,
-    //         HttpStatus.CONFLICT
-    //       )
-    //     );
-
-    //   await expect(
-    //     controller.createUser(mockedUser as User)
-    //   ).resolves.toBeInstanceOf(HttpException);
-    // });
   });
 });

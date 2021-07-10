@@ -21,7 +21,7 @@ export const mockedUser: Partial<User> = {
 
 export const mockedUserDto: CreateUserDto = {
   email: "yasha@gmail.com",
-  password: "Teste123..."
+  password: "Test123..."
 };
 
 export const repositoryMockFactory: () => MockType<

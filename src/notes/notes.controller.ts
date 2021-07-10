@@ -22,17 +22,17 @@ import {
 } from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 
-@ApiTags("Notas")
-@ApiResponse({ status: 401, description: "Usuário não autorizado" })
+@ApiTags("Notes")
+@ApiResponse({ status: 401, description: "Unauthorized" })
 @Controller("notes")
 @UseGuards(AuthGuard())
 export class NotesController {
-  constructor(private notesService: NotesService) {}
+  constructor(private notesService: NotesService) { }
 
-  @ApiOperation({ summary: "Cria nova nota para o animal que possui dado id." })
+  @ApiOperation({ summary: "Create a new note for the animal that has a given id." })
   @ApiResponse({
     status: 201,
-    description: "Cria uma nova nota para o animal com dado id."
+    description: "Create a new note for the animal with a given id."
   })
   @Post()
   @ApiBearerAuth("jwt")
@@ -41,9 +41,9 @@ export class NotesController {
     return this.notesService.createNote(createnoteDto);
   }
 
-  @ApiOperation({ summary: "Retorna todas as nota de um dado animal" })
-  @ApiParam({ name: "animalId", description: "id de um animal" })
-  @ApiResponse({ status: 200, description: "Retorna uma lista de notas" })
+  @ApiOperation({ summary: "Return all grades for a given animal" })
+  @ApiParam({ name: "animalId", description: "animal id" })
+  @ApiResponse({ status: 200, description: "Returns a list of notes" })
   @Get("animal/:animalId")
   @ApiBearerAuth("jwt")
   getNotes(
@@ -52,18 +52,18 @@ export class NotesController {
     return this.notesService.getNotes(id);
   }
 
-  @ApiOperation({ summary: "Retorna uma nota que possui dado id" })
-  @ApiParam({ name: "id", description: "id de uma nota" })
-  @ApiResponse({ status: 200, description: "Retorna uma nota" })
+  @ApiOperation({ summary: "Returns a note that has a given id" })
+  @ApiParam({ name: "id", description: "Note id" })
+  @ApiResponse({ status: 200, description: "Returns a note that has a given id" })
   @Get(":id")
   @ApiBearerAuth("jwt")
   getNoteById(@Param("id", new ParseUUIDPipe()) id: string): Promise<Note> {
     return this.notesService.getNoteById(id);
   }
 
-  @ApiOperation({ summary: "Exclui uma nota que possui dado id" })
-  @ApiParam({ name: "id", description: "id de uma nota" })
-  @ApiResponse({ status: 200, description: "Retorna void" })
+  @ApiOperation({ summary: "Deletes a note that has a given id" })
+  @ApiParam({ name: "id", description: "Note id" })
+  @ApiResponse({ status: 200, description: "Returns void" })
   @Delete(":id")
   @ApiBearerAuth("jwt")
   deleteNote(@Param("id", new ParseUUIDPipe()) id: string): Promise<void> {

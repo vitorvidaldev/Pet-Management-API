@@ -43,6 +43,12 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# format project
+$ npm run format
+
+# Search for lint issues
+$ npm run lint
 ```
 
 ## Tests
@@ -57,6 +63,10 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Author
+
+Vitor Vidal - More about me [here](https://github.com/vitorvidaldev).
 
 ## License
 

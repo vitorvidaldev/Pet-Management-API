@@ -1,5 +1,4 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
-import { JwtModule, JwtService } from "@nestjs/jwt";
+import { JwtModule } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { mockedUser, repositoryMockFactory } from "src/mock/user";
@@ -21,17 +20,17 @@ describe("Users Controller", () => {
         UsersService,
         {
           provide: getRepositoryToken(User),
-          useFactory: repositoryMockFactory,
-        },
+          useFactory: repositoryMockFactory
+        }
       ],
       imports: [
         JwtModule.register({
           secret: "topSecret51",
           signOptions: {
-            expiresIn: 3600,
-          },
-        }),
-      ],
+            expiresIn: 3600
+          }
+        })
+      ]
     }).compile();
 
     service = module.get<UsersService>(UsersService);
@@ -54,20 +53,5 @@ describe("Users Controller", () => {
 
       expect(await controller.createUser(mockedUser as User)).toBe(mockedUser);
     });
-
-    // it("should return HttpStatus Conflict", async () => {
-    //   jest
-    //     .spyOn(service, "createUser")
-    //     .mockRejectedValue(
-    //       new HttpException(
-    //         `Already exist user with email`,
-    //         HttpStatus.CONFLICT
-    //       )
-    //     );
-
-    //   await expect(
-    //     controller.createUser(mockedUser as User)
-    //   ).resolves.toBeInstanceOf(HttpException);
-    // });
   });
 });

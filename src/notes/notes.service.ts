@@ -11,7 +11,7 @@ export class NotesService {
     @InjectRepository(Note)
     private noteRepository: Repository<Note>,
     private animalService: AnimalsService
-  ) {}
+  ) { }
 
   async createNote(createnoteDto: CreateNoteDto): Promise<Note> {
     const {
@@ -20,7 +20,7 @@ export class NotesService {
       description,
       noteDate,
       frequency,
-      animalId,
+      animalId
     } = createnoteDto;
 
     const animal = await this.animalService.getAnimalById(animalId);
@@ -33,15 +33,15 @@ export class NotesService {
     note.frequency = frequency;
     note.animal = animal;
 
-    return await this.noteRepository.create(note).save();
+    return this.noteRepository.create(note).save();
   }
 
   async getNotes(animalId: string): Promise<Note[]> {
-    return await this.noteRepository
+    return this.noteRepository
       .createQueryBuilder("note")
       .leftJoinAndSelect("note.animal", "animal")
       .andWhere("note.animal = :animalId", {
-        animalId: animalId,
+        animalId: animalId
       })
       .getMany();
   }
@@ -49,7 +49,7 @@ export class NotesService {
   async getNoteById(id: string): Promise<Note> {
     const found = await this.noteRepository.findOne(id);
     if (!found) {
-      throw new NotFoundException(`Nota com id ${id} não foi encontrada`);
+      throw new NotFoundException(`Note with id ${id} not found`);
     }
     return found;
   }

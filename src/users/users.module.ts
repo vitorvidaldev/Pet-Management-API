@@ -11,15 +11,15 @@ import { JwtStrategy } from "./jwt.strategy";
   imports: [
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
-      secret: "topSecret51",
+      secret: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
       signOptions: {
-        expiresIn: 3600,
-      },
+        expiresIn: 3600
+      }
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User])
   ],
   controllers: [UsersController],
   providers: [UsersService, JwtStrategy],
-  exports: [UsersService, JwtStrategy, PassportModule],
+  exports: [UsersService, JwtStrategy, PassportModule]
 })
-export class UsersModule {}
+export class UsersModule { }

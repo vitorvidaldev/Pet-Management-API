@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
   PreconditionFailedException,
-  UnauthorizedException,
+  UnauthorizedException
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -19,17 +19,17 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService
-  ) {}
+  ) { }
 
   async getUsers(): Promise<User[]> {
-    return await this.userRepository.createQueryBuilder("user").getMany();
+    return this.userRepository.createQueryBuilder("user").getMany();
   }
 
   async getUserById(id: string): Promise<User> {
     const found = await this.userRepository.findOne(id);
     if (!found) {
       throw new NotFoundException(
-        "Usuário com id " + id + " não foi encontrado."
+        "User with id " + id + " was not found."
       );
     }
     return found;
@@ -47,9 +47,8 @@ export class UsersService {
     try {
       result = await this.userRepository.create(user).save();
     } catch (error) {
-      // console.log(error);
       throw new ConflictException(
-        `Já existe o cadastro de um usário com o email ${email}`
+        `A user is already registered with the email ${email}`
       );
     }
     return result;
@@ -62,7 +61,7 @@ export class UsersService {
 
     if (!user.email) {
       throw new UnauthorizedException(
-        "O email ou senha fornecidos estão incorretos"
+        "The email or password provided is incorrect"
       );
     }
 

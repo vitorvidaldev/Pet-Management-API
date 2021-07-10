@@ -11,7 +11,7 @@ export class AnimalsService {
     @InjectRepository(Animal)
     private animalRepository: Repository<Animal>,
     private userService: UsersService
-  ) {}
+  ) { }
 
   async createAnimal(createAnimalDto: CreateAnimalDto): Promise<Animal> {
     const { name, birthDate, species, breed } = createAnimalDto;
@@ -23,18 +23,18 @@ export class AnimalsService {
     animal.breed = breed.toLowerCase();
     animal.user = await this.userService.getUserById(createAnimalDto.userId);
 
-    return await this.animalRepository.create(animal).save();
+    return this.animalRepository.create(animal).save();
   }
 
   async getAnimals(): Promise<Animal[]> {
-    return await this.animalRepository
+    return this.animalRepository
       .createQueryBuilder("animal")
       .leftJoinAndSelect("animal.user", "user")
       .getMany();
   }
 
   async getUserAnimals(userId: string): Promise<Animal[]> {
-    return await this.animalRepository
+    return this.animalRepository
       .createQueryBuilder("animal")
       .leftJoinAndSelect("animal.user", "user")
       .where("animal.user = :userId", { userId: userId })
@@ -44,7 +44,7 @@ export class AnimalsService {
   async getAnimalById(id: string): Promise<Animal> {
     const animal = await this.animalRepository.findOne(id);
     if (!animal)
-      throw new NotFoundException(`O animal com id ${id} não foi encontrado`);
+      throw new NotFoundException(`The pet with id ${id} was not found`);
     return animal;
   }
 

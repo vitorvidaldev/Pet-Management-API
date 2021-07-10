@@ -8,7 +8,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  UseGuards,
+  UseGuards
 } from "@nestjs/common";
 import { AnimalsService } from "./animals.service";
 import { CreateAnimalDto } from "./dto/create-animal.dto";
@@ -18,21 +18,21 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 
 @ApiTags("Animais")
-@ApiResponse({ status: 401, description: "Usuário não autorizado" })
+@ApiResponse({ status: 401, description: "Unauthorized" })
 @Controller("animals")
 @UseGuards(AuthGuard())
 export class AnimalsController {
-  constructor(private animalsService: AnimalsService) {}
+  constructor(private animalsService: AnimalsService) { }
 
   @ApiOperation({
-    summary: "Faz o cadastro de um novo animal no banco de dados.",
+    summary: "Register a new animal in the database."
   })
-  @ApiResponse({ status: 201, description: "Retorna o novo animal cadastrado" })
+  @ApiResponse({ status: 201, description: "The new registered animal returns" })
   @Post()
   @ApiBearerAuth("jwt")
   @UsePipes(ValidationPipe)
@@ -40,8 +40,8 @@ export class AnimalsController {
     return this.animalsService.createAnimal(createAnimalDto);
   }
 
-  @ApiOperation({ summary: "Retorna a lista com todos os animais cadastrados" })
-  @ApiResponse({ status: 200, description: "Retorna a lista de animais" })
+  @ApiOperation({ summary: "Returns the list with all registered animals" })
+  @ApiResponse({ status: 200, description: "Return to animal list" })
   @Get()
   @ApiBearerAuth("jwt")
   getAnimals(): Promise<Animal[]> {
@@ -51,11 +51,11 @@ export class AnimalsController {
 
   @ApiOperation({
     summary:
-      "Retorna a lista com todos os animais cadastrados pelo usuário com dado id.",
+      "Returns the list with all animals registered by the user with a given id."
   })
   @ApiResponse({
     status: 200,
-    description: "Retorna a lista de animais de dado usuário",
+    description: "Returns the list of animals from the given user"
   })
   @Get("/user/:userId")
   @ApiBearerAuth("jwt")
@@ -65,11 +65,11 @@ export class AnimalsController {
     return this.animalsService.getUserAnimals(userId);
   }
 
-  @ApiOperation({ summary: "Retorna o animal com dado id." })
-  @ApiParam({ name: "id", description: "id do animal." })
+  @ApiOperation({ summary: "Returns the animal with the given id." })
+  @ApiParam({ name: "id", description: "animal id." })
   @ApiResponse({
     status: 200,
-    description: "Retorna o animal que possui dado id.",
+    description: "Returns the animal that has the id."
   })
   @Get(":id")
   @ApiBearerAuth("jwt")
@@ -77,11 +77,11 @@ export class AnimalsController {
     return this.animalsService.getAnimalById(id);
   }
 
-  @ApiOperation({ summary: "Exclui um animal do banco de dados." })
-  @ApiParam({ name: "id", description: "id do animal." })
+  @ApiOperation({ summary: "Deletes an animal from the database." })
+  @ApiParam({ name: "id", description: "animal id." })
   @ApiResponse({
     status: 200,
-    description: "O animal com dado id foi excluido.",
+    description: "The animal with the given id was excluded."
   })
   @Delete(":id")
   @ApiBearerAuth("jwt")

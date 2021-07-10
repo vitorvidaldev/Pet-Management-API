@@ -7,43 +7,43 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Delete,
+  Delete
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { User } from "./entity/user.entity";
 
-@ApiTags("Usuários")
+@ApiTags("Users")
 @Controller("users")
 export class UsersController {
-  constructor(private usersService: UsersService) {}
+  constructor(private usersService: UsersService) { }
 
   @ApiOperation({
-    summary: "Retorna todos os usuários cadastrados no banco de dados.",
+    summary: "Returns all users registered in the database."
   })
   @ApiResponse({
     status: 200,
-    description: "Retorna uma lista com os usuários cadastrados",
+    description: "Returns all users registered in the database"
   })
   @Get()
   getUsers(): Promise<User[]> {
     return this.usersService.getUsers();
   }
 
-  @ApiOperation({ summary: "Retorna o usuário que possui dado id." })
-  @ApiParam({ name: "id", description: "id de identificação de um usuário" })
-  @ApiResponse({ status: 200, description: "Retorna o usuário." })
+  @ApiOperation({ summary: "Returns the user who has the given id." })
+  @ApiParam({ name: "id", description: "User id" })
+  @ApiResponse({ status: 200, description: "Returns the user who has the given id." })
   @Get(":id")
   getUserById(@Param("id", new ParseUUIDPipe()) id: string): Promise<User> {
     return this.usersService.getUserById(id);
   }
 
-  @ApiOperation({ summary: "Realiza o cadastro de um novo usuário" })
-  @ApiResponse({ status: 201, description: "Retorna o usuário cadastrado." })
+  @ApiOperation({ summary: "Register a new user" })
+  @ApiResponse({ status: 201, description: "Register a new user" })
   @ApiResponse({
     status: 400,
-    description: "O email ou a senha enviados estão incorretos.",
+    description: "The email or password sent is incorrect."
   })
   @Post()
   @UsePipes(ValidationPipe)
@@ -53,14 +53,14 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  @ApiOperation({ summary: "Realiza o login do usuário" })
+  @ApiOperation({ summary: "Log in the user" })
   @ApiResponse({
     status: 201,
-    description: "Retorna o token de acesso do usuário.",
+    description: "Returns the user's access token."
   })
   @ApiResponse({
     status: 401,
-    description: "O email ou a senha enviados estão incorretos.",
+    description: "The email or password sent is incorrect."
   })
   @Post("login")
   login(
@@ -69,8 +69,8 @@ export class UsersController {
     return this.usersService.login(createUserDto);
   }
 
-  @ApiOperation({ summary: "Exclusão de um usuário cadastrado." })
-  @ApiParam({ name: "id", description: "id de identificação de um usuário" })
+  @ApiOperation({ summary: "Deleting a registered user." })
+  @ApiParam({ name: "id", description: "User id" })
   @Delete(":id")
   deleteUser(@Param("id", new ParseUUIDPipe()) id: string): Promise<void> {
     return this.usersService.deleteUser(id);

@@ -5,7 +5,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinColumn,
+  JoinColumn
 } from "typeorm";
 import { User } from "src/users/entity/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
@@ -16,35 +16,35 @@ export class Animal extends BaseEntity {
   @PrimaryGeneratedColumn("uuid", { name: "id_animal" })
   id!: string;
 
-  @Column({ name: "nome" })
+  @Column({ name: "name" })
   name!: string;
 
-  @Column({ name: "data_nascimento", type: "timestamp" })
+  @Column({ name: "birthdate", type: "timestamp" })
   birthDate!: string;
 
-  @Column({ name: "especie_animal" })
+  @Column({ name: "species" })
   species!: string;
 
-  @Column({ name: "raca" })
+  @Column({ name: "breed" })
   breed!: string;
 
   @ManyToOne(
     () => User,
-    (user) => user.animals,
+    user => user.animals,
     { onDelete: "CASCADE" }
   )
-  @JoinColumn({ name: "usuario_id_usuario" })
+  @JoinColumn({ name: "user_id_user" })
   user!: User;
 
   @OneToMany(
     () => Vaccine,
-    (vaccine) => vaccine.animal
+    vaccine => vaccine.animal
   )
   vaccines!: Vaccine[];
 
   @OneToMany(
     () => Note,
-    (note) => note.animal
+    note => note.animal
   )
   notes!: Note[];
 }

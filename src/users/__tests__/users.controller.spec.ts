@@ -1,5 +1,4 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
-import { JwtModule, JwtService } from "@nestjs/jwt";
+import { JwtModule } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { mockedUser, repositoryMockFactory } from "src/mock/user";

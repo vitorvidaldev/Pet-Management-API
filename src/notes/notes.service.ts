@@ -33,11 +33,11 @@ export class NotesService {
     note.frequency = frequency;
     note.animal = animal;
 
-    return await this.noteRepository.create(note).save();
+    return this.noteRepository.create(note).save();
   }
 
   async getNotes(animalId: string): Promise<Note[]> {
-    return await this.noteRepository
+    return this.noteRepository
       .createQueryBuilder("note")
       .leftJoinAndSelect("note.animal", "animal")
       .andWhere("note.animal = :animalId", {

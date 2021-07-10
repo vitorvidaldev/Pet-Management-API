@@ -23,18 +23,18 @@ export class AnimalsService {
     animal.breed = breed.toLowerCase();
     animal.user = await this.userService.getUserById(createAnimalDto.userId);
 
-    return await this.animalRepository.create(animal).save();
+    return this.animalRepository.create(animal).save();
   }
 
   async getAnimals(): Promise<Animal[]> {
-    return await this.animalRepository
+    return this.animalRepository
       .createQueryBuilder("animal")
       .leftJoinAndSelect("animal.user", "user")
       .getMany();
   }
 
   async getUserAnimals(userId: string): Promise<Animal[]> {
-    return await this.animalRepository
+    return this.animalRepository
       .createQueryBuilder("animal")
       .leftJoinAndSelect("animal.user", "user")
       .where("animal.user = :userId", { userId: userId })

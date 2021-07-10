@@ -1,10 +1,9 @@
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import { User } from "src/users/entity/user.entity";
-import { Repository } from "typeorm";
 import { v4 as uuidv4 } from "uuid";
 
 export type MockType<T> = {
-  [P in keyof T]: jest.Mock<{}>;
+  [P in keyof T]: jest.Mock<Record<string, unknown>>;
 };
 
 it("just passes", () => {
@@ -25,20 +24,19 @@ export const mockedUserDto: CreateUserDto = {
   password: "Teste123..."
 };
 
-// @ts-ignore
-export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
-  () => ({
-    remove: jest.fn(entity => entity),
-    delete: jest.fn(entity => entity),
-    findOne: jest.fn(entity => entity),
-    findOneOrFail: jest.fn(() => mockedUser),
-    save: jest.fn(entity => entity),
-    create: jest.fn(entity => entity),
-    createImage: jest.fn(entity => entity),
-    preload: jest.fn(entity => entity),
-    findAndCount: jest.fn(entity => entity),
-    find: jest.fn(entity => entity),
-    findByIds: jest.fn(entity => entity),
-    count: jest.fn(entity => entity)
-  })
-);
+export const repositoryMockFactory: () => MockType<
+  Record<string, unknown>
+> = jest.fn(() => ({
+  remove: jest.fn(entity => entity),
+  delete: jest.fn(entity => entity),
+  findOne: jest.fn(entity => entity),
+  findOneOrFail: jest.fn(() => mockedUser),
+  save: jest.fn(entity => entity),
+  create: jest.fn(entity => entity),
+  createImage: jest.fn(entity => entity),
+  preload: jest.fn(entity => entity),
+  findAndCount: jest.fn(entity => entity),
+  find: jest.fn(entity => entity),
+  findByIds: jest.fn(entity => entity),
+  count: jest.fn(entity => entity)
+}));

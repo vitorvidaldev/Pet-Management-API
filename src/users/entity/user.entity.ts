@@ -5,8 +5,7 @@ import {
   Column,
   OneToMany,
   Unique,
-  CreateDateColumn,
-  UpdateDateColumn
+  CreateDateColumn
 } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Animal } from "src/animals/animal.entity";

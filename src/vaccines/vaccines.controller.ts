@@ -3,7 +3,6 @@ import {
   Controller,
   Get,
   Post,
-  Query,
   UseGuards,
   ValidationPipe
 } from "@nestjs/common";
@@ -15,7 +14,6 @@ import {
   ApiTags
 } from "@nestjs/swagger";
 import { CreateVaccineDto } from "./dto/create-vaccine.dto";
-import { GetVaccinesDto } from "./dto/get-vaccines.dto";
 import { Vaccine } from "./vaccine.entity";
 import { VaccinesService } from "./vaccines.service";
 
@@ -26,7 +24,6 @@ import { VaccinesService } from "./vaccines.service";
 export class VaccinesController {
   constructor(private vaccinesService: VaccinesService) {}
 
-  // TODO: Fix it later. Changed because of testing
   @ApiOperation({ summary: "Retorna as vacinas cadastradas" })
   @ApiResponse({
     status: 200,
@@ -36,7 +33,6 @@ export class VaccinesController {
   @ApiBearerAuth("jwt")
   getVaccines(): // @Query(ValidationPipe) filterDto: GetVaccinesDto
   Promise<Vaccine[]> {
-    // return this.vaccinesService.getVaccines(filterDto);
     return this.vaccinesService.getVaccines();
   }
 

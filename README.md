@@ -30,7 +30,7 @@ _Remember to end the containers processes once your done, with the following com
 docker-compose down
 ```
 
-If it's the first time running the `docker-compose up`command in this repository, you'll have to create a database called `tcc`. Access (http://localhost:8080) to create the database.
+If it's the first time running the `docker-compose up`command in this repository, you'll have to create a database called `pet`. Access (http://localhost:8080) to create the database.
 
 ## Available commands
 

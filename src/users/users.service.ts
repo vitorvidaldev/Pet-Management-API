@@ -22,7 +22,7 @@ export class UsersService {
   ) {}
 
   async getUsers(): Promise<User[]> {
-    return await this.userRepository.createQueryBuilder("user").getMany();
+    return this.userRepository.createQueryBuilder("user").getMany();
   }
 
   async getUserById(id: string): Promise<User> {
@@ -47,7 +47,6 @@ export class UsersService {
     try {
       result = await this.userRepository.create(user).save();
     } catch (error) {
-      // console.log(error);
       throw new ConflictException(
         `Já existe o cadastro de um usário com o email ${email}`
       );

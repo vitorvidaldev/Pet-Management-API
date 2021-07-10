@@ -8,9 +8,7 @@ async function bootstrap() {
 
   const options = new DocumentBuilder()
     .setTitle("Aplicativo para gestão de animais de estimação")
-    .setDescription(
-      "API desenvolvida pelo aluno Vitor Vidal como parte de seu trabalho de conclusão de curso"
-    )
+    .setDescription("Pet Management API")
     .setVersion("1.0")
     .addBearerAuth(
       { type: "http", scheme: "bearer", bearerFormat: "JWT" },

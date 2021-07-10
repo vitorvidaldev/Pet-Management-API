@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn,
+  JoinColumn
 } from "typeorm";
 import { Animal } from "src/animals/animal.entity";
 
@@ -27,7 +27,7 @@ export class Vaccine extends BaseEntity {
 
   @ManyToOne(
     () => Animal,
-    (animal) => animal.vaccines,
+    animal => animal.vaccines,
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "animal_id_animal" })

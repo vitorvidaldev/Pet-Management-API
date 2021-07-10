@@ -20,7 +20,7 @@ export class NotesService {
       description,
       noteDate,
       frequency,
-      animalId,
+      animalId
     } = createnoteDto;
 
     const animal = await this.animalService.getAnimalById(animalId);
@@ -41,7 +41,7 @@ export class NotesService {
       .createQueryBuilder("note")
       .leftJoinAndSelect("note.animal", "animal")
       .andWhere("note.animal = :animalId", {
-        animalId: animalId,
+        animalId: animalId
       })
       .getMany();
   }

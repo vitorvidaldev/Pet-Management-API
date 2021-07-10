@@ -5,7 +5,7 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
-  JoinColumn,
+  JoinColumn
 } from "typeorm";
 import { Animal } from "src/animals/animal.entity";
 
@@ -37,7 +37,7 @@ export class Note extends BaseEntity {
 
   @ManyToOne(
     () => Animal,
-    (animal) => animal.notes,
+    animal => animal.notes,
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "animal_id_animal" })

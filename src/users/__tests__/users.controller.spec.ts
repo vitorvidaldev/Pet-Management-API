@@ -21,17 +21,17 @@ describe("Users Controller", () => {
         UsersService,
         {
           provide: getRepositoryToken(User),
-          useFactory: repositoryMockFactory,
-        },
+          useFactory: repositoryMockFactory
+        }
       ],
       imports: [
         JwtModule.register({
           secret: "topSecret51",
           signOptions: {
-            expiresIn: 3600,
-          },
-        }),
-      ],
+            expiresIn: 3600
+          }
+        })
+      ]
     }).compile();
 
     service = module.get<UsersService>(UsersService);

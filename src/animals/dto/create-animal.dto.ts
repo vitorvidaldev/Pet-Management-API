@@ -14,7 +14,7 @@ export class CreateAnimalDto {
 
   @ApiProperty({
     description: "Espécies cadastradas",
-    example: "Espécie do animal",
+    example: "Espécie do animal"
   })
   @IsString()
   @IsNotEmpty()
@@ -22,7 +22,7 @@ export class CreateAnimalDto {
     AnimalSpecies.CACHORRO,
     AnimalSpecies.GATO,
     AnimalSpecies.NAO_INFORMAR,
-    AnimalSpecies.OUTRO,
+    AnimalSpecies.OUTRO
   ])
   species!: AnimalSpecies;
 

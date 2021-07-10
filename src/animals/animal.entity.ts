@@ -5,7 +5,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinColumn,
+  JoinColumn
 } from "typeorm";
 import { User } from "src/users/entity/user.entity";
 import { Vaccine } from "src/vaccines/vaccine.entity";
@@ -30,7 +30,7 @@ export class Animal extends BaseEntity {
 
   @ManyToOne(
     () => User,
-    (user) => user.animals,
+    user => user.animals,
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "usuario_id_usuario" })
@@ -38,13 +38,13 @@ export class Animal extends BaseEntity {
 
   @OneToMany(
     () => Vaccine,
-    (vaccine) => vaccine.animal
+    vaccine => vaccine.animal
   )
   vaccines!: Vaccine[];
 
   @OneToMany(
     () => Note,
-    (note) => note.animal
+    note => note.animal
   )
   notes!: Note[];
 }

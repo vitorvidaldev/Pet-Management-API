@@ -7,7 +7,7 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Delete,
+  Delete
 } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { CreateUserDto } from "./dto/create-user.dto";
@@ -20,11 +20,11 @@ export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @ApiOperation({
-    summary: "Retorna todos os usuários cadastrados no banco de dados.",
+    summary: "Retorna todos os usuários cadastrados no banco de dados."
   })
   @ApiResponse({
     status: 200,
-    description: "Retorna uma lista com os usuários cadastrados",
+    description: "Retorna uma lista com os usuários cadastrados"
   })
   @Get()
   getUsers(): Promise<User[]> {
@@ -43,7 +43,7 @@ export class UsersController {
   @ApiResponse({ status: 201, description: "Retorna o usuário cadastrado." })
   @ApiResponse({
     status: 400,
-    description: "O email ou a senha enviados estão incorretos.",
+    description: "O email ou a senha enviados estão incorretos."
   })
   @Post()
   @UsePipes(ValidationPipe)
@@ -56,11 +56,11 @@ export class UsersController {
   @ApiOperation({ summary: "Realiza o login do usuário" })
   @ApiResponse({
     status: 201,
-    description: "Retorna o token de acesso do usuário.",
+    description: "Retorna o token de acesso do usuário."
   })
   @ApiResponse({
     status: 401,
-    description: "O email ou a senha enviados estão incorretos.",
+    description: "O email ou a senha enviados estão incorretos."
   })
   @Post("login")
   login(

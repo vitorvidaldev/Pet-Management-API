@@ -9,6 +9,6 @@ import { Animal } from "./animal.entity";
   imports: [TypeOrmModule.forFeature([Animal]), UsersModule],
   controllers: [AnimalsController],
   providers: [AnimalsService],
-  exports: [AnimalsService],
+  exports: [AnimalsService]
 })
 export class AnimalsModule {}

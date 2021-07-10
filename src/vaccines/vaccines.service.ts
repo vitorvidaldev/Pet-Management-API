@@ -37,7 +37,7 @@ export class VaccinesService {
         name: createVaccineDto.name,
         species: createVaccineDto.species,
         breed: createVaccineDto.breed,
-        monthsAfterBirth: createVaccineDto.monthsAfterBirth,
+        monthsAfterBirth: createVaccineDto.monthsAfterBirth
       })
       .save();
   }

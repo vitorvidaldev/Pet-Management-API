@@ -12,7 +12,7 @@ import { NotesModule } from "./notes/notes.module";
     UsersModule,
     AnimalsModule,
     VaccinesModule,
-    NotesModule,
-  ],
+    NotesModule
+  ]
 })
 export class AppModule {}

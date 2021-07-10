@@ -14,7 +14,7 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: "Senha muito fraca.",
+    message: "Senha muito fraca."
   })
   password!: string;
 }

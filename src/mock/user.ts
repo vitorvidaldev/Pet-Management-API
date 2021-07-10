@@ -17,28 +17,28 @@ export const mockedUser: Partial<User> = {
   password: "$2b$10$6XPgPUAm3oa83UzqpHfv4O2zsh7sdOD6j6bsnJl0NsowsLSRLLJv6",
   signature: "$2b$10$6XPgPUAm3oa83UzqpHfv4O",
   createDate: "2021-02-18 13:36:40.278347",
-  active: true,
+  active: true
 };
 
 export const mockedUserDto: CreateUserDto = {
   email: "yasha@gmail.com",
-  password: "Teste123...",
+  password: "Teste123..."
 };
 
 // @ts-ignore
 export const repositoryMockFactory: () => MockType<Repository<any>> = jest.fn(
   () => ({
-    remove: jest.fn((entity) => entity),
-    delete: jest.fn((entity) => entity),
-    findOne: jest.fn((entity) => entity),
+    remove: jest.fn(entity => entity),
+    delete: jest.fn(entity => entity),
+    findOne: jest.fn(entity => entity),
     findOneOrFail: jest.fn(() => mockedUser),
-    save: jest.fn((entity) => entity),
-    create: jest.fn((entity) => entity),
-    createImage: jest.fn((entity) => entity),
-    preload: jest.fn((entity) => entity),
-    findAndCount: jest.fn((entity) => entity),
-    find: jest.fn((entity) => entity),
-    findByIds: jest.fn((entity) => entity),
-    count: jest.fn((entity) => entity),
+    save: jest.fn(entity => entity),
+    create: jest.fn(entity => entity),
+    createImage: jest.fn(entity => entity),
+    preload: jest.fn(entity => entity),
+    findAndCount: jest.fn(entity => entity),
+    find: jest.fn(entity => entity),
+    findByIds: jest.fn(entity => entity),
+    count: jest.fn(entity => entity)
   })
 );

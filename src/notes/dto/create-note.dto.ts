@@ -15,7 +15,7 @@ export class CreateNoteDto {
 
   @ApiProperty({
     description: "Descrição da nota",
-    example: "Ir no mercado comprar ração",
+    example: "Ir no mercado comprar ração"
   })
   @IsString()
   @IsNotEmpty()
@@ -33,7 +33,7 @@ export class CreateNoteDto {
     NoteFrequency.DAY,
     NoteFrequency.WEEK,
     NoteFrequency.MONTH,
-    NoteFrequency.NONE,
+    NoteFrequency.NONE
   ])
   frequency!: string;
 

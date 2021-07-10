@@ -8,7 +8,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  UseGuards,
+  UseGuards
 } from "@nestjs/common";
 import { NotesService } from "./notes.service";
 import { CreateNoteDto } from "./dto/create-note.dto";
@@ -18,7 +18,7 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 
@@ -32,7 +32,7 @@ export class NotesController {
   @ApiOperation({ summary: "Cria nova nota para o animal que possui dado id." })
   @ApiResponse({
     status: 201,
-    description: "Cria uma nova nota para o animal com dado id.",
+    description: "Cria uma nova nota para o animal com dado id."
   })
   @Post()
   @ApiBearerAuth("jwt")

@@ -5,14 +5,14 @@ import {
   Post,
   Query,
   UseGuards,
-  ValidationPipe,
+  ValidationPipe
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from "@nestjs/swagger";
 import { CreateVaccineDto } from "./dto/create-vaccine.dto";
 import { GetVaccinesDto } from "./dto/get-vaccines.dto";
@@ -30,7 +30,7 @@ export class VaccinesController {
   @ApiOperation({ summary: "Retorna as vacinas cadastradas" })
   @ApiResponse({
     status: 200,
-    description: "Lista de vacinas cadastradas, de acordo com os parâmentros",
+    description: "Lista de vacinas cadastradas, de acordo com os parâmentros"
   })
   @Get()
   @ApiBearerAuth("jwt")

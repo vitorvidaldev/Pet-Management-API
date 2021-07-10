@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
   PreconditionFailedException,
-  UnauthorizedException,
+  UnauthorizedException
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";

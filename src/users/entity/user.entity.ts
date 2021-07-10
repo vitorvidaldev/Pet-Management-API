@@ -6,7 +6,7 @@ import {
   OneToMany,
   Unique,
   CreateDateColumn,
-  UpdateDateColumn,
+  UpdateDateColumn
 } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { Animal } from "src/animals/animal.entity";
@@ -28,7 +28,7 @@ export class User extends BaseEntity {
 
   @CreateDateColumn({
     type: "timestamp",
-    name: "create_date",
+    name: "create_date"
   })
   createDate: string;
 
@@ -37,7 +37,7 @@ export class User extends BaseEntity {
 
   @OneToMany(
     () => Animal,
-    (animal) => animal.user
+    animal => animal.user
   )
   animals: Animal[];
 

@@ -8,7 +8,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  UseGuards,
+  UseGuards
 } from "@nestjs/common";
 import { AnimalsService } from "./animals.service";
 import { CreateAnimalDto } from "./dto/create-animal.dto";
@@ -18,7 +18,7 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
-  ApiTags,
+  ApiTags
 } from "@nestjs/swagger";
 import { AuthGuard } from "@nestjs/passport";
 
@@ -30,7 +30,7 @@ export class AnimalsController {
   constructor(private animalsService: AnimalsService) {}
 
   @ApiOperation({
-    summary: "Faz o cadastro de um novo animal no banco de dados.",
+    summary: "Faz o cadastro de um novo animal no banco de dados."
   })
   @ApiResponse({ status: 201, description: "Retorna o novo animal cadastrado" })
   @Post()
@@ -51,11 +51,11 @@ export class AnimalsController {
 
   @ApiOperation({
     summary:
-      "Retorna a lista com todos os animais cadastrados pelo usuário com dado id.",
+      "Retorna a lista com todos os animais cadastrados pelo usuário com dado id."
   })
   @ApiResponse({
     status: 200,
-    description: "Retorna a lista de animais de dado usuário",
+    description: "Retorna a lista de animais de dado usuário"
   })
   @Get("/user/:userId")
   @ApiBearerAuth("jwt")
@@ -69,7 +69,7 @@ export class AnimalsController {
   @ApiParam({ name: "id", description: "id do animal." })
   @ApiResponse({
     status: 200,
-    description: "Retorna o animal que possui dado id.",
+    description: "Retorna o animal que possui dado id."
   })
   @Get(":id")
   @ApiBearerAuth("jwt")
@@ -81,7 +81,7 @@ export class AnimalsController {
   @ApiParam({ name: "id", description: "id do animal." })
   @ApiResponse({
     status: 200,
-    description: "O animal com dado id foi excluido.",
+    description: "O animal com dado id foi excluido."
   })
   @Delete(":id")
   @ApiBearerAuth("jwt")

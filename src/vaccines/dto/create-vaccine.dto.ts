@@ -9,7 +9,7 @@ export class CreateVaccineDto {
 
   @ApiProperty({
     description: "Espécie do animal",
-    example: "especie do animal",
+    example: "especie do animal"
   })
   @IsString()
   @IsNotEmpty()
@@ -22,7 +22,7 @@ export class CreateVaccineDto {
 
   @ApiProperty({
     description: "Meses após nascimento",
-    example: "Meses após nascimento",
+    example: "Meses após nascimento"
   })
   @IsNotEmpty()
   monthsAfterBirth!: string;

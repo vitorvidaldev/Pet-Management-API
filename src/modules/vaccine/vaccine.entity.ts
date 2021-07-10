@@ -31,5 +31,5 @@ export class Vaccine extends BaseEntity {
     { onDelete: "CASCADE" }
   )
   @JoinColumn({ name: "animal_id_animal" })
-  animal?: Animal;
+  pet?: Animal;
 }

@@ -15,14 +15,14 @@ import {
 } from "@nestjs/swagger";
 import { CreateVaccineDto } from "./dto/create-vaccine.dto";
 import { Vaccine } from "./vaccine.entity";
-import { VaccinesService } from "./vaccines.service";
+import { VaccineService } from "./vaccine.service";
 
 @ApiTags("Vaccines")
 @ApiResponse({ status: 401, description: "Unauthorized" })
 @Controller("vaccines")
 @UseGuards(AuthGuard())
 export class VaccinesController {
-  constructor(private vaccinesService: VaccinesService) { }
+  constructor(private vaccinesService: VaccineService) {}
 
   // TODO: Add filter parameter
   @ApiOperation({ summary: "Returns vaccines available" })

@@ -8,7 +8,6 @@ import {
   CreateDateColumn
 } from "typeorm";
 import * as bcrypt from "bcrypt";
-import { Animal } from "src/animals/animal.entity";
 
 @Entity("User")
 @Unique(["email"])
@@ -38,7 +37,7 @@ export class User extends BaseEntity {
     () => Animal,
     animal => animal.user
   )
-  animals: Animal[];
+  pets: Animal[];
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.signature);

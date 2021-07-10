@@ -3,19 +3,19 @@ import { IsString, IsNotEmpty, IsIn, IsUUID } from "class-validator";
 import { NoteFrequency } from "../note-frequency.enum";
 
 export class CreateNoteDto {
-  @ApiProperty({ description: "Note type", example: "Note type" })
+  @ApiProperty({ description: "Type", example: "Type" })
   @IsString()
   @IsNotEmpty()
-  noteType!: string;
+  type!: string;
 
-  @ApiProperty({ description: "Note title", example: "Note title" })
+  @ApiProperty({ description: "Title", example: "Title" })
   @IsString()
   @IsNotEmpty()
   title!: string;
 
   @ApiProperty({
-    description: "Note description",
-    example: "Note description"
+    description: "Description",
+    example: "Description"
   })
   @IsString()
   @IsNotEmpty()
@@ -26,7 +26,7 @@ export class CreateNoteDto {
   @IsNotEmpty()
   noteDate!: Date;
 
-  @ApiProperty({ description: "Note frequency", example: "Daily" })
+  @ApiProperty({ description: "Frequency", example: "Daily" })
   @IsString()
   @IsNotEmpty()
   @IsIn([
@@ -37,9 +37,9 @@ export class CreateNoteDto {
   ])
   frequency!: string;
 
-  @ApiProperty({ description: "Animal id.", example: "animal id" })
+  @ApiProperty({ description: "id", example: "id" })
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  animalId!: string;
+  petId!: string;
 }

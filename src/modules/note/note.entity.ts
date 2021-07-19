@@ -7,15 +7,15 @@ import {
   CreateDateColumn,
   JoinColumn
 } from "typeorm";
-import { Animal } from "src/animals/animal.entity";
+import { Pet } from "../pet/pet.entity";
 
 @Entity("note")
 export class Note extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_note" })
+  @PrimaryGeneratedColumn("uuid", { name: "id" })
   id!: string;
 
   @Column({ name: "type" })
-  noteType!: string;
+  type!: string;
 
   @Column({ name: "title" })
   title!: string;
@@ -27,16 +27,16 @@ export class Note extends BaseEntity {
   creationDate!: string;
 
   @Column({ name: "trigger_date" })
-  noteDate!: Date;
+  triggerDate!: Date;
 
   @Column({ name: "frequency" })
   frequency!: string;
 
   @ManyToOne(
-    () => Animal,
-    animal => animal.notes,
+    () => Pet,
+    pet => pet.notes,
     { onDelete: "CASCADE" }
   )
-  @JoinColumn({ name: "animal_id_animal" })
-  animal!: Animal;
+  @JoinColumn({ name: "pet_id" })
+  pet!: Pet;
 }

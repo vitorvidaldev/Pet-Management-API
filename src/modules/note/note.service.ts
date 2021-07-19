@@ -1,52 +1,52 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateNoteDto } from "./dto/create-note.dto";
-import { Note } from "./notes.entity";
+import { Note } from "./note.entity";
 import { Repository } from "typeorm";
-import { AnimalsService } from "src/animals/animals.service";
+import { PetService } from "../pet/pet.service";
 
 @Injectable()
-export class NotesService {
+export class NoteService {
   constructor(
     @InjectRepository(Note)
     private noteRepository: Repository<Note>,
-    private animalService: AnimalsService
-  ) { }
+    private petService: PetService
+  ) {}
 
-  async createNote(createnoteDto: CreateNoteDto): Promise<Note> {
+  async save(createnoteDto: CreateNoteDto): Promise<Note> {
     const {
-      noteType,
+      type: noteType,
       title,
       description,
       noteDate,
       frequency,
-      animalId
+      petId
     } = createnoteDto;
 
-    const animal = await this.animalService.getAnimalById(animalId);
+    const pet = await this.petService.findById(petId);
 
     const note = new Note();
-    note.noteType = noteType.toLowerCase();
+    note.type = noteType.toLowerCase();
     note.title = title;
     note.description = description;
-    note.noteDate = noteDate;
+    note.triggerDate = noteDate;
     note.frequency = frequency;
-    note.animal = animal;
+    note.pet = pet;
 
     return this.noteRepository.create(note).save();
   }
 
-  async getNotes(animalId: string): Promise<Note[]> {
+  async findAll(id: string): Promise<Note[]> {
     return this.noteRepository
       .createQueryBuilder("note")
-      .leftJoinAndSelect("note.animal", "animal")
-      .andWhere("note.animal = :animalId", {
-        animalId: animalId
+      .leftJoinAndSelect("note.pet", "pet")
+      .andWhere("note.pet = :id", {
+        id: id
       })
       .getMany();
   }
 
-  async getNoteById(id: string): Promise<Note> {
+  async findById(id: string): Promise<Note> {
     const found = await this.noteRepository.findOne(id);
     if (!found) {
       throw new NotFoundException(`Note with id ${id} not found`);
@@ -54,7 +54,7 @@ export class NotesService {
     return found;
   }
 
-  async deleteNote(id: string): Promise<void> {
+  async deleteById(id: string): Promise<void> {
     await this.noteRepository.delete(id);
   }
 }

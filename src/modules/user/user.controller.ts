@@ -9,15 +9,15 @@ import {
   ParseUUIDPipe,
   Delete
 } from "@nestjs/common";
-import { UsersService } from "./users.service";
+import { UsersService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { User } from "./entity/user.entity";
+import { User } from "./user.entity";
 
 @ApiTags("Users")
 @Controller("users")
 export class UsersController {
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService) {}
 
   @ApiOperation({
     summary: "Returns all users registered in the database."
@@ -33,7 +33,10 @@ export class UsersController {
 
   @ApiOperation({ summary: "Returns the user who has the given id." })
   @ApiParam({ name: "id", description: "User id" })
-  @ApiResponse({ status: 200, description: "Returns the user who has the given id." })
+  @ApiResponse({
+    status: 200,
+    description: "Returns the user who has the given id."
+  })
   @Get(":id")
   getUserById(@Param("id", new ParseUUIDPipe()) id: string): Promise<User> {
     return this.usersService.getUserById(id);

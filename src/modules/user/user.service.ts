@@ -7,7 +7,7 @@ import {
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { User } from "./entity/user.entity";
+import { User } from "./user.entity";
 import { Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { JwtService } from "@nestjs/jwt";
@@ -19,7 +19,7 @@ export class UsersService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService
-  ) { }
+  ) {}
 
   async getUsers(): Promise<User[]> {
     return this.userRepository.createQueryBuilder("user").getMany();
@@ -28,9 +28,7 @@ export class UsersService {
   async getUserById(id: string): Promise<User> {
     const found = await this.userRepository.findOne(id);
     if (!found) {
-      throw new NotFoundException(
-        "User with id " + id + " was not found."
-      );
+      throw new NotFoundException("User with id " + id + " was not found.");
     }
     return found;
   }

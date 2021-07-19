@@ -14,15 +14,14 @@ import {
   ApiTags
 } from "@nestjs/swagger";
 import { CreateVaccineDto } from "./dto/create-vaccine.dto";
-import { Vaccine } from "./vaccine.entity";
-import { VaccinesService } from "./vaccines.service";
+import { VaccineService } from "./vaccine.service";
 
 @ApiTags("Vaccines")
 @ApiResponse({ status: 401, description: "Unauthorized" })
 @Controller("vaccines")
 @UseGuards(AuthGuard())
 export class VaccinesController {
-  constructor(private vaccinesService: VaccinesService) { }
+  constructor(private vaccinesService: VaccineService) {}
 
   // TODO: Add filter parameter
   @ApiOperation({ summary: "Returns vaccines available" })
@@ -32,8 +31,8 @@ export class VaccinesController {
   })
   @Get()
   @ApiBearerAuth("jwt")
-  getVaccines(): Promise<Vaccine[]> {
-    return this.vaccinesService.getVaccines();
+  getVaccines(): void {
+    // return this.vaccinesService.getVaccines();
   }
 
   @ApiOperation({ summary: "Registration of new vaccines in the database" })
@@ -42,7 +41,7 @@ export class VaccinesController {
   @ApiBearerAuth("jwt")
   createVaccine(
     @Body(ValidationPipe) createVaccineDto: CreateVaccineDto
-  ): Promise<Vaccine> {
-    return this.vaccinesService.createVaccine(createVaccineDto);
+  ): void {
+    // return this.vaccinesService.createVaccine(createVaccineDto);
   }
 }

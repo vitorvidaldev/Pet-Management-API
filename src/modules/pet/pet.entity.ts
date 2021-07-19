@@ -7,13 +7,13 @@ import {
   OneToMany,
   JoinColumn
 } from "typeorm";
-import { User } from "src/users/entity/user.entity";
-import { Vaccine } from "src/vaccines/vaccine.entity";
-import { Note } from "src/notes/notes.entity";
+import { Note } from "../note/note.entity";
+import { User } from "../user/user.entity";
+import { Vaccine } from "../vaccine/vaccine.entity";
 
-@Entity("animal")
-export class Animal extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_animal" })
+@Entity("pet")
+export class Pet extends BaseEntity {
+  @PrimaryGeneratedColumn("uuid", { name: "id" })
   id!: string;
 
   @Column({ name: "name" })
@@ -30,21 +30,21 @@ export class Animal extends BaseEntity {
 
   @ManyToOne(
     () => User,
-    user => user.animals,
+    user => user.pets,
     { onDelete: "CASCADE" }
   )
-  @JoinColumn({ name: "user_id_user" })
+  @JoinColumn({ name: "user_id" })
   user!: User;
 
   @OneToMany(
     () => Vaccine,
-    vaccine => vaccine.animal
+    vaccine => vaccine.pet
   )
   vaccines!: Vaccine[];
 
   @OneToMany(
     () => Note,
-    note => note.animal
+    note => note.pet
   )
   notes!: Note[];
 }

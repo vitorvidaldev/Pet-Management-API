@@ -9,10 +9,10 @@ import {
   ParseUUIDPipe,
   Delete
 } from "@nestjs/common";
-import { UsersService } from "./users.service";
+import { UsersService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { User } from "./entity/user.entity";
+import { User } from "./user.entity";
 
 @ApiTags("Users")
 @Controller("users")

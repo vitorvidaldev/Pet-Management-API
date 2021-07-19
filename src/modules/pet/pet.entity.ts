@@ -8,7 +8,7 @@ import {
   JoinColumn
 } from "typeorm";
 import { Note } from "../note/note.entity";
-import { User } from "../user/entity/user.entity";
+import { User } from "../user/user.entity";
 import { Vaccine } from "../vaccine/vaccine.entity";
 
 @Entity("pet")

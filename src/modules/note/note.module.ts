@@ -4,7 +4,7 @@ import { NoteService } from "./note.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Note } from "./note.entity";
 import { PetModule } from "../pet/pet.module";
-import { UsersModule } from "../user/users.module";
+import { UsersModule } from "../user/user.module";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Note]), PetModule, UsersModule],

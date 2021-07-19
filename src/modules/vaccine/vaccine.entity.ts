@@ -6,7 +6,7 @@ import {
   ManyToOne,
   JoinColumn
 } from "typeorm";
-import { Animal } from "src/animals/animal.entity";
+import { Pet } from "../pet/pet.entity";
 
 @Entity("vaccine")
 export class Vaccine extends BaseEntity {
@@ -26,10 +26,10 @@ export class Vaccine extends BaseEntity {
   monthsAfterBirth!: string;
 
   @ManyToOne(
-    () => Animal,
-    animal => animal.vaccines,
+    () => Pet,
+    pet => pet.vaccines,
     { onDelete: "CASCADE" }
   )
-  @JoinColumn({ name: "animal_id_animal" })
-  pet?: Animal;
+  @JoinColumn({ name: "pet_id" })
+  pet?: Pet;
 }

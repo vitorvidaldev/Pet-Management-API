@@ -14,7 +14,6 @@ import {
   ApiTags
 } from "@nestjs/swagger";
 import { CreateVaccineDto } from "./dto/create-vaccine.dto";
-import { Vaccine } from "./vaccine.entity";
 import { VaccineService } from "./vaccine.service";
 
 @ApiTags("Vaccines")
@@ -32,8 +31,8 @@ export class VaccinesController {
   })
   @Get()
   @ApiBearerAuth("jwt")
-  getVaccines(): Promise<Vaccine[]> {
-    return this.vaccinesService.getVaccines();
+  getVaccines(): void {
+    // return this.vaccinesService.getVaccines();
   }
 
   @ApiOperation({ summary: "Registration of new vaccines in the database" })
@@ -42,7 +41,7 @@ export class VaccinesController {
   @ApiBearerAuth("jwt")
   createVaccine(
     @Body(ValidationPipe) createVaccineDto: CreateVaccineDto
-  ): Promise<Vaccine> {
-    return this.vaccinesService.createVaccine(createVaccineDto);
+  ): void {
+    // return this.vaccinesService.createVaccine(createVaccineDto);
   }
 }

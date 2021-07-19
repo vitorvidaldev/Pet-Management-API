@@ -1,18 +1,18 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { typeOrmConfig } from "./config/typeorm.config";
-import { UsersModule } from "./users/users.module";
-import { AnimalsModule } from "./animals/animals.module";
-import { VaccinesModule } from "./vaccines/vaccines.module";
-import { NotesModule } from "./notes/notes.module";
+import { PetModule } from "./modules/pet/pet.module";
+import { NoteModule } from "./modules/note/note.module";
+import { UsersModule } from "./modules/user/user.module";
+import { VaccinesModule } from "./modules/vaccine/vaccine.module";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     UsersModule,
-    AnimalsModule,
+    PetModule,
     VaccinesModule,
-    NotesModule,
-  ],
+    NoteModule
+  ]
 })
 export class AppModule {}

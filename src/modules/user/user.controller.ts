@@ -31,11 +31,11 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
-  @ApiOperation({ summary: "Returns the user who has the given id." })
+  @ApiOperation({ summary: "Returns an user object" })
   @ApiParam({ name: "id", description: "User id" })
   @ApiResponse({
     status: 200,
-    description: "Returns the user who has the given id."
+    description: "Returns the user object who has the given id."
   })
   @Get(":id")
   getUserById(@Param("id", new ParseUUIDPipe()) id: string): Promise<User> {
@@ -43,10 +43,10 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: "Register a new user" })
-  @ApiResponse({ status: 201, description: "Register a new user" })
+  @ApiResponse({ status: 201, description: "The new user was created." })
   @ApiResponse({
     status: 400,
-    description: "The email or password sent is incorrect."
+    description: "The email or password sent was invalid."
   })
   @Post()
   @UsePipes(ValidationPipe)
@@ -56,7 +56,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
-  @ApiOperation({ summary: "Log in the user" })
+  @ApiOperation({ summary: "User login" })
   @ApiResponse({
     status: 201,
     description: "Returns the user's access token."
@@ -72,7 +72,7 @@ export class UsersController {
     return this.usersService.login(createUserDto);
   }
 
-  @ApiOperation({ summary: "Deleting a registered user." })
+  @ApiOperation({ summary: "Deletes a registered user." })
   @ApiParam({ name: "id", description: "User id" })
   @Delete(":id")
   deleteUser(@Param("id", new ParseUUIDPipe()) id: string): Promise<void> {

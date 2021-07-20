@@ -13,7 +13,7 @@ import { Pet } from "src/modules/pet/pet.entity";
 @Entity("User")
 @Unique(["email"])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_user" })
+  @PrimaryGeneratedColumn("uuid", { name: "id" })
   id: string;
 
   @Column()
@@ -25,14 +25,14 @@ export class User extends BaseEntity {
   @Column({ name: "signature" })
   signature: string;
 
+  @Column({ type: "bool", name: "isActive", default: true })
+  isActive: boolean;
+
   @CreateDateColumn({
     type: "timestamp",
-    name: "create_date"
+    name: "creation_date"
   })
-  createDate: string;
-
-  @Column({ type: "bool", name: "active", default: true })
-  active: boolean;
+  creationDate: string;
 
   @OneToMany(
     () => Pet,

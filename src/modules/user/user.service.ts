@@ -14,7 +14,7 @@ import { JwtService } from "@nestjs/jwt";
 import { JwtPayload } from "./jwt-payload.interface";
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
@@ -28,20 +28,20 @@ export class UsersService {
   async getUserById(id: string): Promise<User> {
     const found = await this.userRepository.findOne(id);
     if (!found) {
-      throw new NotFoundException("User with id " + id + " was not found.");
+      throw new NotFoundException(`User with id ${id} was not found.`);
     }
     return found;
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<Partial<User>> {
-    const { email, password } = createUserDto;
+  async createUser(userDto: CreateUserDto): Promise<Partial<User>> {
+    const { email, password } = userDto;
 
     const user = new User();
     user.email = email;
     user.signature = await bcrypt.genSalt();
     user.password = await bcrypt.hash(password, user.signature);
-    let result;
 
+    let result: User;
     try {
       result = await this.userRepository.create(user).save();
     } catch (error) {
@@ -53,9 +53,9 @@ export class UsersService {
   }
 
   async login(
-    loginUserDto: CreateUserDto
+    userDto: CreateUserDto
   ): Promise<{ accessToken: string; user: User }> {
-    const user = await this.validateUserPassword(loginUserDto);
+    const user = await this.validateUserPassword(userDto);
 
     if (!user.email) {
       throw new UnauthorizedException(

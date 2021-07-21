@@ -9,16 +9,17 @@ import {
   ParseUUIDPipe,
   Delete
 } from "@nestjs/common";
-import { UsersService } from "./user.service";
+import { UserService } from "./user.service";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { User } from "./user.entity";
 
 @ApiTags("Users")
 @Controller("users")
-export class UsersController {
-  constructor(private usersService: UsersService) {}
+export class UserController {
+  constructor(private usersService: UserService) {}
 
+  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({
     summary: "Returns all users registered in the database."
   })
@@ -31,6 +32,7 @@ export class UsersController {
     return this.usersService.getUsers();
   }
 
+  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: "Returns an user object" })
   @ApiParam({ name: "id", description: "User id" })
   @ApiResponse({
@@ -42,6 +44,7 @@ export class UsersController {
     return this.usersService.getUserById(id);
   }
 
+  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: "Register a new user" })
   @ApiResponse({ status: 201, description: "The new user was created." })
   @ApiResponse({
@@ -56,6 +59,7 @@ export class UsersController {
     return this.usersService.createUser(createUserDto);
   }
 
+  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: "User login" })
   @ApiResponse({
     status: 201,

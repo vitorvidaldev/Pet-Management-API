@@ -3,14 +3,14 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { CreatePetDto } from "./dto/create-pet.dto";
 import { Pet } from "./pet.entity";
 import { Repository } from "typeorm";
-import { UsersService } from "../user/user.service";
+import { UserService } from "../user/user.service";
 
 @Injectable()
 export class PetService {
   constructor(
     @InjectRepository(Pet)
     private petRepository: Repository<Pet>,
-    private userService: UsersService
+    private userService: UserService
   ) {}
 
   async save(createPetDto: CreatePetDto): Promise<Pet> {

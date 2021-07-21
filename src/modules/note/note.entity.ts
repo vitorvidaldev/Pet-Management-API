@@ -5,38 +5,38 @@ import {
   Column,
   ManyToOne,
   CreateDateColumn,
-  JoinColumn
-} from "typeorm";
-import { Pet } from "../pet/pet.entity";
+  JoinColumn,
+} from 'typeorm';
+import { Pet } from '../pet/pet.entity';
 
-@Entity("note")
+@Entity('note')
 export class Note extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id" })
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id!: string;
 
-  @Column({ name: "type" })
+  @Column({ name: 'type' })
   type!: string;
 
-  @Column({ name: "title" })
+  @Column({ name: 'title' })
   title!: string;
 
-  @Column({ name: "description" })
+  @Column({ name: 'description' })
   description!: string;
 
-  @CreateDateColumn({ name: "creation_date" })
+  @CreateDateColumn({ name: 'creation_date' })
   creationDate!: string;
 
-  @Column({ name: "trigger_date" })
+  @Column({ name: 'trigger_date' })
   triggerDate!: Date;
 
-  @Column({ name: "frequency" })
+  @Column({ name: 'frequency' })
   frequency!: string;
 
   @ManyToOne(
     () => Pet,
     pet => pet.notes,
-    { onDelete: "CASCADE" }
+    { onDelete: 'CASCADE' },
   )
-  @JoinColumn({ name: "pet_id" })
+  @JoinColumn({ name: 'pet_id' })
   pet!: Pet;
 }

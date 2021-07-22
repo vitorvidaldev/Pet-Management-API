@@ -15,7 +15,7 @@ import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
 
 @ApiTags('User')
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private usersService: UserService) {}
 
@@ -79,7 +79,7 @@ export class UserController {
   @ApiOperation({ summary: 'Deletes a registered user.' })
   @ApiParam({ name: 'id', description: 'User id' })
   @Delete(':id')
-  delete(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
-    return this.usersService.delete(id);
+  deleteById(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
+    return this.usersService.deleteById(id);
   }
 }

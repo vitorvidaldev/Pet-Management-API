@@ -12,4 +12,4 @@ import { UserModule } from '../user/user.module';
   providers: [VaccineService],
   exports: [VaccineService],
 })
-export class VaccinesModule {}
+export class VaccineModule {}

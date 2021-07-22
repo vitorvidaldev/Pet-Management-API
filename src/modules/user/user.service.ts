@@ -80,7 +80,7 @@ export class UserService {
     throw new PreconditionFailedException();
   }
 
-  async delete(id: string): Promise<void> {
+  async deleteById(id: string): Promise<void> {
     await this.userRepository.delete(id);
   }
 }

@@ -12,25 +12,30 @@ import { Pet } from '../pet/pet.entity';
 @Entity('note')
 export class Note extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
-  id!: string;
+  id: string;
 
   @Column({ name: 'type' })
-  type!: string;
+  type: string;
 
   @Column({ name: 'title' })
-  title!: string;
+  title: string;
 
   @Column({ name: 'description' })
-  description!: string;
+  description: string;
 
-  @CreateDateColumn({ name: 'creation_date' })
-  creationDate!: string;
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'creation_date',
+  })
+  creationDate: string;
 
+  // TODO: Add "moment" package
   @Column({ name: 'trigger_date' })
-  triggerDate!: Date;
+  triggerDate: Date;
 
+  // TODO: Define enum
   @Column({ name: 'frequency' })
-  frequency!: string;
+  frequency: string;
 
   @ManyToOne(
     () => Pet,
@@ -38,5 +43,5 @@ export class Note extends BaseEntity {
     { onDelete: 'CASCADE' },
   )
   @JoinColumn({ name: 'pet_id' })
-  pet!: Pet;
+  pet: Pet;
 }

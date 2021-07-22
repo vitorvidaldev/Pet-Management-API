@@ -18,7 +18,7 @@ import { VaccineService } from './vaccine.service';
 
 @ApiTags('Vaccine')
 @ApiResponse({ status: 401, description: 'Unauthorized' })
-@Controller('vaccines')
+@Controller('vaccine')
 @UseGuards(AuthGuard())
 export class VaccinesController {
   constructor(private vaccinesService: VaccineService) {}
@@ -39,9 +39,7 @@ export class VaccinesController {
   @ApiResponse({ status: 201, description: 'Vaccine successfully registered.' })
   @Post()
   @ApiBearerAuth('jwt')
-  createVaccine(
-    @Body(ValidationPipe) createVaccineDto: CreateVaccineDto,
-  ): void {
+  createVaccine(@Body(ValidationPipe) vaccineDto: CreateVaccineDto): void {
     // return this.vaccinesService.createVaccine(createVaccineDto);
   }
 }

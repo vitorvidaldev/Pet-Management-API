@@ -6,12 +6,12 @@ export class CreateNoteDto {
   @ApiProperty({ description: 'Type', example: 'Type' })
   @IsString()
   @IsNotEmpty()
-  type!: string;
+  type: string;
 
   @ApiProperty({ description: 'Title', example: 'Title' })
   @IsString()
   @IsNotEmpty()
-  title!: string;
+  title: string;
 
   @ApiProperty({
     description: 'Description',
@@ -19,12 +19,12 @@ export class CreateNoteDto {
   })
   @IsString()
   @IsNotEmpty()
-  description!: string;
+  description: string;
 
   @ApiProperty({ description: 'Trigger date', example: '02/10/2020' })
   @IsString()
   @IsNotEmpty()
-  noteDate!: Date;
+  noteDate: Date;
 
   @ApiProperty({ description: 'Frequency', example: 'Daily' })
   @IsString()
@@ -35,11 +35,11 @@ export class CreateNoteDto {
     NoteFrequency.MONTH,
     NoteFrequency.NONE,
   ])
-  frequency!: string;
+  frequency: string;
 
   @ApiProperty({ description: 'id', example: 'id' })
   @IsString()
   @IsNotEmpty()
   @IsUUID()
-  petId!: string;
+  petId: string;
 }

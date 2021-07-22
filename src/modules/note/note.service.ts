@@ -13,7 +13,7 @@ export class NoteService {
     private petService: PetService,
   ) {}
 
-  async save(createnoteDto: CreateNoteDto): Promise<Note> {
+  async save(noteDto: CreateNoteDto): Promise<Note> {
     const {
       type: noteType,
       title,
@@ -21,7 +21,7 @@ export class NoteService {
       noteDate,
       frequency,
       petId,
-    } = createnoteDto;
+    } = noteDto;
 
     const pet = await this.petService.findById(petId);
 

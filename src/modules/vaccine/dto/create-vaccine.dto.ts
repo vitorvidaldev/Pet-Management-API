@@ -5,7 +5,7 @@ export class CreateVaccineDto {
   @ApiProperty({ description: 'Vaccine name', example: 'vaccine name' })
   @IsString()
   @IsNotEmpty()
-  name!: string;
+  name: string;
 
   @ApiProperty({
     description: 'animal species',
@@ -13,17 +13,17 @@ export class CreateVaccineDto {
   })
   @IsString()
   @IsNotEmpty()
-  species!: string;
+  species: string;
 
   @ApiProperty({ description: 'animal breed', example: 'animal breed' })
   @IsString()
   @IsNotEmpty()
-  breed!: string;
+  breed: string;
 
   @ApiProperty({
     description: 'Months after birth',
     example: 'Months after birth',
   })
   @IsNotEmpty()
-  monthsAfterBirth!: string;
+  monthsAfterBirth: string;
 }

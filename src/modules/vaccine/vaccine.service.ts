@@ -8,18 +8,18 @@ import { Vaccine } from './vaccine.entity';
 export class VaccineService {
   constructor(
     @InjectRepository(Vaccine)
-    private repository: Repository<Vaccine>,
+    private vaccineRepository: Repository<Vaccine>,
   ) {}
 
   // TODO: Add filter to the request
   async findAll(): Promise<Vaccine[]> {
-    const query = this.repository.createQueryBuilder('vaccine');
+    const query = this.vaccineRepository.createQueryBuilder('vaccine');
 
     return query.getMany();
   }
 
   async save(dto: CreateVaccineDto): Promise<Vaccine> {
-    return this.repository
+    return this.vaccineRepository
       .create({
         name: dto.name,
         species: dto.species,

@@ -7,75 +7,79 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Delete
-} from "@nestjs/common";
-import { UsersService } from "./user.service";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { User } from "./user.entity";
+  Delete,
+} from '@nestjs/common';
+import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { User } from './user.entity';
 
-@ApiTags("Users")
-@Controller("users")
-export class UsersController {
-  constructor(private usersService: UsersService) {}
+@ApiTags('User')
+@Controller('user')
+export class UserController {
+  constructor(private usersService: UserService) {}
 
+  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({
-    summary: "Returns all users registered in the database."
+    summary: 'Returns all users registered in the database.',
   })
   @ApiResponse({
     status: 200,
-    description: "Returns all users registered in the database"
+    description: 'Returns all users registered in the database',
   })
   @Get()
-  getUsers(): Promise<User[]> {
-    return this.usersService.getUsers();
+  findAll(): Promise<User[]> {
+    return this.usersService.findAll();
   }
 
-  @ApiOperation({ summary: "Returns the user who has the given id." })
-  @ApiParam({ name: "id", description: "User id" })
+  // TODO: Change return object. It currently returns password and signature.
+  @ApiOperation({ summary: 'Returns an user object' })
+  @ApiParam({ name: 'id', description: 'User id' })
   @ApiResponse({
     status: 200,
-    description: "Returns the user who has the given id."
+    description: 'Returns the user object who has the given id.',
   })
-  @Get(":id")
-  getUserById(@Param("id", new ParseUUIDPipe()) id: string): Promise<User> {
-    return this.usersService.getUserById(id);
+  @Get(':id')
+  findById(@Param('id', new ParseUUIDPipe()) id: string): Promise<User> {
+    return this.usersService.findById(id);
   }
 
-  @ApiOperation({ summary: "Register a new user" })
-  @ApiResponse({ status: 201, description: "Register a new user" })
+  // TODO: Change return object. It currently returns password and signature.
+  @ApiOperation({ summary: 'Register a new user' })
+  @ApiResponse({ status: 201, description: 'The new user was created.' })
   @ApiResponse({
     status: 400,
-    description: "The email or password sent is incorrect."
+    description: 'The email or password sent was invalid.',
   })
   @Post()
   @UsePipes(ValidationPipe)
-  createUser(
-    @Body(ValidationPipe) createUserDto: CreateUserDto
+  save(
+    @Body(ValidationPipe) createUserDto: CreateUserDto,
   ): Promise<Partial<User>> {
-    return this.usersService.createUser(createUserDto);
+    return this.usersService.save(createUserDto);
   }
 
-  @ApiOperation({ summary: "Log in the user" })
+  // TODO: Change return object. It currently returns password and signature.
+  @ApiOperation({ summary: 'User login' })
   @ApiResponse({
     status: 201,
-    description: "Returns the user's access token."
+    description: "Returns the user's access token.",
   })
   @ApiResponse({
     status: 401,
-    description: "The email or password sent is incorrect."
+    description: 'The email or password sent is incorrect.',
   })
-  @Post("login")
+  @Post('login')
   login(
-    @Body(ValidationPipe) createUserDto: CreateUserDto
+    @Body(ValidationPipe) createUserDto: CreateUserDto,
   ): Promise<{ accessToken: string }> {
     return this.usersService.login(createUserDto);
   }
 
-  @ApiOperation({ summary: "Deleting a registered user." })
-  @ApiParam({ name: "id", description: "User id" })
-  @Delete(":id")
-  deleteUser(@Param("id", new ParseUUIDPipe()) id: string): Promise<void> {
-    return this.usersService.deleteUser(id);
+  @ApiOperation({ summary: 'Deletes a registered user.' })
+  @ApiParam({ name: 'id', description: 'User id' })
+  @Delete(':id')
+  deleteById(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
+    return this.usersService.deleteById(id);
   }
 }

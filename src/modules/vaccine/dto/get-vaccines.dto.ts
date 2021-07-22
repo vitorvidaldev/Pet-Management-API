@@ -1,16 +1,16 @@
-import { ApiPropertyOptional } from "@nestjs/swagger";
-import { IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class GetVaccinesDto {
-  @ApiPropertyOptional({ description: "animal species" })
+  @ApiPropertyOptional({ description: 'Pet species' })
   @IsString()
   @IsOptional()
   @IsNotEmpty()
-  species!: string;
+  species: string;
 
-  @ApiPropertyOptional({ description: "animal breed" })
+  @ApiPropertyOptional({ description: 'Pet breed' })
   @IsString()
   @IsOptional()
   @IsNotEmpty()
-  breed!: string;
+  breed: string;
 }

@@ -1,27 +1,27 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { CreateNoteDto } from "./dto/create-note.dto";
-import { Note } from "./note.entity";
-import { Repository } from "typeorm";
-import { PetService } from "../pet/pet.service";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateNoteDto } from './dto/create-note.dto';
+import { Note } from './note.entity';
+import { Repository } from 'typeorm';
+import { PetService } from '../pet/pet.service';
 
 @Injectable()
 export class NoteService {
   constructor(
     @InjectRepository(Note)
     private noteRepository: Repository<Note>,
-    private petService: PetService
+    private petService: PetService,
   ) {}
 
-  async save(createnoteDto: CreateNoteDto): Promise<Note> {
+  async save(noteDto: CreateNoteDto): Promise<Note> {
     const {
       type: noteType,
       title,
       description,
       noteDate,
       frequency,
-      petId
-    } = createnoteDto;
+      petId,
+    } = noteDto;
 
     const pet = await this.petService.findById(petId);
 
@@ -38,10 +38,10 @@ export class NoteService {
 
   async findAll(id: string): Promise<Note[]> {
     return this.noteRepository
-      .createQueryBuilder("note")
-      .leftJoinAndSelect("note.pet", "pet")
-      .andWhere("note.pet = :id", {
-        id: id
+      .createQueryBuilder('note')
+      .leftJoinAndSelect('note.pet', 'pet')
+      .andWhere('note.pet = :id', {
+        id: id,
       })
       .getMany();
   }

@@ -5,46 +5,53 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinColumn
-} from "typeorm";
-import { Note } from "../note/note.entity";
-import { User } from "../user/user.entity";
-import { Vaccine } from "../vaccine/vaccine.entity";
+  JoinColumn,
+  CreateDateColumn,
+} from 'typeorm';
+import { Note } from '../note/note.entity';
+import { User } from '../user/user.entity';
+import { Vaccine } from '../vaccine/vaccine.entity';
 
-@Entity("pet")
+@Entity('pet')
 export class Pet extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id" })
-  id!: string;
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
+  id: string;
 
-  @Column({ name: "name" })
-  name!: string;
+  @Column({ name: 'name' })
+  name: string;
 
-  @Column({ name: "birthdate", type: "timestamp" })
-  birthDate!: string;
+  @Column({ name: 'birthdate', type: 'timestamp' })
+  birthDate: string;
 
-  @Column({ name: "species" })
-  species!: string;
+  @Column({ name: 'species' })
+  species: string;
 
-  @Column({ name: "breed" })
-  breed!: string;
+  @Column({ name: 'breed' })
+  breed: string;
+
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'creation_date',
+  })
+  creationDate: string;
 
   @ManyToOne(
     () => User,
     user => user.pets,
-    { onDelete: "CASCADE" }
+    { onDelete: 'CASCADE' },
   )
-  @JoinColumn({ name: "user_id" })
-  user!: User;
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @OneToMany(
     () => Vaccine,
-    vaccine => vaccine.pet
+    vaccine => vaccine.pet,
   )
-  vaccines!: Vaccine[];
+  vaccines: Vaccine[];
 
   @OneToMany(
     () => Note,
-    note => note.pet
+    note => note.pet,
   )
-  notes!: Note[];
+  notes: Note[];
 }

@@ -5,38 +5,38 @@ import {
   Column,
   OneToMany,
   Unique,
-  CreateDateColumn
-} from "typeorm";
-import * as bcrypt from "bcrypt";
-import { Pet } from "src/modules/pet/pet.entity";
+  CreateDateColumn,
+} from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { Pet } from 'src/modules/pet/pet.entity';
 
-@Entity("User")
-@Unique(["email"])
+@Entity('user')
+@Unique(['email'])
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid", { name: "id_user" })
+  @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 
   @Column()
   email: string;
 
-  @Column({ name: "password", length: 200 })
+  @Column({ name: 'password', length: 200 })
   password: string;
 
-  @Column({ name: "signature" })
+  @Column({ name: 'signature' })
   signature: string;
 
-  @CreateDateColumn({
-    type: "timestamp",
-    name: "create_date"
-  })
-  createDate: string;
+  @Column({ type: 'bool', name: 'isActive', default: true })
+  isActive: boolean;
 
-  @Column({ type: "bool", name: "active", default: true })
-  active: boolean;
+  @CreateDateColumn({
+    type: 'timestamp',
+    name: 'creation_date',
+  })
+  creationDate: string;
 
   @OneToMany(
     () => Pet,
-    pet => pet.user
+    pet => pet.user,
   )
   pets: Pet[];
 

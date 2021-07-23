@@ -52,9 +52,7 @@ export class UserService {
     return result;
   }
 
-  async login(
-    userDto: CreateUserDto,
-  ): Promise<{ accessToken: string; user: User }> {
+  async login(userDto: CreateUserDto): Promise<string> {
     const user = await this.validateUserPassword(userDto);
 
     if (!user.email) {
@@ -66,7 +64,7 @@ export class UserService {
     const payload: JwtPayload = { email: user.email };
     const accessToken = this.jwtService.sign(payload);
 
-    return { accessToken, user };
+    return accessToken;
   }
 
   async validateUserPassword(userCredentialsDto: CreateUserDto): Promise<User> {

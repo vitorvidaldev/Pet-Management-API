@@ -70,9 +70,7 @@ export class UserController {
     description: 'The email or password sent is incorrect.',
   })
   @Post('login')
-  login(
-    @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<{ accessToken: string }> {
+  login(@Body(ValidationPipe) createUserDto: CreateUserDto): Promise<string> {
     return this.usersService.login(createUserDto);
   }
 

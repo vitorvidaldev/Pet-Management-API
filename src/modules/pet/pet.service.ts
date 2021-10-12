@@ -21,8 +21,8 @@ export class PetService {
     pet.birthDate = birthDate;
     pet.species = species.toLowerCase();
     pet.breed = breed.toLowerCase();
-    pet.user = await this.userService.findById(petDto.userId);
-
+    const userDto = await this.userService.findById(petDto.userId);
+    pet.user = userDto.toUser();
     return this.petRepository.create(pet).save();
   }
 

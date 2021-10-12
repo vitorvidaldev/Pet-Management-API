@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Pet } from 'src/modules/pet/pet.entity';
+import { UserDTO } from './dto/user.dto';
 
 @Entity('user')
 @Unique(['email'])
@@ -44,4 +45,14 @@ export class User extends BaseEntity {
     const hash = await bcrypt.hash(password, this.signature);
     return hash === this.password;
   }
+
+  toUserDTO() {
+    let userDTO = new UserDTO();
+    userDTO.id = this.id;
+    userDTO.email = this.email;
+    userDTO.isActive = this.isActive;
+    userDTO.creationDate = this.creationDate;
+    userDTO.pets = this.pets;
+    return userDTO;
+}
 }

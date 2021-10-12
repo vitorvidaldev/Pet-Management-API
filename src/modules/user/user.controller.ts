@@ -13,13 +13,13 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { User } from './user.entity';
+import { UserDTO } from './dto/user.dto';
 
 @ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(private usersService: UserService) {}
 
-  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({
     summary: 'Returns all users registered in the database.',
   })
@@ -28,11 +28,10 @@ export class UserController {
     description: 'Returns all users registered in the database',
   })
   @Get()
-  findAll(): Promise<User[]> {
+  findAll(): Promise<UserDTO[]> {
     return this.usersService.findAll();
   }
 
-  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: 'Returns an user object' })
   @ApiParam({ name: 'id', description: 'User id' })
   @ApiResponse({
@@ -40,11 +39,10 @@ export class UserController {
     description: 'Returns the user object who has the given id.',
   })
   @Get(':id')
-  findById(@Param('id', new ParseUUIDPipe()) id: string): Promise<User> {
+  findById(@Param('id', new ParseUUIDPipe()) id: string): Promise<UserDTO> {
     return this.usersService.findById(id);
   }
 
-  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: 'Register a new user' })
   @ApiResponse({ status: 201, description: 'The new user was created.' })
   @ApiResponse({
@@ -55,11 +53,10 @@ export class UserController {
   @UsePipes(ValidationPipe)
   save(
     @Body(ValidationPipe) createUserDto: CreateUserDto,
-  ): Promise<Partial<User>> {
+  ): Promise<Partial<UserDTO>> {
     return this.usersService.save(createUserDto);
   }
 
-  // TODO: Change return object. It currently returns password and signature.
   @ApiOperation({ summary: 'User login' })
   @ApiResponse({
     status: 201,

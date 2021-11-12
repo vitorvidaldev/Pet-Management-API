@@ -25,11 +25,7 @@ export class Vaccine extends BaseEntity {
   @Column({ name: 'months_after_birth' })
   monthsAfterBirth: string;
 
-  @ManyToOne(
-    () => Pet,
-    pet => pet.vaccines,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne(() => Pet, (pet) => pet.vaccines, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'pet_id' })
   pet: Pet;
 }

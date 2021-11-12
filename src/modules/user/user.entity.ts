@@ -35,10 +35,7 @@ export class User extends BaseEntity {
   })
   creationDate: string;
 
-  @OneToMany(
-    () => Pet,
-    pet => pet.user,
-  )
+  @OneToMany(() => Pet, (pet) => pet.user)
   pets: Pet[];
 
   async validatePassword(password: string): Promise<boolean> {
@@ -47,12 +44,12 @@ export class User extends BaseEntity {
   }
 
   toUserDTO() {
-    let userDTO = new UserDTO();
+    const userDTO = new UserDTO();
     userDTO.id = this.id;
     userDTO.email = this.email;
     userDTO.isActive = this.isActive;
     userDTO.creationDate = this.creationDate;
     userDTO.pets = this.pets;
     return userDTO;
-}
+  }
 }

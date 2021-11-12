@@ -24,8 +24,8 @@ export class UserService {
 
   async findAll(): Promise<UserDTO[]> {
     const users = this.userRepository.createQueryBuilder('user').getMany();
-    let response: UserDTO[] = [];
-    for (let user of await users) {
+    const response: UserDTO[] = [];
+    for (const user of await users) {
       response.push(user.toUserDTO());
     }
     return response;

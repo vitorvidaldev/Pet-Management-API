@@ -35,23 +35,13 @@ export class Pet extends BaseEntity {
   })
   creationDate: string;
 
-  @ManyToOne(
-    () => User,
-    user => user.pets,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne(() => User, (user) => user.pets, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @OneToMany(
-    () => Vaccine,
-    vaccine => vaccine.pet,
-  )
+  @OneToMany(() => Vaccine, (vaccine) => vaccine.pet)
   vaccines: Vaccine[];
 
-  @OneToMany(
-    () => Note,
-    note => note.pet,
-  )
+  @OneToMany(() => Note, (note) => note.pet)
   notes: Note[];
 }

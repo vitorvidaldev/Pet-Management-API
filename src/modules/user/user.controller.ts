@@ -12,7 +12,6 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { User } from './user.entity';
 import { UserDTO } from './dto/user.dto';
 
 @ApiTags('User')
@@ -20,9 +19,7 @@ import { UserDTO } from './dto/user.dto';
 export class UserController {
   constructor(private usersService: UserService) {}
 
-  @ApiOperation({
-    summary: 'Returns all users registered in the database.',
-  })
+  @ApiOperation({ summary: 'Returns all users registered in the database.' })
   @ApiResponse({
     status: 200,
     description: 'Returns all users registered in the database',
@@ -49,6 +46,10 @@ export class UserController {
     status: 400,
     description: 'The email or password sent was invalid.',
   })
+  @ApiResponse({
+    status: 409,
+    description: 'A user with this email already exists.',
+  })
   @Post()
   @UsePipes(ValidationPipe)
   save(
@@ -58,10 +59,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: 'User login' })
-  @ApiResponse({
-    status: 201,
-    description: "Returns the user's access token.",
-  })
+  @ApiResponse({ status: 201, description: "Returns the user's access token." })
   @ApiResponse({
     status: 401,
     description: 'The email or password sent is incorrect.',
@@ -73,6 +71,7 @@ export class UserController {
 
   @ApiOperation({ summary: 'Deletes a registered user.' })
   @ApiParam({ name: 'id', description: 'User id' })
+  @ApiResponse({ status: 200, description: 'The user was deleted.' })
   @Delete(':id')
   deleteById(@Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
     return this.usersService.deleteById(id);

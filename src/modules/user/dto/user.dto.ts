@@ -9,15 +9,15 @@ export class UserDTO {
 
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email: string; // TODO: Encrypt email
 
   @IsBoolean()
   @IsNotEmpty()
-  isActive: boolean;
+  isActive: boolean; // TODO: Vefify if user is active
 
   @IsString()
   @IsNotEmpty()
-  creationDate: string;
+  creationDate: string; // TODO: Filter by creation date
 
   @IsNotEmpty()
   pets: Pet[];

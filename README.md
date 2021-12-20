@@ -3,10 +3,14 @@
 An pet management API, developed with:
 
 - Typescript
-- PostgreSQL
 - NodeJs
 - NestJs
+- PostgreSQL
 - Docker
+
+## Data Model
+
+![Data Model](./docs/data-model.drawio.png)
 
 ## Environment Configuration
 

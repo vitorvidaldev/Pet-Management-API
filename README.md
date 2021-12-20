@@ -10,7 +10,7 @@ An pet management API, developed with:
 
 ## Data Model
 
-![Data Model](./docs/data-model.drawio.png)
+![Data Model](docs/data-model.png)
 
 ## Environment Configuration
 

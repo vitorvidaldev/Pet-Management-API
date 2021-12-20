@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Pet } from 'src/modules/pet/pet.entity';
+import { UserDTO } from './dto/user.dto';
 
 @Entity('user')
 @Unique(['email'])
@@ -16,7 +17,7 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid', { name: 'id' })
   id: string;
 
-  @Column()
+  @Column({ name: 'email' })
   email: string;
 
   @Column({ name: 'password', length: 200 })
@@ -34,14 +35,21 @@ export class User extends BaseEntity {
   })
   creationDate: string;
 
-  @OneToMany(
-    () => Pet,
-    pet => pet.user,
-  )
+  @OneToMany(() => Pet, (pet) => pet.user)
   pets: Pet[];
 
   async validatePassword(password: string): Promise<boolean> {
     const hash = await bcrypt.hash(password, this.signature);
     return hash === this.password;
+  }
+
+  toUserDTO() {
+    const userDTO = new UserDTO();
+    userDTO.id = this.id;
+    userDTO.email = this.email;
+    userDTO.isActive = this.isActive;
+    userDTO.creationDate = this.creationDate;
+    userDTO.pets = this.pets;
+    return userDTO;
   }
 }

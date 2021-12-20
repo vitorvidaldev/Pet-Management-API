@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './jwt-payload.interface';
+import { UserDTO } from './dto/user.dto';
 
 @Injectable()
 export class UserService {
@@ -21,19 +22,24 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
-  async findAll(): Promise<User[]> {
-    return this.userRepository.createQueryBuilder('user').getMany();
+  async findAll(): Promise<UserDTO[]> {
+    const users = this.userRepository.createQueryBuilder('user').getMany();
+    const response: UserDTO[] = [];
+    for (const user of await users) {
+      response.push(user.toUserDTO());
+    }
+    return response;
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: string): Promise<UserDTO> {
     const found = await this.userRepository.findOne(id);
     if (!found) {
       throw new NotFoundException(`User with id ${id} was not found.`);
     }
-    return found;
+    return found.toUserDTO();
   }
 
-  async save(userDto: CreateUserDto): Promise<Partial<User>> {
+  async save(userDto: CreateUserDto): Promise<Partial<UserDTO>> {
     const { email, password } = userDto;
 
     const user = new User();
@@ -49,7 +55,7 @@ export class UserService {
         `A user is already registered with the email ${email}`,
       );
     }
-    return result;
+    return result.toUserDTO();
   }
 
   async login(userDto: CreateUserDto): Promise<string> {

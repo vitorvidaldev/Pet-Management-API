@@ -37,11 +37,7 @@ export class Note extends BaseEntity {
   @Column({ name: 'frequency' })
   frequency: string;
 
-  @ManyToOne(
-    () => Pet,
-    pet => pet.notes,
-    { onDelete: 'CASCADE' },
-  )
+  @ManyToOne(() => Pet, (pet) => pet.notes, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'pet_id' })
   pet: Pet;
 }

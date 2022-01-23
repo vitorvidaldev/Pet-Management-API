@@ -8,7 +8,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Pet } from 'src/modules/pet/pet.entity';
+import { Pet } from 'src_old/modules/pet/pet.entity';
 import { UserDTO } from './dto/user.dto';
 
 @Entity('user')

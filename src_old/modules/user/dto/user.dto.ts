@@ -1,5 +1,5 @@
 import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
-import { Pet } from 'src/modules/pet/pet.entity';
+import { Pet } from 'src_old/modules/pet/pet.entity';
 import { User } from '../user.entity';
 
 export class UserDTO {

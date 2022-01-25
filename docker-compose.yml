@@ -1,16 +1,18 @@
 version: '3.9'
 services:
-  postgres:
-    image: postgres:13-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: pet
+  cassandra:
+    image: cassandra:4.0
     ports:
-      - '5432:5432'
+      - "9042:9042"
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=petmanagementapi
+    networks:
+      - cassandra
 
 volumes:
   db:
+
+networks:
+  cassandra:

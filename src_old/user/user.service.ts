@@ -22,23 +22,6 @@ export class UserService {
     private jwtService: JwtService,
   ) {}
 
-  async findAll(): Promise<UserDTO[]> {
-    const users = this.userRepository.createQueryBuilder('user').getMany();
-    const response: UserDTO[] = [];
-    for (const user of await users) {
-      response.push(user.toUserDTO());
-    }
-    return response;
-  }
-
-  async findById(id: string): Promise<UserDTO> {
-    const found = await this.userRepository.findOne(id);
-    if (!found) {
-      throw new NotFoundException(`User with id ${id} was not found.`);
-    }
-    return found.toUserDTO();
-  }
-
   async save(userDto: CreateUserDto): Promise<Partial<UserDTO>> {
     const { email, password } = userDto;
 

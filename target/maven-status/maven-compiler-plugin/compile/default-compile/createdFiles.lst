@@ -1,0 +1,15 @@
+dev/vitorvidal/petmanagementapi/config/CassandraConfig.class
+dev/vitorvidal/petmanagementapi/application/service/NoteService.class
+dev/vitorvidal/petmanagementapi/application/repository/NoteRepository.class
+dev/vitorvidal/petmanagementapi/application/controller/UserController.class
+dev/vitorvidal/petmanagementapi/application/controller/PetController.class
+dev/vitorvidal/petmanagementapi/model/user/UserDTO.class
+dev/vitorvidal/petmanagementapi/PetManagementApiApplication.class
+dev/vitorvidal/petmanagementapi/application/service/UserService.class
+dev/vitorvidal/petmanagementapi/application/repository/UserRepository.class
+dev/vitorvidal/petmanagementapi/application/controller/NoteController.class
+dev/vitorvidal/petmanagementapi/model/user/CreateUserDTO.class
+dev/vitorvidal/petmanagementapi/model/user/UserEntity.class
+dev/vitorvidal/petmanagementapi/config/HttpConfig.class
+dev/vitorvidal/petmanagementapi/application/repository/PetRepository.class
+dev/vitorvidal/petmanagementapi/application/service/PetService.class

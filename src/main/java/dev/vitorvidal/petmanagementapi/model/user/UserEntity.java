@@ -1,5 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.user;
 
+import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
@@ -8,8 +9,11 @@ public class UserEntity {
 
     @PrimaryKey
     private String id;
+    @Column
     private String username;
+    @Column
     private String email;
+    @Column
     private String password;
 
     public UserEntity(String username, String email, String password) {

@@ -4,14 +4,15 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.util.Objects;
 
-@Table
+// TODO automatically create tables based on class instances
+@Table(value = "user")
 public class UserEntity {
 
     @PrimaryKey
     private String id; // TODO initialize id
+    // TODO change ids to UUIDs
     @Column
     private String username;
     @Column

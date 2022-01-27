@@ -48,14 +48,28 @@ public class UserService {
     }
 
     public UserDTO signup(CreateUserDTO createUserDTO) {
-        return null;
+        UserEntity userEntity = userRepository.save(new UserEntity(
+                createUserDTO.username(),
+                createUserDTO.email(),
+                createUserDTO.password()
+        ));
+
+        return new UserDTO(
+                userEntity.getId(),
+                userEntity.getEmail(),
+                userEntity.getActive(),
+                userEntity.getCreationDate()
+        );
     }
 
     public String login(CreateUserDTO createUserDTO) {
+        // TODO validate password
+        // TODO generate jwt access token
+
         return null;
     }
 
     public void deleteUser(String id) {
-
+        userRepository.deleteById(id);
     }
 }

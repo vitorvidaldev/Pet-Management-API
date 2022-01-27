@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public record CreateUserDTO(
+        @NotNull
+        String username,
         @Email
         @NotNull
         String email,

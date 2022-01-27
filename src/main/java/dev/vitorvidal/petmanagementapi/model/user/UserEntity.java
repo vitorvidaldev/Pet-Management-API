@@ -4,15 +4,16 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.UUID;
 
 // TODO automatically create tables based on class instances
 @Table(value = "user")
 public class UserEntity {
 
-    @PrimaryKey
-    private String id; // TODO initialize id
-    // TODO change ids to UUIDs
+    @PrimaryKey(value = "user_id")
+    private UUID userId; // TODO initialize id
     @Column
     private String username;
     @Column
@@ -22,7 +23,7 @@ public class UserEntity {
     @Column
     private String signature; // TODO initialize signature
     @Column
-    private String creationDate; // TODO initialize creationDate
+    private LocalDateTime creationDate; // TODO initialize creationDate
     @Column
     private Boolean isActive; // TODO initialize isActive
 
@@ -32,12 +33,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -64,11 +65,11 @@ public class UserEntity {
         this.password = password;
     }
 
-    public String getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 

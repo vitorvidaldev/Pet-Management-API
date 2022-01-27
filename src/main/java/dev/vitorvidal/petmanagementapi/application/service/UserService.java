@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -23,7 +24,7 @@ public class UserService {
         List<UserDTO> userDtoList = new ArrayList<>();
         for (UserEntity userEntity : userEntityList) {
             userDtoList.add(new UserDTO(
-                    userEntity.getId(),
+                    userEntity.getUserId(),
                     userEntity.getEmail(),
                     userEntity.getActive(),
                     userEntity.getCreationDate()
@@ -32,13 +33,13 @@ public class UserService {
         return userDtoList;
     }
 
-    public UserDTO getUserById(String id) {
+    public UserDTO getUserById(UUID id) {
         Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();
 
             return new UserDTO(
-                    userEntity.getId(),
+                    userEntity.getUserId(),
                     userEntity.getEmail(),
                     userEntity.getActive(),
                     userEntity.getCreationDate()
@@ -55,7 +56,7 @@ public class UserService {
         ));
 
         return new UserDTO(
-                userEntity.getId(),
+                userEntity.getUserId(),
                 userEntity.getEmail(),
                 userEntity.getActive(),
                 userEntity.getCreationDate()
@@ -69,7 +70,7 @@ public class UserService {
         return null;
     }
 
-    public void deleteUser(String id) {
+    public void deleteUser(UUID id) {
         userRepository.deleteById(id);
     }
 }

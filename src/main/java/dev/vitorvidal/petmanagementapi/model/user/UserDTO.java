@@ -2,16 +2,18 @@ package dev.vitorvidal.petmanagementapi.model.user;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 public record UserDTO(
         @NotNull
-        String id,
+        UUID id,
         @Email
         @NotNull
         String email,
         @NotNull
         Boolean isActive,
         @NotNull
-        String creationDate
+        LocalDateTime creationDate
 ) {
 }

@@ -1,3 +1,11 @@
 spring:
   datasource:
     url: jdbc:cassandra://localhost:9042
+  data:
+    cassandra:
+      schema-action: create_if_not_exists
+      local-datacenter: datacenter1
+      contact-points: 127.0.0.1
+      keyspace-name: pet_management_api
+      request:
+        timeout: 10s

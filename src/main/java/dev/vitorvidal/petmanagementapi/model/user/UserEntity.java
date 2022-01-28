@@ -1,10 +1,15 @@
 package dev.vitorvidal.petmanagementapi.model.user;
 
+import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,7 +18,7 @@ import java.util.UUID;
 public class UserEntity {
 
     @PrimaryKey(value = "user_id")
-    private UUID userId; // TODO initialize id
+    private UUID userId; // TODO initialize id. Do I have to?
     @Column
     private String username;
     @Column
@@ -21,16 +26,22 @@ public class UserEntity {
     @Column
     private String password;
     @Column
-    private String signature; // TODO initialize signature
-    @Column
-    private LocalDateTime creationDate; // TODO initialize creationDate
-    @Column
-    private Boolean isActive; // TODO initialize isActive
+    private String signature;
+    @Column(value = "creation_date")
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
+    private LocalDateTime creationDate;
+    @Column(value = "is_active")
+    private Boolean isActive;
 
     public UserEntity(String username, String email, String password) {
+        this.userId = UUID.randomUUID();
         this.username = username;
         this.email = email;
-        this.password = password;
+        this.signature = UUID.randomUUID().toString().replace("-", "");
+        this.isActive = true;
+        this.creationDate = LocalDateTime.now();
+
+        this.password = encryptPassword(password);
     }
 
     public UUID getUserId() {
@@ -65,6 +76,14 @@ public class UserEntity {
         this.password = password;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
@@ -81,10 +100,19 @@ public class UserEntity {
         isActive = active;
     }
 
+    private String encryptPassword(String password) {
+        try {
+            SecretKeySpec secretKeySpec = new SecretKeySpec(this.signature.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+            Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(secretKeySpec);
+            byte[] bytes = mac.doFinal(password.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(bytes);
+        } catch (Exception e) {
+            throw new RuntimeException("Error encrypting password");
+        }
+    }
+
     Boolean validatePassword(String password) {
-        // TODO add hash algorithm
-//        var hash = new HMACParameterSpec(64).
-        String hash = null;
-        return Objects.equals(hash, this.password);
+        return Objects.equals(encryptPassword(password), this.password);
     }
 }

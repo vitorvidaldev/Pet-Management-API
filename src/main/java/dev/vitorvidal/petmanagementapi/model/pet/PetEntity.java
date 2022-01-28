@@ -1,5 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.pet;
 
+import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -14,12 +15,14 @@ public class PetEntity {
     @Column
     private String name;
     @Column
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private LocalDateTime birthDate;
     @Column
     private String species; // TODO change to enum
     @Column
     private String breed; // TODO change to enum
-    @Column
+    @Column(value = "creation_date")
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private LocalDateTime creationDate;
     @Column(value = "user_id")
     private UUID userId;

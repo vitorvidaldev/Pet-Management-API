@@ -1,5 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.note;
 
+import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -18,6 +19,7 @@ public class NoteEntity {
     @Column(value = "note_description")
     private String noteDescription;
     @Column(value = "creation_date")
+    @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private LocalDateTime creationDate;
     @Column(value = "pet_id")
     private UUID petId;

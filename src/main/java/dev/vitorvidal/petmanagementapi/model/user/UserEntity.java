@@ -10,7 +10,6 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 
-// TODO automatically create tables based on class instances
 @Table(value = "user")
 public class UserEntity {
 

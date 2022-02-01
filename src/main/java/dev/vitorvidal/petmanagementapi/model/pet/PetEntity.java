@@ -1,9 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.pet;
 
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -25,6 +22,7 @@ public class PetEntity {
     @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private LocalDateTime creationDate;
     @Column(value = "user_id")
+    @Indexed
     private UUID userId;
 
     public PetEntity(String name, LocalDateTime birthDate) {

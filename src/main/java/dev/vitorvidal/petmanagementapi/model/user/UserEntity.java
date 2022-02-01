@@ -31,6 +31,9 @@ public class UserEntity {
     @Column(value = "is_active")
     private Boolean isActive;
 
+    public UserEntity() {
+    }
+
     public UserEntity(String username, String email, String password) {
         this.userId = UUID.randomUUID();
         this.username = username;
@@ -39,6 +42,23 @@ public class UserEntity {
         this.isActive = true;
         this.creationDate = LocalDateTime.now();
         this.password = encryptPassword(password);
+    }
+
+    public UserEntity(
+            UUID userId,
+            String username,
+            String email,
+            String password,
+            String signature,
+            LocalDateTime creationDate,
+            Boolean isActive) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.signature = signature;
+        this.creationDate = creationDate;
+        this.isActive = isActive;
     }
 
     public UUID getUserId() {

@@ -1,9 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.user;
 
-import org.springframework.data.cassandra.core.mapping.CassandraType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.cassandra.core.mapping.*;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -18,10 +15,11 @@ import java.util.UUID;
 public class UserEntity {
 
     @PrimaryKey(value = "user_id")
-    private UUID userId; // TODO initialize id. Do I have to?
+    private UUID userId;
     @Column
     private String username;
     @Column
+    @Indexed
     private String email;
     @Column
     private String password;
@@ -40,7 +38,6 @@ public class UserEntity {
         this.signature = UUID.randomUUID().toString().replace("-", "");
         this.isActive = true;
         this.creationDate = LocalDateTime.now();
-
         this.password = encryptPassword(password);
     }
 
@@ -112,7 +109,7 @@ public class UserEntity {
         }
     }
 
-    Boolean validatePassword(String password) {
+    public Boolean validatePassword(String password) {
         return Objects.equals(encryptPassword(password), this.password);
     }
 }

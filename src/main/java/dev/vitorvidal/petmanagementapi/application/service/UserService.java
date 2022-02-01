@@ -45,7 +45,7 @@ public class UserService {
                     userEntity.getCreationDate()
             );
         }
-        return null;
+        throw new RuntimeException("Could not find user with provided id");
     }
 
     public UserDTO signup(CreateUserDTO createUserDTO) {
@@ -64,10 +64,17 @@ public class UserService {
     }
 
     public String login(CreateUserDTO createUserDTO) {
-        // TODO validate password
-        // TODO generate jwt access token
+        Optional<UserEntity> optionalUser = userRepository.findByEmail(createUserDTO.email());
 
-        return null;
+        if (optionalUser.isPresent()) {
+            UserEntity userEntity = optionalUser.get();
+            Boolean isValid = userEntity.validatePassword(createUserDTO.password());
+            if (isValid) {
+                return "Top";
+            }
+        }
+        // TODO generate jwt access token
+        throw new RuntimeException("Could not validate user");
     }
 
     public void deleteUser(UUID id) {

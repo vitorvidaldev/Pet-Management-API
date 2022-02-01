@@ -64,10 +64,10 @@ public class UserService {
     }
 
     public String login(CreateUserDTO createUserDTO) {
-        UserEntity userEntity = userRepository.findByEmail(createUserDTO.email());
+        List<UserEntity> userEntityList = userRepository.findByEmail(createUserDTO.email());
 
-        if (userEntity != null) {
-            Boolean isValid = userEntity.validatePassword(createUserDTO.password());
+        if (userEntityList != null) {
+            Boolean isValid = userEntityList.get(0).validatePassword(createUserDTO.password());
             if (isValid) {
                 return "Top";
             }

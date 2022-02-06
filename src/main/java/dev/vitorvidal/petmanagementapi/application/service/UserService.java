@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public UserDTO getUserById(UUID id) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findById(id);
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUserId(id);
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();
 
@@ -64,10 +64,10 @@ public class UserService {
     }
 
     public String login(CreateUserDTO createUserDTO) {
-        List<UserEntity> userEntityList = userRepository.findByEmail(createUserDTO.email());
+        Optional<UserEntity> optionalUser = userRepository.findById(createUserDTO.email());
 
-        if (userEntityList != null) {
-            Boolean isValid = userEntityList.get(0).validatePassword(createUserDTO.password());
+        if (optionalUser.isPresent()) {
+            Boolean isValid = optionalUser.get().validatePassword(createUserDTO.password());
             if (isValid) {
                 return "Top";
             }
@@ -77,6 +77,6 @@ public class UserService {
     }
 
     public void deleteUser(UUID id) {
-        userRepository.deleteById(id);
+        userRepository.deleteByUserId(id);
     }
 }

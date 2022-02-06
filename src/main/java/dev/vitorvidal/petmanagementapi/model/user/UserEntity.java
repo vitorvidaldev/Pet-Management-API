@@ -13,13 +13,13 @@ import java.util.UUID;
 @Table(value = "user")
 public class UserEntity {
 
-    @PrimaryKey(value = "user_id")
-    private UUID userId;
+    @PrimaryKey(value = "email")
+    private String email;
     @Column
     private String username;
-    @Column
+    @Column(value = "user_id")
     @Indexed
-    private String email;
+    private UUID userId;
     @Column
     private String password;
     @Column

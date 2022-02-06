@@ -77,6 +77,7 @@ public class UserService {
     }
 
     public void deleteUser(UUID id) {
-        userRepository.deleteByUserId(id);
+        Optional<UserEntity> optionalUser = userRepository.findByUserId(id);
+        optionalUser.ifPresent(userEntity -> userRepository.deleteById(userEntity.getEmail()));
     }
 }

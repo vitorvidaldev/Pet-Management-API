@@ -9,7 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends CassandraRepository<UserEntity, String> {
-    void deleteByUserId(UUID id);
-
     Optional<UserEntity> findByUserId(UUID id);
 }

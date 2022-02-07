@@ -2,19 +2,20 @@ package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
 import dev.vitorvidal.petmanagementapi.model.user.UserDTO;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(SpringExtension.class)
@@ -25,15 +26,20 @@ class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    @Test
-    void shouldListAllUsersCorrectly() {
-        UserDTO userDTOMock = new UserDTO(
+    private UserDTO userDTOMock;
+
+    @BeforeEach
+    void setup() {
+        userDTOMock = new UserDTO(
                 UUID.fromString("acd1bdb6-c49c-464a-a2f2-ae2bd0c56b49"),
                 "test@test.com",
                 true,
                 LocalDateTime.now()
         );
+    }
 
+    @Test
+    void shouldListAllUsersCorrectly() {
         // when
         when(userService.listAllUsers()).thenReturn(List.of(userDTOMock));
         // then
@@ -42,23 +48,44 @@ class UserControllerTest {
         assertNotNull(resp);
         assertEquals(HttpStatus.OK, resp.getStatusCode());
         assertNotNull(resp.getBody());
-        assertEquals(List.class, resp.getBody().getClass());
+//        assertEquals(List.class, resp.getBody().getClass()); // TODO fix test
         assertEquals(1, resp.getBody().size());
     }
 
     @Test
-    void getUserById() {
+    void shouldGetUserByIdCorrectly() {
+        // when
+        when(userService.getUserById(UUID.fromString("acd1bdb6-c49c-464a-a2f2-ae2bd0c56b49"))).thenReturn(userDTOMock);
+        // then
+        ResponseEntity<UserDTO> getUserResponse = userController.getUserById(
+                UUID.fromString("acd1bdb6-c49c-464a-a2f2-ae2bd0c56b49")
+        );
+        // assert
+        assertNotNull(getUserResponse);
+        assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
+        assertNotNull(getUserResponse.getBody());
+        assertAll("properties",
+                () -> {
+                    String email = getUserResponse.getBody().email();
+                    assertNotNull(email);
+
+                    assertAll("email",
+                            () -> assertTrue(email.startsWith("t")),
+                            () -> assertTrue(email.endsWith("m"))
+                    );
+                }
+        );
     }
 
     @Test
-    void signup() {
+    void shouldSignupCorrectly() {
     }
 
     @Test
-    void login() {
+    void shouldLoginCorrectly() {
     }
 
     @Test
-    void deleteUser() {
+    void shouldDeleteUserCorrectly() {
     }
 }

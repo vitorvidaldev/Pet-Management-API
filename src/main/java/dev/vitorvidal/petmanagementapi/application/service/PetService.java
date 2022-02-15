@@ -57,14 +57,36 @@ public class PetService {
     }
 
     public List<PetDTO> getPetByUser(UUID userId) {
-        // TODO implement find by index with cassandra
-        return new ArrayList<>();
+        Optional<List<PetEntity>> optionalPetEntityList = petRepository.findByUserId(userId);
+
+        if (optionalPetEntityList.isPresent()) {
+            List<PetEntity> petEntities = optionalPetEntityList.get();
+
+            List<PetDTO> petDTOList = new ArrayList<>();
+            for (PetEntity pet : petEntities) {
+                petDTOList.add(new PetDTO(
+                        pet.getPetId(),
+                        pet.getName(),
+                        pet.getBirthDate(),
+                        pet.getSpecies(),
+                        pet.getBreed(),
+                        pet.getCreationDate(),
+                        pet.getUserId()
+                ));
+            }
+            return petDTOList;
+        }
+
+        throw new RuntimeException("This user has no pet registers");
     }
 
-    public PetDTO createPet(CreatePetDTO createPetDTO) {
+    public PetDTO createPet(CreatePetDTO createPetDTO, UUID userId) {
         PetEntity pet = petRepository.save(new PetEntity(
                 createPetDTO.name(),
-                createPetDTO.birthDate()
+                createPetDTO.birthDate(),
+                createPetDTO.species(),
+                createPetDTO.breed(),
+                userId
         ));
 
         return new PetDTO(

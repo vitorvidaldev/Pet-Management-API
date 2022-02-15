@@ -12,8 +12,6 @@ public record CreatePetDTO(
         @NotNull
         String species,
         @NotNull
-        String breed,
-        @NotNull
-        UUID userId
+        String breed
 ) {
 }

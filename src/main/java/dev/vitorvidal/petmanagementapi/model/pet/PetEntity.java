@@ -25,9 +25,33 @@ public class PetEntity {
     @Indexed
     private UUID userId;
 
-    public PetEntity(String name, LocalDateTime birthDate) {
+    public PetEntity() {
+    }
+
+    public PetEntity(UUID petId, String name, LocalDateTime birthDate, String species, String breed, LocalDateTime creationDate, UUID userId) {
+        this.petId = petId;
         this.name = name;
         this.birthDate = birthDate;
+        this.species = species;
+        this.breed = breed;
+        this.creationDate = creationDate;
+        this.userId = userId;
+    }
+
+    public PetEntity(
+            String name,
+            LocalDateTime birthDate,
+            String species,
+            String breed,
+            UUID userId
+    ) {
+        this.petId = UUID.randomUUID();
+        this.name = name;
+        this.birthDate = birthDate;
+        this.species = species;
+        this.breed = breed;
+        this.userId = userId;
+        this.creationDate = LocalDateTime.now();
     }
 
     public UUID getPetId() {

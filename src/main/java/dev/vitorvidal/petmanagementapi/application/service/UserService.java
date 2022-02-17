@@ -4,6 +4,7 @@ import dev.vitorvidal.petmanagementapi.application.repository.UserRepository;
 import dev.vitorvidal.petmanagementapi.model.user.CreateUserDTO;
 import dev.vitorvidal.petmanagementapi.model.user.UserDTO;
 import dev.vitorvidal.petmanagementapi.model.user.UserEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper = new ModelMapper();
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -23,12 +25,7 @@ public class UserService {
         List<UserEntity> userEntityList = userRepository.findAll();
         List<UserDTO> userDtoList = new ArrayList<>();
         for (UserEntity userEntity : userEntityList) {
-            userDtoList.add(new UserDTO(
-                    userEntity.getUserId(),
-                    userEntity.getEmail(),
-                    userEntity.getActive(),
-                    userEntity.getCreationDate()
-            ));
+            userDtoList.add(modelMapper.map(userEntity, UserDTO.class));
         }
         return userDtoList;
     }
@@ -37,30 +34,14 @@ public class UserService {
         Optional<UserEntity> optionalUserEntity = userRepository.findByUserId(id);
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();
-
-            return new UserDTO(
-                    userEntity.getUserId(),
-                    userEntity.getEmail(),
-                    userEntity.getActive(),
-                    userEntity.getCreationDate()
-            );
+            return modelMapper.map(userEntity, UserDTO.class);
         }
         throw new RuntimeException("Could not find user with provided id");
     }
 
     public UserDTO signup(CreateUserDTO createUserDTO) {
-        UserEntity userEntity = userRepository.save(new UserEntity(
-                createUserDTO.username(),
-                createUserDTO.email(),
-                createUserDTO.password()
-        ));
-
-        return new UserDTO(
-                userEntity.getUserId(),
-                userEntity.getEmail(),
-                userEntity.getActive(),
-                userEntity.getCreationDate()
-        );
+        UserEntity userEntity = userRepository.save(modelMapper.map(createUserDTO, UserEntity.class));
+        return modelMapper.map(userEntity, UserDTO.class);
     }
 
     public String login(CreateUserDTO createUserDTO) {

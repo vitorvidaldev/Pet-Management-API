@@ -16,14 +16,14 @@ A Pet Management API, developed with:
 - You can log in the application, using your email and password.
 - You can delete your user account.
 
-## Pet feature
+### Pet feature
 
 - You can register your pet's data.
 - You can retrieve a list with every pet you've registered, with their data.
 - You can retrieve you can retrieve the data for a single pet you've registered.
 - You can delete a pet register from the system.
 
-## Note feature
+### Note feature
 
 - You can create a note for a pet.
 - You can retrieve every note for a given pet.

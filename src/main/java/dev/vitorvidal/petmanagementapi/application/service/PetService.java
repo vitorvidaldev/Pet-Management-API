@@ -1,6 +1,6 @@
 package dev.vitorvidal.petmanagementapi.application.service;
 
-import dev.vitorvidal.petmanagementapi.application.repository.PetRepository;
+import dev.vitorvidal.petmanagementapi.model.repository.PetRepository;
 import dev.vitorvidal.petmanagementapi.model.dto.CreatePetDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.PetDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.PetEntity;

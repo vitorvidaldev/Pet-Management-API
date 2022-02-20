@@ -1,26 +1,36 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
+import dev.vitorvidal.petmanagementapi.application.service.PetService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
 class PetControllerTest {
+    @InjectMocks
+    private PetController petController;
+    @Mock
+    private PetService petService;
 
     @Test
-    void listEveryPet() {
+    void shouldListEveryPetCorrectly() {
     }
 
     @Test
-    void getPetById() {
+    void shouldGetPetByIdCorrectly() {
     }
 
     @Test
-    void getPetByUser() {
+    void shouldGetPetByUserCorrectly() {
     }
 
     @Test
-    void createPet() {
+    void shouldCreatePetCorrectly() {
     }
 
     @Test
-    void deletePet() {
+    void shouldDeletePetCorrectly() {
     }
 }

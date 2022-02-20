@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.model.pet;
+package dev.vitorvidal.petmanagementapi.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;

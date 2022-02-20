@@ -1,8 +1,8 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
-import dev.vitorvidal.petmanagementapi.model.user.CreateUserDTO;
-import dev.vitorvidal.petmanagementapi.model.user.UserDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

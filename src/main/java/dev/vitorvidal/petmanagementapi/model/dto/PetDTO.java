@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.model.pet;
+package dev.vitorvidal.petmanagementapi.model.dto;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.model.pet;
+package dev.vitorvidal.petmanagementapi.model.dto;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;

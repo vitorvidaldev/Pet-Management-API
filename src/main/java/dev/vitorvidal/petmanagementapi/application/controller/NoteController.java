@@ -1,8 +1,8 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.NoteService;
-import dev.vitorvidal.petmanagementapi.model.note.CreateNoteDTO;
-import dev.vitorvidal.petmanagementapi.model.note.NoteDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.CreateNoteDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.NoteDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

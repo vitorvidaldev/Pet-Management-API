@@ -1,6 +1,6 @@
 package dev.vitorvidal.petmanagementapi.application.repository;
 
-import dev.vitorvidal.petmanagementapi.model.user.UserEntity;
+import dev.vitorvidal.petmanagementapi.model.entity.UserEntity;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.stereotype.Repository;
 

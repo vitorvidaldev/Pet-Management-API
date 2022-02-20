@@ -21,11 +21,11 @@ import static org.mockito.Mockito.*;
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
 
+    private final UUID userIdMock = UUID.randomUUID();
     @Mock
     private UserService userService;
     @InjectMocks
     private UserController userController;
-    private final UUID userIdMock = UUID.randomUUID();
 
     @Test
     void shouldListAllUsersCorrectly() {

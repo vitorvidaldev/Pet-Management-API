@@ -1,9 +1,9 @@
 package dev.vitorvidal.petmanagementapi.application.service;
 
-import dev.vitorvidal.petmanagementapi.model.repository.NoteRepository;
 import dev.vitorvidal.petmanagementapi.model.dto.CreateNoteDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.NoteDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.NoteEntity;
+import dev.vitorvidal.petmanagementapi.model.repository.NoteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,14 @@
 package dev.vitorvidal.petmanagementapi.model.pet;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Table(value = "pet")
 public class PetEntity {
     @PrimaryKey(value = "pet_id")
@@ -28,7 +32,14 @@ public class PetEntity {
     public PetEntity() {
     }
 
-    public PetEntity(UUID petId, String name, LocalDateTime birthDate, String species, String breed, LocalDateTime creationDate, UUID userId) {
+    public PetEntity(
+            UUID petId,
+            String name,
+            LocalDateTime birthDate,
+            String species,
+            String breed,
+            LocalDateTime creationDate,
+            UUID userId) {
         this.petId = petId;
         this.name = name;
         this.birthDate = birthDate;
@@ -52,61 +63,5 @@ public class PetEntity {
         this.breed = breed;
         this.userId = userId;
         this.creationDate = LocalDateTime.now();
-    }
-
-    public UUID getPetId() {
-        return petId;
-    }
-
-    public void setPetId(UUID petId) {
-        this.petId = petId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDateTime getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(LocalDateTime birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public String getBreed() {
-        return breed;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
     }
 }

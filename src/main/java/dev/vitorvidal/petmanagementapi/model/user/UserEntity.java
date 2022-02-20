@@ -1,5 +1,7 @@
 package dev.vitorvidal.petmanagementapi.model.user;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.*;
 
 import javax.crypto.Mac;
@@ -10,6 +12,8 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Table(value = "user")
 public class UserEntity {
 
@@ -58,62 +62,6 @@ public class UserEntity {
         this.signature = signature;
         this.creationDate = creationDate;
         this.isActive = isActive;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public Boolean getActive() {
-        return isActive;
-    }
-
-    public void setActive(Boolean active) {
-        isActive = active;
     }
 
     private String encryptPassword(String password) {

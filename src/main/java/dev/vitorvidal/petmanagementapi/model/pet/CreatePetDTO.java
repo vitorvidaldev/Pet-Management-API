@@ -2,7 +2,6 @@ package dev.vitorvidal.petmanagementapi.model.pet;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public record CreatePetDTO(
         @NotNull

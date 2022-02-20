@@ -1,10 +1,14 @@
 package dev.vitorvidal.petmanagementapi.model.note;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.*;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Getter
+@Setter
 @Table(value = "note")
 public class NoteEntity {
     @PrimaryKey(value = "note_id")
@@ -29,53 +33,5 @@ public class NoteEntity {
         this.noteType = noteType;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
-    }
-
-    public UUID getNoteId() {
-        return noteId;
-    }
-
-    public void setNoteId(UUID noteId) {
-        this.noteId = noteId;
-    }
-
-    public String getNoteType() {
-        return noteType;
-    }
-
-    public void setNoteType(String noteType) {
-        this.noteType = noteType;
-    }
-
-    public String getNoteTitle() {
-        return noteTitle;
-    }
-
-    public void setNoteTitle(String noteTitle) {
-        this.noteTitle = noteTitle;
-    }
-
-    public String getNoteDescription() {
-        return noteDescription;
-    }
-
-    public void setNoteDescription(String noteDescription) {
-        this.noteDescription = noteDescription;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public UUID getPetId() {
-        return petId;
-    }
-
-    public void setPetId(UUID petId) {
-        this.petId = petId;
     }
 }

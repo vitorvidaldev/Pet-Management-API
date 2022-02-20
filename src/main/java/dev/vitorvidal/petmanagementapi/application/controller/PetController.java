@@ -42,8 +42,7 @@ public class PetController {
     @PostMapping("/{userId}")
     public ResponseEntity<PetDTO> createPet(
             @RequestBody @Valid CreatePetDTO createPetDTO,
-            @PathVariable(value = "userId") UUID userId
-    ) {
+            @PathVariable(value = "userId") UUID userId) {
         PetDTO petDTO = petService.createPet(createPetDTO, userId);
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(petDTO);
     }

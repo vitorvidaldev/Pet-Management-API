@@ -22,7 +22,7 @@ public class NoteController {
 
     @GetMapping
     public ResponseEntity<List<NoteDTO>> listNotes() {
-        List<NoteDTO> noteList = noteService.listNotes();
+        List<NoteDTO> noteList = noteService.getAllNotes();
         return ResponseEntity.ok().body(noteList);
     }
 

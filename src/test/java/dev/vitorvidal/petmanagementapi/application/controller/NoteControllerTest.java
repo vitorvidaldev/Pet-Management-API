@@ -29,7 +29,7 @@ class NoteControllerTest {
         NoteDTO noteDTOMock = mock(NoteDTO.class);
         List<NoteDTO> noteDTOList = List.of(noteDTOMock);
 
-        when(noteService.listNotes()).thenReturn(noteDTOList);
+        when(noteService.getAllNotes()).thenReturn(noteDTOList);
         ResponseEntity<List<NoteDTO>> response = noteController.listNotes();
 
         assertNotNull(response);

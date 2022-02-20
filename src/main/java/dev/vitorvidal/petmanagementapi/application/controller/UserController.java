@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,12 +18,6 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<UserDTO>> listAllUsers() {
-        List<UserDTO> userDTO = userService.listAllUsers();
-        return ResponseEntity.ok().body(userDTO);
     }
 
     @GetMapping("/{id}")

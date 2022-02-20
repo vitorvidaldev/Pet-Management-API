@@ -28,19 +28,6 @@ class UserControllerTest {
     private UserController userController;
 
     @Test
-    void shouldListAllUsersCorrectly() {
-        UserDTO userDTOMock = mock(UserDTO.class);
-        // when
-        when(userService.listAllUsers()).thenReturn(List.of(userDTOMock));
-        // then
-        ResponseEntity<List<UserDTO>> response = userController.listAllUsers();
-        // assert
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(1, response.getBody().size());
-    }
-
-    @Test
     void shouldGetUserByIdCorrectly() {
         UserDTO userDTOMock = mock(UserDTO.class);
         // when

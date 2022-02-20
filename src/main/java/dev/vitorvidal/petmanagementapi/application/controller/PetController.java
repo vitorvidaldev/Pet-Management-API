@@ -21,12 +21,6 @@ public class PetController {
         this.petService = petService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<PetDTO>> listEveryPet() {
-        List<PetDTO> petDTOList = petService.listEveryPet();
-        return ResponseEntity.ok().body(petDTOList);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<PetDTO> getPetById(@PathVariable(value = "id") UUID petId) {
         PetDTO petDTO = petService.getPetById(petId);

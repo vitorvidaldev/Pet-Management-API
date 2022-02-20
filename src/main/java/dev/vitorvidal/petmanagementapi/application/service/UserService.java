@@ -7,8 +7,6 @@ import dev.vitorvidal.petmanagementapi.model.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,15 +17,6 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    public List<UserDTO> listAllUsers() {
-        List<UserEntity> userEntityList = userRepository.findAll();
-        List<UserDTO> userDtoList = new ArrayList<>();
-        for (UserEntity userEntity : userEntityList) {
-            userDtoList.add(modelMapper.map(userEntity, UserDTO.class));
-        }
-        return userDtoList;
     }
 
     public UserDTO getUserById(UUID id) {

@@ -25,20 +25,6 @@ class PetControllerTest {
     private PetService petService;
 
     @Test
-    void shouldListEveryPetCorrectly() {
-        PetDTO petDTOMock = mock(PetDTO.class);
-        List<PetDTO> petDTOList = List.of(petDTOMock);
-
-        when(petService.listEveryPet()).thenReturn(petDTOList);
-        ResponseEntity<List<PetDTO>> response = petController.listEveryPet();
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(petDTOMock, response.getBody().get(0));
-    }
-
-    @Test
     void shouldGetPetByIdCorrectly() {
         UUID petIdMock = UUID.randomUUID();
         PetDTO petDTOMock = mock(PetDTO.class);

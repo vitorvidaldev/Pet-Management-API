@@ -25,20 +25,6 @@ class NoteControllerTest {
     private NoteService noteService;
 
     @Test
-    void shouldListNotesCorrectly() {
-        NoteDTO noteDTOMock = mock(NoteDTO.class);
-        List<NoteDTO> noteDTOList = List.of(noteDTOMock);
-
-        when(noteService.getAllNotes()).thenReturn(noteDTOList);
-        ResponseEntity<List<NoteDTO>> response = noteController.listNotes();
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody());
-        assertEquals(noteDTOList.size(), response.getBody().size());
-    }
-
-    @Test
     void shouldGetNoteByIdCorrectly() {
         UUID noteIdMock = UUID.randomUUID();
         NoteDTO noteDTOMock = mock(NoteDTO.class);

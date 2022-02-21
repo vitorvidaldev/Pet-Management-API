@@ -8,8 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,23 +17,6 @@ public class NoteService {
 
     public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
-    }
-
-    public List<NoteDTO> getAllNotes() {
-        List<NoteEntity> noteList = noteRepository.findAll();
-
-        List<NoteDTO> noteDTOList = new ArrayList<>();
-        for (NoteEntity noteEntity : noteList) {
-            noteDTOList.add(new NoteDTO(
-                    noteEntity.getNoteId(),
-                    noteEntity.getNoteType(),
-                    noteEntity.getNoteTitle(),
-                    noteEntity.getNoteDescription(),
-                    noteEntity.getCreationDate(),
-                    noteEntity.getPetId()
-            ));
-        }
-        return noteDTOList;
     }
 
     public NoteDTO getNoteById(UUID noteId) {

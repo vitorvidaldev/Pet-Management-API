@@ -4,8 +4,9 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.UserEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.UserRepository;
-import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -13,24 +14,35 @@ import java.util.UUID;
 @Service
 public class UserService {
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper = new ModelMapper();
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public UserDTO getUserById(UUID id) {
-        Optional<UserEntity> optionalUserEntity = userRepository.findByUserId(id);
+    public UserDTO getUserById(UUID userId) {
+        Optional<UserEntity> optionalUserEntity = userRepository.findByUserId(userId);
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();
-            return modelMapper.map(userEntity, UserDTO.class);
+            return new UserDTO(
+                    userEntity.getUserId(),
+                    userEntity.getEmail(),
+                    userEntity.getIsActive(),
+                    userEntity.getCreationDate());
         }
-        throw new RuntimeException("Could not find user with provided id");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
     public UserDTO signup(CreateUserDTO createUserDTO) {
-        UserEntity userEntity = userRepository.save(modelMapper.map(createUserDTO, UserEntity.class));
-        return modelMapper.map(userEntity, UserDTO.class);
+        UserEntity userEntity = userRepository.save(new UserEntity(
+                createUserDTO.username(),
+                createUserDTO.email(),
+                createUserDTO.password()
+        ));
+        return new UserDTO(
+                userEntity.getUserId(),
+                userEntity.getEmail(),
+                userEntity.getIsActive(),
+                userEntity.getCreationDate());
     }
 
     public String login(CreateUserDTO createUserDTO) {
@@ -39,15 +51,15 @@ public class UserService {
         if (optionalUser.isPresent()) {
             Boolean isValid = optionalUser.get().validatePassword(createUserDTO.password());
             if (isValid) {
+                // TODO generate jwt access token
                 return "Top";
             }
         }
-        // TODO generate jwt access token
-        throw new RuntimeException("Could not validate user");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
-    public void deleteUser(UUID id) {
-        Optional<UserEntity> optionalUser = userRepository.findByUserId(id);
+    public void deleteUser(UUID userId) {
+        Optional<UserEntity> optionalUser = userRepository.findByUserId(userId);
         optionalUser.ifPresent(userEntity -> userRepository.deleteById(userEntity.getEmail()));
     }
 }

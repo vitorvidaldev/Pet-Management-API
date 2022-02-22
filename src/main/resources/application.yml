@@ -9,3 +9,8 @@ spring:
       keyspace-name: pet_management_api
       request:
         timeout: 10s
+  main:
+    allow-circular-references: true
+
+jwt:
+  secret: secret

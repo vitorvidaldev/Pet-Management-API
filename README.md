@@ -6,7 +6,7 @@ A Pet Management API, developed with:
 - Spring
 - Cassandra 4.0
 - Docker
-- Docker compose
+- Docker Compose
 
 ## Features
 

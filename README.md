@@ -2,10 +2,11 @@
 
 A Pet Management API, developed with:
 
-- Java
+- Java 17
 - Spring
-- Cassandra
+- Cassandra 4.0
 - Docker
+- Docker compose
 
 ## Features
 
@@ -30,6 +31,34 @@ A Pet Management API, developed with:
 - You can retrieve all of your notes.
 - You can delete a note.
 - You can edit the note content.
+
+## How do I execute the application?
+
+To set up the database, run:
+
+```
+docker-compose up -d --build
+```
+
+You need to create a keyspace with the name *pet_management_api* in the Cassandra database, after the containers are running.
+
+Download the project dependencies with the following command:
+
+```
+mvn clean install
+```
+
+Execute the following command to run the application:
+
+```
+mvn spring-boot:run
+```
+
+Execute the application tests with the following command:
+
+```
+mvn test
+```
 
 ## Author
 

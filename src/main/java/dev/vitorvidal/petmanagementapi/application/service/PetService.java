@@ -4,8 +4,9 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreatePetDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.PetDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.PetEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.PetRepository;
-import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,20 +16,9 @@ import java.util.UUID;
 @Service
 public class PetService {
     private final PetRepository petRepository;
-    private final ModelMapper modelMapper = new ModelMapper();
 
     public PetService(PetRepository petRepository) {
         this.petRepository = petRepository;
-    }
-
-    public List<PetDTO> listEveryPet() {
-        List<PetEntity> petList = petRepository.findAll();
-
-        List<PetDTO> petDTOList = new ArrayList<>();
-        for (PetEntity pet : petList) {
-            petDTOList.add(modelMapper.map(pet, PetDTO.class));
-        }
-        return petDTOList;
     }
 
     public PetDTO getPetById(UUID petId) {
@@ -36,9 +26,17 @@ public class PetService {
 
         if (optionalPet.isPresent()) {
             PetEntity petEntity = optionalPet.get();
-            return modelMapper.map(petEntity, PetDTO.class);
+            return new PetDTO(
+                    petEntity.getPetId(),
+                    petEntity.getName(),
+                    petEntity.getBirthDate(),
+                    petEntity.getSpecies(),
+                    petEntity.getBreed(),
+                    petEntity.getCreationDate(),
+                    petEntity.getUserId()
+            );
         }
-        return null;
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
     }
 
     public List<PetDTO> getPetByUser(UUID userId) {
@@ -46,16 +44,24 @@ public class PetService {
         if (optionalPetEntityList.isPresent()) {
             List<PetEntity> petEntities = optionalPetEntityList.get();
             List<PetDTO> petDTOList = new ArrayList<>();
-            for (PetEntity pet : petEntities) {
-                petDTOList.add(modelMapper.map(pet, PetDTO.class));
+            for (PetEntity petEntity : petEntities) {
+                petDTOList.add(new PetDTO(
+                        petEntity.getPetId(),
+                        petEntity.getName(),
+                        petEntity.getBirthDate(),
+                        petEntity.getSpecies(),
+                        petEntity.getBreed(),
+                        petEntity.getCreationDate(),
+                        petEntity.getUserId()
+                ));
             }
             return petDTOList;
         }
-        throw new RuntimeException("This user has no pet registers");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pets not found");
     }
 
     public PetDTO createPet(CreatePetDTO createPetDTO, UUID userId) {
-        PetEntity pet = petRepository.save(new PetEntity(
+        PetEntity petEntity = petRepository.save(new PetEntity(
                 createPetDTO.name(),
                 createPetDTO.birthDate(),
                 createPetDTO.species(),
@@ -63,7 +69,15 @@ public class PetService {
                 userId
         ));
 
-        return modelMapper.map(pet, PetDTO.class);
+        return new PetDTO(
+                petEntity.getPetId(),
+                petEntity.getName(),
+                petEntity.getBirthDate(),
+                petEntity.getSpecies(),
+                petEntity.getBreed(),
+                petEntity.getCreationDate(),
+                petEntity.getUserId()
+        );
     }
 
     public void deletePet(UUID petId) {

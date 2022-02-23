@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -51,10 +52,12 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDTO signup(CreateUserDTO createUserDTO) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
         UserEntity userEntity = userRepository.save(new UserEntity(
                 createUserDTO.username(),
                 createUserDTO.email(),
-                createUserDTO.password()
+                passwordEncoder.encode(createUserDTO.password())
         ));
         return new UserDTO(
                 userEntity.getUserId(),

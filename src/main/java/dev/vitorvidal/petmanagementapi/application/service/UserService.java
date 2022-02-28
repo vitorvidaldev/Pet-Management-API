@@ -5,6 +5,7 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.UserEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;

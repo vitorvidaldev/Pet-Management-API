@@ -13,4 +13,4 @@ spring:
     allow-circular-references: true
 
 jwt:
-  secret: secret
+  secret: WzYwLCAtMTE0LCAtMTI4LCAtMTIsIC0xMjgsIDExLCAtODgsIC0xMjAsIDEwNywgMzMsIDY0LCA1OSwgLTcsIDY5LCAxMCwgLTk4LCAtNzUsIDEyMywgMjIsIC0zNSwgNzcsIC0xMTYsIDExMywgOTgsIDExNSwgLTk5LCAtNjMsIC01MiwgMTExLCAtNzMsIC0xMTcsIDQzXQ==

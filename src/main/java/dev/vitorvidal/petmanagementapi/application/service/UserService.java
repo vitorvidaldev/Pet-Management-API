@@ -71,7 +71,8 @@ public class UserService implements UserDetailsService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             createUserDTO.email(),
-                            createUserDTO.password())
+                            createUserDTO.password()
+                    )
             );
         } catch (DisabledException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User disabled", e);
@@ -98,7 +99,11 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = optionalUser.get();
 
         if (userEntity.getEmail().equals(username)) {
-            return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
+            return new User(
+                    userEntity.getEmail(),
+                    userEntity.getPassword(),
+                    new ArrayList<>()
+            );
         } else {
             throw new UsernameNotFoundException("User not found with email: " + userEntity.getEmail());
         }

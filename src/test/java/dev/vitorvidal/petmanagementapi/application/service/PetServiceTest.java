@@ -49,7 +49,7 @@ class PetServiceTest {
 
         when(petRepository.findById(petIdMock)).thenReturn(Optional.of(petEntityMock));
 
-        PetDTO petDTO = petService.getPetById(petIdMock);
+        PetDTO petDTO = petService.getPetById(userIdMock, petIdMock);
 
         verify(petRepository, times(1)).findById(petIdMock);
 
@@ -66,12 +66,13 @@ class PetServiceTest {
     @Test
     void shouldThrowNotFoundExceptionGettingPet() {
         UUID petIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
 
         when(petRepository.findById(petIdMock)).thenReturn(Optional.empty());
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> petService.getPetById(petIdMock));
+                () -> petService.getPetById(userIdMock, petIdMock));
 
         verify(petRepository, times(1)).findById(petIdMock);
 
@@ -177,9 +178,10 @@ class PetServiceTest {
     @Test
     void shouldDeletePetCorrectly() {
         UUID petIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
         doNothing().when(petRepository).deleteById(petIdMock);
 
-        assertDoesNotThrow(() -> petService.deletePet(petIdMock));
+        assertDoesNotThrow(() -> petService.deletePet(userIdMock, petIdMock));
         verify(petRepository, times(1)).deleteById(petIdMock);
     }
 }

@@ -21,10 +21,10 @@ public class PetService {
         this.petRepository = petRepository;
     }
 
-    public PetDTO getPetById(UUID petId) {
+    public PetDTO getPetById(UUID userId, UUID petId) {
         Optional<PetEntity> optionalPet = petRepository.findById(petId);
 
-        if (optionalPet.isPresent()) {
+        if (optionalPet.isPresent() && optionalPet.get().getUserId().equals(userId)) {
             PetEntity petEntity = optionalPet.get();
             return new PetDTO(
                     petEntity.getPetId(),
@@ -80,7 +80,15 @@ public class PetService {
         );
     }
 
-    public void deletePet(UUID petId) {
-        petRepository.deleteById(petId);
+    public void deletePet(UUID userId, UUID petId) {
+        Optional<PetEntity> optionalPet = petRepository.findById(petId);
+        if (optionalPet.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
+        }
+
+        PetEntity petEntity = optionalPet.get();
+        if (petEntity.getUserId().equals(userId)) {
+            petRepository.deleteById(petId);
+        }
     }
 }

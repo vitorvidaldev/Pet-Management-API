@@ -27,10 +27,11 @@ class PetControllerTest {
     @Test
     void shouldGetPetByIdCorrectly() {
         UUID petIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
         PetDTO petDTOMock = mock(PetDTO.class);
 
-        when(petService.getPetById(petIdMock)).thenReturn(petDTOMock);
-        ResponseEntity<PetDTO> response = petController.getPetById(petIdMock);
+        when(petService.getPetById(userIdMock, petIdMock)).thenReturn(petDTOMock);
+        ResponseEntity<PetDTO> response = petController.getPetById(userIdMock, petIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -74,9 +75,10 @@ class PetControllerTest {
     @Test
     void shouldDeletePetCorrectly() {
         UUID petIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
 
-        doNothing().when(petService).deletePet(petIdMock);
-        ResponseEntity<Void> response = petController.deletePet(petIdMock);
+        doNothing().when(petService).deletePet(userIdMock, petIdMock);
+        ResponseEntity<Void> response = petController.deletePet(userIdMock, petIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());

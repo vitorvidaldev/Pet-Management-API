@@ -1,7 +1,8 @@
 package dev.vitorvidal.petmanagementapi.application.service;
 
 import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
-import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.UserEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.UserRepository;
@@ -53,13 +54,13 @@ public class UserService implements UserDetailsService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
-    public UserDTO signup(CreateUserDTO createUserDTO) {
+    public UserDTO signup(SignupDTO signupDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         UserEntity userEntity = userRepository.save(new UserEntity(
-                createUserDTO.username(),
-                createUserDTO.email(),
-                passwordEncoder.encode(createUserDTO.password())
+                signupDTO.username(),
+                signupDTO.email(),
+                passwordEncoder.encode(signupDTO.password())
         ));
         return new UserDTO(
                 userEntity.getUserId(),
@@ -68,12 +69,12 @@ public class UserService implements UserDetailsService {
                 userEntity.getCreationDate());
     }
 
-    public String login(CreateUserDTO createUserDTO) {
+    public String login(LoginDTO loginDTO) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            createUserDTO.email(),
-                            createUserDTO.password()
+                            loginDTO.email(),
+                            loginDTO.password()
                     )
             );
         } catch (DisabledException e) {
@@ -82,7 +83,7 @@ public class UserService implements UserDetailsService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Invalid credentials", e);
         }
 
-        UserDetails userDetails = loadUserByUsername(createUserDTO.email());
+        UserDetails userDetails = loadUserByUsername(loginDTO.email());
         return jwtTokenUtil.generateToken(userDetails);
     }
 
@@ -99,15 +100,10 @@ public class UserService implements UserDetailsService {
         }
 
         UserEntity userEntity = optionalUser.get();
-
-        if (userEntity.getEmail().equals(username)) {
-            return new User(
-                    userEntity.getEmail(),
-                    userEntity.getPassword(),
-                    new ArrayList<>()
-            );
-        } else {
-            throw new UsernameNotFoundException("User not found with email: " + userEntity.getEmail());
-        }
+        return new User(
+                userEntity.getEmail(),
+                userEntity.getPassword(),
+                new ArrayList<>()
+        );
     }
 }

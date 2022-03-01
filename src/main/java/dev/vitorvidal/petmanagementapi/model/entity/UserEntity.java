@@ -4,12 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.cassandra.core.mapping.*;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.Base64;
-import java.util.Objects;
 import java.util.UUID;
 
 @Getter
@@ -26,8 +21,6 @@ public class UserEntity {
     private UUID userId;
     @Column
     private String password;
-    @Column
-    private String signature;
     @Column(value = "creation_date")
     @CassandraType(type = CassandraType.Name.TIMESTAMP)
     private LocalDateTime creationDate;
@@ -41,7 +34,6 @@ public class UserEntity {
         this.userId = UUID.randomUUID();
         this.username = username;
         this.email = email;
-        this.signature = UUID.randomUUID().toString().replace("-", "");
         this.isActive = true;
         this.creationDate = LocalDateTime.now();
         this.password = password;

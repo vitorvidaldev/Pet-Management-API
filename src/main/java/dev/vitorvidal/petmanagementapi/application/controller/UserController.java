@@ -1,7 +1,8 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
-import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +30,15 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<UserDTO> signup(
-            @RequestBody @Valid CreateUserDTO createUserDTO) {
-        UserDTO userDTO = userService.signup(createUserDTO);
+            @RequestBody @Valid SignupDTO signupDTO) {
+        UserDTO userDTO = userService.signup(signupDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(
-            @RequestBody @Valid CreateUserDTO createUserDTO) {
-        String token = userService.login(createUserDTO);
+            @RequestBody @Valid LoginDTO loginDTO) {
+        String token = userService.login(loginDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 

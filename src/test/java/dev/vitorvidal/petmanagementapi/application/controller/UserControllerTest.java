@@ -1,7 +1,8 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
-import dev.vitorvidal.petmanagementapi.model.dto.CreateUserDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
+import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,11 +42,11 @@ class UserControllerTest {
     @Test
     void shouldSignupCorrectly() {
         UserDTO userDTOMock = mock(UserDTO.class);
-        CreateUserDTO createUserDTOMock = mock(CreateUserDTO.class);
+        SignupDTO signupDTOMock = mock(SignupDTO.class);
 
-        when(userService.signup(createUserDTOMock)).thenReturn(userDTOMock);
+        when(userService.signup(signupDTOMock)).thenReturn(userDTOMock);
 
-        ResponseEntity<UserDTO> response = userController.signup(createUserDTOMock);
+        ResponseEntity<UserDTO> response = userController.signup(signupDTOMock);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
     }
@@ -53,11 +54,11 @@ class UserControllerTest {
     @Test
     void shouldLoginCorrectly() {
         String tokenMock = "token mock";
-        CreateUserDTO createUserDTOMock = mock(CreateUserDTO.class);
+        LoginDTO loginDTOMock = mock(LoginDTO.class);
 
-        when(userService.login(createUserDTOMock)).thenReturn(tokenMock);
+        when(userService.login(loginDTOMock)).thenReturn(tokenMock);
 
-        ResponseEntity<String> response = userController.login(createUserDTOMock);
+        ResponseEntity<String> response = userController.login(loginDTOMock);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(tokenMock, response.getBody());

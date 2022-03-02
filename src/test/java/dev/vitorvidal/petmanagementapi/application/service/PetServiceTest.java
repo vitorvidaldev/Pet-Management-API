@@ -188,7 +188,7 @@ class PetServiceTest {
 
         assertDoesNotThrow(() -> petService.deletePet(userIdMock, petIdMock));
 
-        verify(petRepository).findByUserId(petIdMock);
+        verify(petRepository).findById(petIdMock);
     }
 
     @Test

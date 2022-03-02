@@ -21,10 +21,10 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUserById(
-            @PathVariable(value = "id") UUID id) {
-        UserDTO userDTO = userService.getUserById(id);
+            @PathVariable(value = "userId") UUID userId) {
+        UserDTO userDTO = userService.getUserById(userId);
         return ResponseEntity.ok().body(userDTO);
     }
 
@@ -42,10 +42,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(
-            @PathVariable(value = "id") UUID id) {
-        userService.deleteUser(id);
+            @PathVariable(value = "userId") UUID userId) {
+        userService.deleteUser(userId);
         return ResponseEntity.noContent().build();
     }
 }

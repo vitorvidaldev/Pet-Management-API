@@ -26,15 +26,17 @@ public class PetService {
 
         if (optionalPet.isPresent() && optionalPet.get().getUserId().equals(userId)) {
             PetEntity petEntity = optionalPet.get();
-            return new PetDTO(
-                    petEntity.getPetId(),
-                    petEntity.getName(),
-                    petEntity.getBirthDate(),
-                    petEntity.getSpecies(),
-                    petEntity.getBreed(),
-                    petEntity.getCreationDate(),
-                    petEntity.getUserId()
-            );
+            if (petEntity.getUserId().equals(userId)) {
+                return new PetDTO(
+                        petEntity.getPetId(),
+                        petEntity.getName(),
+                        petEntity.getBirthDate(),
+                        petEntity.getSpecies(),
+                        petEntity.getBreed(),
+                        petEntity.getCreationDate(),
+                        petEntity.getUserId()
+                );
+            }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
     }
@@ -45,15 +47,17 @@ public class PetService {
             List<PetEntity> petEntities = optionalPetEntityList.get();
             List<PetDTO> petDTOList = new ArrayList<>();
             for (PetEntity petEntity : petEntities) {
-                petDTOList.add(new PetDTO(
-                        petEntity.getPetId(),
-                        petEntity.getName(),
-                        petEntity.getBirthDate(),
-                        petEntity.getSpecies(),
-                        petEntity.getBreed(),
-                        petEntity.getCreationDate(),
-                        petEntity.getUserId()
-                ));
+                if (petEntity.getUserId().equals(userId)) {
+                    petDTOList.add(new PetDTO(
+                            petEntity.getPetId(),
+                            petEntity.getName(),
+                            petEntity.getBirthDate(),
+                            petEntity.getSpecies(),
+                            petEntity.getBreed(),
+                            petEntity.getCreationDate(),
+                            petEntity.getUserId()
+                    ));
+                }
             }
             return petDTOList;
         }
@@ -82,7 +86,7 @@ public class PetService {
 
     public void deletePet(UUID userId, UUID petId) {
         Optional<PetEntity> optionalPet = petRepository.findById(petId);
-        if (optionalPet.isEmpty()) {
+        if (optionalPet.isEmpty() || !optionalPet.get().getUserId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
         }
 

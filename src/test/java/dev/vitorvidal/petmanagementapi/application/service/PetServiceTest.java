@@ -51,7 +51,7 @@ class PetServiceTest {
 
         PetDTO petDTO = petService.getPetById(userIdMock, petIdMock);
 
-        verify(petRepository, times(1)).findById(petIdMock);
+        verify(petRepository).findById(petIdMock);
 
         assertNotNull(petDTO);
         assertEquals(petIdMock, petDTO.petId());
@@ -74,7 +74,7 @@ class PetServiceTest {
                 ResponseStatusException.class,
                 () -> petService.getPetById(userIdMock, petIdMock));
 
-        verify(petRepository, times(1)).findById(petIdMock);
+        verify(petRepository).findById(petIdMock);
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
@@ -106,7 +106,7 @@ class PetServiceTest {
 
         List<PetDTO> petDTOList = petService.getPetByUser(userIdMock);
 
-        verify(petRepository, times(1)).findByUserId(userIdMock);
+        verify(petRepository).findByUserId(userIdMock);
 
         assertNotNull(petDTOList);
         assertEquals(petEntityListMock.size(), petDTOList.size());
@@ -130,7 +130,7 @@ class PetServiceTest {
                 ResponseStatusException.class,
                 () -> petService.getPetByUser(userIdMock));
 
-        verify(petRepository, times(1)).findByUserId(userIdMock);
+        verify(petRepository).findByUserId(userIdMock);
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
@@ -172,16 +172,37 @@ class PetServiceTest {
         assertEquals(creationDateMock, petDTO.creationDate());
         assertEquals(userIdMock, petDTO.userId());
 
-        verify(petRepository, times(1)).save(any(PetEntity.class));
+        verify(petRepository).save(any(PetEntity.class));
     }
 
     @Test
     void shouldDeletePetCorrectly() {
         UUID petIdMock = UUID.randomUUID();
         UUID userIdMock = UUID.randomUUID();
+        PetEntity petEntityMock = mock(PetEntity.class);
+        Optional<PetEntity> optionalPet = Optional.of(petEntityMock);
+
+        when(petRepository.findById(petIdMock)).thenReturn(optionalPet);
+        when(optionalPet.get().getUserId()).thenReturn(userIdMock);
         doNothing().when(petRepository).deleteById(petIdMock);
 
         assertDoesNotThrow(() -> petService.deletePet(userIdMock, petIdMock));
-        verify(petRepository, times(1)).deleteById(petIdMock);
+
+        verify(petRepository).findByUserId(petIdMock);
+    }
+
+    @Test
+    void shouldThrowNotFoundExceptionWhenDeletingPet() {
+        UUID petIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
+
+        when(petRepository.findById(petIdMock)).thenReturn(Optional.empty());
+        doNothing().when(petRepository).deleteById(petIdMock);
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> petService.deletePet(userIdMock, petIdMock));
+
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals("Pet not found", exception.getReason());
     }
 }

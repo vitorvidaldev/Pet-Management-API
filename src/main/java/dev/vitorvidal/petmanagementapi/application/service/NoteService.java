@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,10 +20,10 @@ public class NoteService {
         this.noteRepository = noteRepository;
     }
 
-    public NoteDTO getNoteById(UUID noteId) {
+    public NoteDTO getNoteById(UUID userId, UUID noteId) {
         Optional<NoteEntity> optionalNote = noteRepository.findById(noteId);
 
-        if (optionalNote.isPresent()) {
+        if (optionalNote.isPresent() && optionalNote.get().getUserId().equals(userId)) {
             NoteEntity noteEntity = optionalNote.get();
             return new NoteDTO(
                     noteEntity.getNoteId(),
@@ -54,7 +55,26 @@ public class NoteService {
         );
     }
 
-    public void deleteNote(UUID noteId) {
-        noteRepository.deleteById(noteId);
+    public void deleteNote(UUID userId, UUID noteId) {
+        Optional<NoteEntity> optionalNote = noteRepository.findById(noteId);
+
+        if (optionalNote.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found");
+        }
+
+        NoteEntity noteEntity = optionalNote.get();
+
+        if (noteEntity.getUserId().equals(userId)) {
+            noteRepository.deleteById(noteId);
+        }
     }
+
+    public List<NoteDTO> getNoteByPet(UUID petId) {
+        return null;
+    }
+
+    public List<NoteDTO> getNoteByUser(UUID userId) {
+        return null;
+    }
+
 }

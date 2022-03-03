@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -70,11 +71,35 @@ public class NoteService {
     }
 
     public List<NoteDTO> getNoteByPet(UUID petId) {
-        return null;
+        Optional<List<NoteEntity>> optionalNoteEntityList = noteRepository.findByPetId(petId);
+
+        return mapNoteListToDTO(optionalNoteEntityList);
     }
 
     public List<NoteDTO> getNoteByUser(UUID userId) {
-        return null;
+        Optional<List<NoteEntity>> optionalNoteEntityList = noteRepository.findByUserId(userId);
+
+        return mapNoteListToDTO(optionalNoteEntityList);
     }
 
+    private List<NoteDTO> mapNoteListToDTO(Optional<List<NoteEntity>> optionalNoteEntityList) {
+        if (optionalNoteEntityList.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notes not found");
+        }
+
+        List<NoteEntity> noteEntityList = optionalNoteEntityList.get();
+        List<NoteDTO> noteDTOList = new ArrayList<>();
+        for (NoteEntity noteEntity: noteEntityList) {
+            NoteDTO noteDTO = new NoteDTO(
+                    noteEntity.getNoteId(),
+                    noteEntity.getNoteType(),
+                    noteEntity.getNoteTitle(),
+                    noteEntity.getNoteDescription(),
+                    noteEntity.getCreationDate(),
+                    noteEntity.getPetId()
+            );
+            noteDTOList.add(noteDTO);
+        }
+        return noteDTOList;
+    }
 }

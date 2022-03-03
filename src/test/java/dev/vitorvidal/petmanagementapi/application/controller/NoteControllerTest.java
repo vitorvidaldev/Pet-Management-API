@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +27,11 @@ class NoteControllerTest {
     @Test
     void shouldGetNoteByIdCorrectly() {
         UUID noteIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
         NoteDTO noteDTOMock = mock(NoteDTO.class);
 
-        when(noteService.getNoteById(noteIdMock)).thenReturn(noteDTOMock);
-        ResponseEntity<NoteDTO> response = noteController.getNoteById(noteIdMock);
+        when(noteService.getNoteById(userIdMock, noteIdMock)).thenReturn(noteDTOMock);
+        ResponseEntity<NoteDTO> response = noteController.getNoteById(userIdMock, noteIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -53,13 +55,32 @@ class NoteControllerTest {
 
     @Test
     void shouldDeleteNoteCorrectly() {
-        UUID noteId = UUID.randomUUID();
+        UUID noteIdMock = UUID.randomUUID();
+        UUID userIdMock = UUID.randomUUID();
 
-        doNothing().when(noteService).deleteNote(noteId);
-        ResponseEntity<Void> response = noteController.deleteNote(noteId);
+        doNothing().when(noteService).deleteNote(userIdMock, noteIdMock);
+        ResponseEntity<Void> response = noteController.deleteNote(userIdMock, noteIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
         assertNull(response.getBody());
+    }
+
+    @Test
+    void shouldGetNoteByPetCorrectly() {
+        UUID petIdMock = UUID.randomUUID();
+        NoteDTO noteDTOMock = mock(NoteDTO.class);
+        List<NoteDTO> noteDTOList = List.of(noteDTOMock);
+
+        when(noteService.getNoteByPet(petIdMock)).thenReturn(noteDTOList);
+
+        ResponseEntity<List<NoteDTO>> response = noteController.getNoteByPet(petIdMock);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(noteDTOList, response.getBody());
+
+        verify(noteService).getNoteByPet(petIdMock);
     }
 }

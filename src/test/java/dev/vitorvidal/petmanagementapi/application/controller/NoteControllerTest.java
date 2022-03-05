@@ -83,4 +83,22 @@ class NoteControllerTest {
 
         verify(noteService).getNoteByPet(petIdMock);
     }
+
+    @Test
+    void shouldGetNoteByUserCorrectly() {
+        UUID userIdMock = UUID.randomUUID();
+        NoteDTO noteDTOMock = mock(NoteDTO.class);
+        List<NoteDTO> noteDTOList = List.of(noteDTOMock);
+
+        when(noteService.getNoteByUser(userIdMock)).thenReturn(noteDTOList);
+
+        ResponseEntity<List<NoteDTO>> response = noteController.getNoteByUser(userIdMock);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertEquals(noteDTOList, response.getBody());
+
+        verify(noteService).getNoteByUser(userIdMock);
+    }
 }

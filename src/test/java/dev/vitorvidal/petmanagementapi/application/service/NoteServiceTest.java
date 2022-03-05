@@ -172,4 +172,59 @@ class NoteServiceTest {
 
         verify(noteRepository).findByUserId(userIdMock);
     }
+
+    @Test
+    void shouldThrowNotFoundExceptionGettingNotesByUserId() {
+        UUID userIdMock = UUID.randomUUID();
+
+        when(noteRepository.findByUserId(userIdMock)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> noteService.getNoteByUser(userIdMock)
+        );
+
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals("Notes not found", exception.getReason());
+
+        verify(noteRepository).findByUserId(userIdMock);
+    }
+
+    @Test
+    void shouldThrowNotFoundExceptionGettingNotesByPetId() {
+        UUID petIdMock = UUID.randomUUID();
+
+        when(noteRepository.findByPetId(petIdMock)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> noteService.getNoteByPet(petIdMock)
+        );
+
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals("Notes not found", exception.getReason());
+
+        verify(noteRepository).findByPetId(petIdMock);
+    }
+
+    @Test
+    void shouldThrowNotFoundExceptionDeletingNote() {
+        UUID userIdMock = UUID.randomUUID();
+        UUID noteIdMock = UUID.randomUUID();
+
+        when(noteRepository.findById(noteIdMock)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(
+                ResponseStatusException.class,
+                () -> noteService.deleteNote(userIdMock, noteIdMock)
+        );
+
+        assertNotNull(exception);
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals("Note not found", exception.getReason());
+
+        verify(noteRepository).findById(noteIdMock);
+    }
 }

@@ -29,9 +29,10 @@ public class NoteEntity {
     @Indexed
     private UUID userId;
 
-    public NoteEntity(String noteType, String noteTitle, String noteDescription) {
+    public NoteEntity(String noteType, String noteTitle, String noteDescription, UUID userId) {
         this.noteType = noteType;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
+        this.userId = userId;
     }
 }

@@ -4,6 +4,8 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreateNoteDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.NoteDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.NoteEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.NoteRepository;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,12 +42,12 @@ public class NoteService {
                 "Note not found");
     }
 
-    public NoteDTO createNote(CreateNoteDTO createNoteDTO) {
+    public NoteDTO createNote(UUID userId, CreateNoteDTO createNoteDTO) {
         NoteEntity noteEntity = noteRepository.save(new NoteEntity(
                 createNoteDTO.noteType(),
                 createNoteDTO.noteTitle(),
-                createNoteDTO.description()
-        ));
+                createNoteDTO.description(),
+                userId));
         return new NoteDTO(
                 noteEntity.getNoteId(),
                 noteEntity.getNoteType(),
@@ -70,26 +72,21 @@ public class NoteService {
         }
     }
 
-    public List<NoteDTO> getNoteByPet(UUID petId) {
-        Optional<List<NoteEntity>> optionalNoteEntityList = noteRepository.findByPetId(petId);
+    public List<NoteDTO> getNoteByPet(UUID petId, int pageSize) {
+        Slice<NoteEntity> noteEntitySlice = noteRepository.findByPetId(petId, CassandraPageRequest.first(pageSize));
 
-        return mapNoteListToDTO(optionalNoteEntityList);
+        return mapNoteListToDTO(noteEntitySlice.getContent());
     }
 
-    public List<NoteDTO> getNoteByUser(UUID userId) {
-        Optional<List<NoteEntity>> optionalNoteEntityList = noteRepository.findByUserId(userId);
+    public List<NoteDTO> getNoteByUser(UUID userId, int pageSize) {
+        Slice<NoteEntity> noteEntitySlice = noteRepository.findByUserId(userId, CassandraPageRequest.first(pageSize));
 
-        return mapNoteListToDTO(optionalNoteEntityList);
+        return mapNoteListToDTO(noteEntitySlice.getContent());
     }
 
-    private List<NoteDTO> mapNoteListToDTO(Optional<List<NoteEntity>> optionalNoteEntityList) {
-        if (optionalNoteEntityList.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Notes not found");
-        }
-
-        List<NoteEntity> noteEntityList = optionalNoteEntityList.get();
+    private List<NoteDTO> mapNoteListToDTO(List<NoteEntity> noteEntityList) {
         List<NoteDTO> noteDTOList = new ArrayList<>();
-        for (NoteEntity noteEntity: noteEntityList) {
+        for (NoteEntity noteEntity : noteEntityList) {
             NoteDTO noteDTO = new NoteDTO(
                     noteEntity.getNoteId(),
                     noteEntity.getNoteType(),

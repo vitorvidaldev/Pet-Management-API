@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Repository
 public interface NoteRepository extends CassandraRepository<NoteEntity, UUID> {
-
     Slice<NoteEntity> findByPetId(UUID petId, Pageable pageable);
 
     Slice<NoteEntity> findByUserId(UUID userId, Pageable pageable);

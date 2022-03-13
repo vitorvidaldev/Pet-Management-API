@@ -4,6 +4,8 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreatePetDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.PetDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.PetEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.PetRepository;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,27 +43,24 @@ public class PetService {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
     }
 
-    public List<PetDTO> getPetByUser(UUID userId) {
-        Optional<List<PetEntity>> optionalPetEntityList = petRepository.findByUserId(userId);
-        if (optionalPetEntityList.isPresent()) {
-            List<PetEntity> petEntities = optionalPetEntityList.get();
-            List<PetDTO> petDTOList = new ArrayList<>();
-            for (PetEntity petEntity : petEntities) {
-                if (petEntity.getUserId().equals(userId)) {
-                    petDTOList.add(new PetDTO(
-                            petEntity.getPetId(),
-                            petEntity.getName(),
-                            petEntity.getBirthDate(),
-                            petEntity.getSpecies(),
-                            petEntity.getBreed(),
-                            petEntity.getCreationDate(),
-                            petEntity.getUserId()
-                    ));
-                }
+    public List<PetDTO> getPetByUser(UUID userId, int pageSize) {
+        Slice<PetEntity> petEntitySlice = petRepository.findByUserId(userId, CassandraPageRequest.first(pageSize));
+        List<PetEntity> petEntityList = petEntitySlice.getContent();
+        List<PetDTO> petDTOList = new ArrayList<>();
+        for (PetEntity petEntity : petEntityList) {
+            if (petEntity.getUserId().equals(userId)) {
+                petDTOList.add(new PetDTO(
+                        petEntity.getPetId(),
+                        petEntity.getName(),
+                        petEntity.getBirthDate(),
+                        petEntity.getSpecies(),
+                        petEntity.getBreed(),
+                        petEntity.getCreationDate(),
+                        petEntity.getUserId()
+                ));
             }
-            return petDTOList;
         }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pets not found");
+        return petDTOList;
     }
 
     public PetDTO createPet(CreatePetDTO createPetDTO, UUID userId) {

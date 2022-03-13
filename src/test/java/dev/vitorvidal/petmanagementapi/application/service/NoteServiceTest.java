@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
@@ -65,6 +67,7 @@ class NoteServiceTest {
         CreateNoteDTO createNoteDTOMock = mock(CreateNoteDTO.class);
         NoteEntity noteEntityMock = mock(NoteEntity.class);
 
+        UUID userIdMock = UUID.randomUUID();
         UUID noteIdMock = UUID.randomUUID();
         String noteTypeMock = "Test type";
         String noteTitleMock = "Test title";
@@ -85,7 +88,7 @@ class NoteServiceTest {
 
         when(noteRepository.save(any(NoteEntity.class))).thenReturn(noteEntityMock);
 
-        NoteDTO noteDTO = noteService.createNote(createNoteDTOMock);
+        NoteDTO noteDTO = noteService.createNote(userIdMock, createNoteDTOMock);
 
         assertNotNull(noteDTO);
         assertEquals(noteIdMock, noteDTO.id());
@@ -118,7 +121,9 @@ class NoteServiceTest {
         UUID petIdMock = UUID.randomUUID();
         NoteEntity noteEntityMock = mock(NoteEntity.class);
         List<NoteEntity> noteEntityList = List.of(noteEntityMock);
-        Optional<List<NoteEntity>> optionalNoteEntityList = Optional.of(noteEntityList);
+
+        CassandraPageRequest pageRequestMock = CassandraPageRequest.first(10);
+        SliceImpl<NoteEntity> noteEntitySliceMock = new SliceImpl<>(noteEntityList);
 
         UUID noteIdMock = UUID.randomUUID();
         String noteTypeMock = "Test type";
@@ -126,7 +131,7 @@ class NoteServiceTest {
         String noteDescriptionMock = "Test description";
         LocalDateTime noteCreationDateMock = LocalDateTime.now();
 
-        when(noteRepository.findByPetId(petIdMock)).thenReturn(optionalNoteEntityList);
+        when(noteRepository.findByPetId(petIdMock, pageRequestMock)).thenReturn(noteEntitySliceMock);
 
         when(noteEntityMock.getNoteId()).thenReturn(noteIdMock);
         when(noteEntityMock.getNoteType()).thenReturn(noteTypeMock);
@@ -135,12 +140,12 @@ class NoteServiceTest {
         when(noteEntityMock.getCreationDate()).thenReturn(noteCreationDateMock);
         when(noteEntityMock.getPetId()).thenReturn(petIdMock);
 
-        List<NoteDTO> noteDTOList = noteService.getNoteByPet(petIdMock);
+        List<NoteDTO> noteDTOList = noteService.getNoteByPet(petIdMock, 10);
 
         assertNotNull(noteDTOList);
         assertEquals(noteEntityList.size(), noteDTOList.size());
 
-        verify(noteRepository).findByPetId(petIdMock);
+        verify(noteRepository).findByPetId(petIdMock, pageRequestMock);
     }
 
     @Test
@@ -148,7 +153,9 @@ class NoteServiceTest {
         UUID userIdMock = UUID.randomUUID();
         NoteEntity noteEntityMock = mock(NoteEntity.class);
         List<NoteEntity> noteEntityList = List.of(noteEntityMock);
-        Optional<List<NoteEntity>> optionalNoteEntityList = Optional.of(noteEntityList);
+
+        CassandraPageRequest pageRequestMock = CassandraPageRequest.first(10);
+        SliceImpl<NoteEntity> noteEntitySliceMock = new SliceImpl<>(noteEntityList);
 
         UUID noteIdMock = UUID.randomUUID();
         String noteTypeMock = "Test type";
@@ -156,7 +163,7 @@ class NoteServiceTest {
         String noteDescriptionMock = "Test description";
         LocalDateTime noteCreationDateMock = LocalDateTime.now();
 
-        when(noteRepository.findByUserId(userIdMock)).thenReturn(optionalNoteEntityList);
+        when(noteRepository.findByUserId(userIdMock, pageRequestMock)).thenReturn(noteEntitySliceMock);
 
         when(noteEntityMock.getNoteId()).thenReturn(noteIdMock);
         when(noteEntityMock.getNoteType()).thenReturn(noteTypeMock);
@@ -165,48 +172,12 @@ class NoteServiceTest {
         when(noteEntityMock.getCreationDate()).thenReturn(noteCreationDateMock);
         when(noteEntityMock.getUserId()).thenReturn(userIdMock);
 
-        List<NoteDTO> noteDTOList = noteService.getNoteByUser(userIdMock);
+        List<NoteDTO> noteDTOList = noteService.getNoteByUser(userIdMock, 10);
 
         assertNotNull(noteDTOList);
         assertEquals(noteEntityList.size(), noteDTOList.size());
 
-        verify(noteRepository).findByUserId(userIdMock);
-    }
-
-    @Test
-    void shouldThrowNotFoundExceptionGettingNotesByUserId() {
-        UUID userIdMock = UUID.randomUUID();
-
-        when(noteRepository.findByUserId(userIdMock)).thenReturn(Optional.empty());
-
-        ResponseStatusException exception = assertThrows(
-                ResponseStatusException.class,
-                () -> noteService.getNoteByUser(userIdMock)
-        );
-
-        assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-        assertEquals("Notes not found", exception.getReason());
-
-        verify(noteRepository).findByUserId(userIdMock);
-    }
-
-    @Test
-    void shouldThrowNotFoundExceptionGettingNotesByPetId() {
-        UUID petIdMock = UUID.randomUUID();
-
-        when(noteRepository.findByPetId(petIdMock)).thenReturn(Optional.empty());
-
-        ResponseStatusException exception = assertThrows(
-                ResponseStatusException.class,
-                () -> noteService.getNoteByPet(petIdMock)
-        );
-
-        assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-        assertEquals("Notes not found", exception.getReason());
-
-        verify(noteRepository).findByPetId(petIdMock);
+        verify(noteRepository).findByUserId(userIdMock, pageRequestMock);
     }
 
     @Test

@@ -20,7 +20,7 @@ public class NoteController {
         this.noteService = noteService;
     }
 
-    @GetMapping("/{noteId}/user/{userId}")
+    @GetMapping("/user/{userId}/note/{noteId}")
     public ResponseEntity<NoteDTO> getNoteById(
             @PathVariable(value = "userId") UUID userId,
             @PathVariable(value = "noteId") UUID noteId) {
@@ -30,26 +30,29 @@ public class NoteController {
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<NoteDTO>> getNoteByUser(
-            @PathVariable(value = "userId") UUID userId) {
-        List<NoteDTO> noteDTOList = noteService.getNoteByUser(userId);
+            @PathVariable(value = "userId") UUID userId,
+            @RequestParam(value = "size", defaultValue = "0", required = false) int pageSize) {
+        List<NoteDTO> noteDTOList = noteService.getNoteByUser(userId, pageSize);
         return ResponseEntity.ok().body(noteDTOList);
     }
 
     @GetMapping("/pet/{petId}")
     public ResponseEntity<List<NoteDTO>> getNoteByPet(
-            @PathVariable(value = "petId") UUID petId) {
-        List<NoteDTO> noteDTOList = noteService.getNoteByPet(petId);
+            @PathVariable(value = "petId") UUID petId,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+        List<NoteDTO> noteDTOList = noteService.getNoteByPet(petId, pageSize);
         return ResponseEntity.ok().body(noteDTOList);
     }
 
-    @PostMapping
+    @PostMapping("/user/{userId}")
     public ResponseEntity<NoteDTO> createNote(
+            @PathVariable(value = "userId") UUID userId,
             @RequestBody @Valid CreateNoteDTO createNoteDTO) {
-        NoteDTO note = noteService.createNote(createNoteDTO);
+        NoteDTO note = noteService.createNote(userId, createNoteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(note);
     }
 
-    @DeleteMapping("/{noteId}/user/{userId}")
+    @DeleteMapping("/user/{userId}/note/{noteId}")
     public ResponseEntity<Void> deleteNote(
             @PathVariable(value = "userId") UUID userId,
             @PathVariable(value = "noteId") UUID noteId) {

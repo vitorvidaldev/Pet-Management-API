@@ -45,9 +45,8 @@ class PetControllerTest {
         PetDTO petDTOMock = mock(PetDTO.class);
         List<PetDTO> petDTOList = List.of(petDTOMock);
 
-        when(petService.getPetByUser(userIdMock)).thenReturn(petDTOList);
-        ResponseEntity<List<PetDTO>> response = petController
-                .getPetByUser(userIdMock);
+        when(petService.getPetByUser(userIdMock, 10)).thenReturn(petDTOList);
+        ResponseEntity<List<PetDTO>> response = petController.getPetByUser(userIdMock, 10);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());

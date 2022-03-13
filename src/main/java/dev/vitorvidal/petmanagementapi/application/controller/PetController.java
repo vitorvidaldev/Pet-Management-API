@@ -21,7 +21,7 @@ public class PetController {
         this.petService = petService;
     }
 
-    @GetMapping("/{petId}/user/{userId}")
+    @GetMapping("/user/{userId}/pet/{petId}")
     public ResponseEntity<PetDTO> getPetById(
             @PathVariable(value = "userId") UUID userId,
             @PathVariable(value = "petId") UUID petId) {
@@ -30,8 +30,10 @@ public class PetController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<PetDTO>> getPetByUser(@PathVariable(value = "userId") UUID userId) {
-        List<PetDTO> petDTO = petService.getPetByUser(userId);
+    public ResponseEntity<List<PetDTO>> getPetByUser(
+            @PathVariable(value = "userId") UUID userId,
+            @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
+        List<PetDTO> petDTO = petService.getPetByUser(userId, pageSize);
         return ResponseEntity.ok().body(petDTO);
     }
 
@@ -43,7 +45,7 @@ public class PetController {
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(petDTO);
     }
 
-    @DeleteMapping("/{petId}/user/{userId}")
+    @DeleteMapping("/user/{userId}/pet/{petId}")
     public ResponseEntity<Void> deletePet(
             @PathVariable(value = "userId") UUID userId,
             @PathVariable(value = "petId") UUID petId) {

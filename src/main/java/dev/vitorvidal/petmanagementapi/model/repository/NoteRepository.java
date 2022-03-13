@@ -2,16 +2,16 @@ package dev.vitorvidal.petmanagementapi.model.repository;
 
 import dev.vitorvidal.petmanagementapi.model.entity.NoteEntity;
 import org.springframework.data.cassandra.repository.CassandraRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface NoteRepository extends CassandraRepository<NoteEntity, UUID> {
 
-    Optional<List<NoteEntity>> findByPetId(UUID petId);
+    Slice<NoteEntity> findByPetId(UUID petId, Pageable pageable);
 
-    Optional<List<NoteEntity>> findByUserId(UUID userId);
+    Slice<NoteEntity> findByUserId(UUID userId, Pageable pageable);
 }

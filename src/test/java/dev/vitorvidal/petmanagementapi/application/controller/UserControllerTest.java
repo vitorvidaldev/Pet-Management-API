@@ -1,6 +1,7 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
+import dev.vitorvidal.petmanagementapi.model.dto.JwtResponseDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
@@ -55,13 +56,15 @@ class UserControllerTest {
     void shouldLoginCorrectly() {
         String tokenMock = "token mock";
         LoginDTO loginDTOMock = mock(LoginDTO.class);
+        UUID userIdMock = UUID.randomUUID();
 
-        when(userService.login(loginDTOMock)).thenReturn(tokenMock);
+        when(userService.login(loginDTOMock)).thenReturn(new JwtResponseDTO(tokenMock, userIdMock));
 
-        ResponseEntity<String> response = userController.login(loginDTOMock);
+        ResponseEntity<JwtResponseDTO> response = userController.login(loginDTOMock);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(tokenMock, response.getBody());
+        assertEquals(tokenMock, response.getBody().token());
+        assertEquals(userIdMock, response.getBody().userId());
     }
 
     @Test

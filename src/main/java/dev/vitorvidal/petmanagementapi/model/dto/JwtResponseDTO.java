@@ -1,4 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.dto;
 
-public record JwtResponseDTO(String jwtToken) {
+import java.util.UUID;
+
+public record JwtResponseDTO(String token, UUID userId) {
 }

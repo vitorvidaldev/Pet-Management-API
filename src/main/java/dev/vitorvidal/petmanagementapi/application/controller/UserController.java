@@ -1,6 +1,7 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
 import dev.vitorvidal.petmanagementapi.application.service.UserService;
+import dev.vitorvidal.petmanagementapi.model.dto.JwtResponseDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
@@ -36,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<JwtResponseDTO> login(
             @RequestBody @Valid LoginDTO loginDTO) {
-        String token = userService.login(loginDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(token);
+        JwtResponseDTO loginData = userService.login(loginDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(loginData);
     }
 
     @DeleteMapping("/{userId}")

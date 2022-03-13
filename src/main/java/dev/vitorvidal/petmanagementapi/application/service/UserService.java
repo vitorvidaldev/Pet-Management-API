@@ -1,6 +1,7 @@
 package dev.vitorvidal.petmanagementapi.application.service;
 
 import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
+import dev.vitorvidal.petmanagementapi.model.dto.JwtResponseDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
@@ -69,7 +70,7 @@ public class UserService implements UserDetailsService {
                 userEntity.getCreationDate());
     }
 
-    public String login(LoginDTO loginDTO) {
+    public JwtResponseDTO login(LoginDTO loginDTO) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -84,7 +85,15 @@ public class UserService implements UserDetailsService {
         }
 
         UserDetails userDetails = loadUserByUsername(loginDTO.email());
-        return jwtTokenUtil.generateToken(userDetails);
+        String token = jwtTokenUtil.generateToken(userDetails);
+
+
+        Optional<UserEntity> optionalUser = userRepository.findById(loginDTO.email());
+
+        if (optionalUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return new JwtResponseDTO(token, optionalUser.get().getUserId());
     }
 
     public void deleteUser(UUID userId) {

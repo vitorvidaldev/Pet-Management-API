@@ -1,6 +1,7 @@
 package dev.vitorvidal.petmanagementapi.application.service;
 
 import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
+import dev.vitorvidal.petmanagementapi.model.dto.JwtResponseDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
@@ -137,13 +138,13 @@ class UserServiceTest {
         )).thenReturn(null);
         when(jwtTokenUtil.generateToken(any(UserDetails.class))).thenReturn(jwtTokenMock);
 
-        String jwtToken = userService.login(loginDTOMock);
+        JwtResponseDTO loginData = userService.login(loginDTOMock);
 
-        assertNotNull(jwtToken);
-        assertEquals(jwtTokenMock, jwtToken);
+        assertNotNull(loginData);
+        assertEquals(jwtTokenMock, loginData.token());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(userRepository).findById(emailMock);
+        verify(userRepository, times(2)).findById(emailMock);
         verify(jwtTokenUtil).generateToken(any(UserDetails.class));
     }
 

@@ -67,7 +67,6 @@ class NoteServiceTest {
         CreateNoteDTO createNoteDTOMock = mock(CreateNoteDTO.class);
         NoteEntity noteEntityMock = mock(NoteEntity.class);
 
-        UUID userIdMock = UUID.randomUUID();
         UUID noteIdMock = UUID.randomUUID();
         String noteTypeMock = "Test type";
         String noteTitleMock = "Test title";
@@ -88,7 +87,7 @@ class NoteServiceTest {
 
         when(noteRepository.save(any(NoteEntity.class))).thenReturn(noteEntityMock);
 
-        NoteDTO noteDTO = noteService.createNote(userIdMock, createNoteDTOMock);
+        NoteDTO noteDTO = noteService.createNote(createNoteDTOMock);
 
         assertNotNull(noteDTO);
         assertEquals(noteIdMock, noteDTO.id());
@@ -98,7 +97,7 @@ class NoteServiceTest {
         assertEquals(noteCreationDateMock, noteDTO.creationDate());
         assertEquals(petIdMock, noteDTO.petId());
 
-        verify(noteRepository, times(1)).save(any(NoteEntity.class));
+        verify(noteRepository).save(any(NoteEntity.class));
     }
 
     @Test
@@ -113,7 +112,7 @@ class NoteServiceTest {
         when(noteEntityMock.getUserId()).thenReturn(userIdMock);
 
         assertDoesNotThrow(() -> noteService.deleteNote(userIdMock, noteIdMock));
-        verify(noteRepository, times(1)).deleteById(noteIdMock);
+        verify(noteRepository).deleteById(noteIdMock);
     }
 
     @Test

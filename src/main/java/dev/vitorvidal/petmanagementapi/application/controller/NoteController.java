@@ -47,7 +47,7 @@ public class NoteController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<NoteDTO>> getNoteByUser(
             @PathVariable(value = "userId") UUID userId,
-            @RequestParam(value = "size", defaultValue = "0", required = false) int pageSize) {
+            @RequestParam(value = "size", defaultValue = "10", required = false) int pageSize) {
         List<NoteDTO> noteDTOList = noteService.getNoteByUser(userId, pageSize);
         return ResponseEntity.ok().body(noteDTOList);
     }
@@ -68,11 +68,10 @@ public class NoteController {
     @ApiResponse(responseCode = "200", description = "Returns note data",
             content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = NoteDTO.class))})
-    @PostMapping("/user/{userId}")
+    @PostMapping
     public ResponseEntity<NoteDTO> createNote(
-            @PathVariable(value = "userId") UUID userId,
             @RequestBody @Valid CreateNoteDTO createNoteDTO) {
-        NoteDTO note = noteService.createNote(userId, createNoteDTO);
+        NoteDTO note = noteService.createNote(createNoteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(note);
     }
 

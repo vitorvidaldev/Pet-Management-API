@@ -42,12 +42,13 @@ public class NoteService {
                 "Note not found");
     }
 
-    public NoteDTO createNote(UUID userId, CreateNoteDTO createNoteDTO) {
+    public NoteDTO createNote(CreateNoteDTO createNoteDTO) {
         NoteEntity noteEntity = noteRepository.save(new NoteEntity(
                 createNoteDTO.noteType(),
                 createNoteDTO.noteTitle(),
                 createNoteDTO.description(),
-                userId));
+                createNoteDTO.userId(),
+                createNoteDTO.petId()));
         return new NoteDTO(
                 noteEntity.getNoteId(),
                 noteEntity.getNoteType(),

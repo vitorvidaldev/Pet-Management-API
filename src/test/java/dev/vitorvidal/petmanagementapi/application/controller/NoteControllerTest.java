@@ -43,10 +43,9 @@ class NoteControllerTest {
     void shouldCreateNoteCorrectly() {
         CreateNoteDTO createNoteDTOMock = mock(CreateNoteDTO.class);
         NoteDTO noteDTOMock = mock(NoteDTO.class);
-        UUID userIdMock = UUID.randomUUID();
 
-        when(noteService.createNote(userIdMock, createNoteDTOMock)).thenReturn(noteDTOMock);
-        ResponseEntity<NoteDTO> response = noteController.createNote(userIdMock, createNoteDTOMock);
+        when(noteService.createNote(createNoteDTOMock)).thenReturn(noteDTOMock);
+        ResponseEntity<NoteDTO> response = noteController.createNote(createNoteDTOMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());

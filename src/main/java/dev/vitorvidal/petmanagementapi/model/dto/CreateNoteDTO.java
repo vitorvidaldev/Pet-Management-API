@@ -1,7 +1,6 @@
 package dev.vitorvidal.petmanagementapi.model.dto;
 
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record CreateNoteDTO(
@@ -12,9 +11,7 @@ public record CreateNoteDTO(
         @NotNull
         String description,
         @NotNull
-        LocalDateTime creationDate,
-        @NotNull
-        UUID noteId,
+        UUID userId,
         @NotNull
         UUID petId
 ) {

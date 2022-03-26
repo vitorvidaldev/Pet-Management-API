@@ -29,10 +29,18 @@ public class NoteEntity {
     @Indexed
     private UUID userId;
 
-    public NoteEntity(String noteType, String noteTitle, String noteDescription, UUID userId) {
+    public NoteEntity(
+            String noteType,
+            String noteTitle,
+            String noteDescription,
+            UUID userId,
+            UUID petId) {
+        this.noteId = UUID.randomUUID();
         this.noteType = noteType;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
         this.userId = userId;
+        this.petId = petId;
+        this.creationDate = LocalDateTime.now();
     }
 }

@@ -4,7 +4,6 @@ import dev.vitorvidal.petmanagementapi.model.dto.CreatePetDTO;
 import dev.vitorvidal.petmanagementapi.model.dto.PetDTO;
 import dev.vitorvidal.petmanagementapi.model.entity.PetEntity;
 import dev.vitorvidal.petmanagementapi.model.repository.PetRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -79,65 +78,6 @@ class PetServiceTest {
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         assertEquals("Pet not found", exception.getReason());
-    }
-
-    @Test
-    @Disabled
-    void shouldGetPetByUserCorrectly() {
-//        PetEntity petEntityMock = mock(PetEntity.class);
-//        List<PetEntity> petEntityListMock = List.of(petEntityMock);
-//
-//        UUID userIdMock = UUID.randomUUID();
-//        UUID petIdMock = UUID.randomUUID();
-//        String petNameMock = "pet name";
-//        LocalDateTime birthDateMock = LocalDateTime.now();
-//        String speciesMock = "species";
-//        String breedMock = "breed";
-//        LocalDateTime creationDateMock = LocalDateTime.now();
-//
-//        when(petEntityMock.getPetId()).thenReturn(petIdMock);
-//        when(petEntityMock.getName()).thenReturn(petNameMock);
-//        when(petEntityMock.getBirthDate()).thenReturn(birthDateMock);
-//        when(petEntityMock.getSpecies()).thenReturn(speciesMock);
-//        when(petEntityMock.getBreed()).thenReturn(breedMock);
-//        when(petEntityMock.getCreationDate()).thenReturn(creationDateMock);
-//        when(petEntityMock.getUserId()).thenReturn(userIdMock);
-//
-//        when(petRepository.findByUserId(userIdMock)).thenReturn(Optional.of(petEntityListMock));
-//
-//        List<PetDTO> petDTOList = petService.getPetByUser(userIdMock, 0);
-//
-//        verify(petRepository).findByUserId(userIdMock);
-//
-//        assertNotNull(petDTOList);
-//        assertEquals(petEntityListMock.size(), petDTOList.size());
-//        assertNotNull(petDTOList.get(0));
-//        assertEquals(petIdMock, petDTOList.get(0).petId());
-//        assertEquals(petNameMock, petDTOList.get(0).petName());
-//        assertEquals(birthDateMock, petDTOList.get(0).birthDate());
-//        assertEquals(speciesMock, petDTOList.get(0).species());
-//        assertEquals(breedMock, petDTOList.get(0).breed());
-//        assertEquals(creationDateMock, petDTOList.get(0).creationDate());
-//        assertEquals(userIdMock, petDTOList.get(0).userId());
-    }
-
-    @Test
-    @Disabled
-    void shouldThrowNotFoundExceptionGettingPetByUser() {
-//        UUID userIdMock = UUID.randomUUID();
-//
-//        when(petRepository.findByUserId(userIdMock)).thenReturn(Optional.empty());
-//
-//        ResponseStatusException exception = assertThrows(
-//                ResponseStatusException.class,
-//                () -> petService.getPetByUser(userIdMock, 0));
-//
-//        verify(petRepository).findByUserId(userIdMock);
-//
-//        assertNotNull(exception);
-//        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-//        assertEquals("Pets not found", exception.getReason());
-
     }
 
     @Test

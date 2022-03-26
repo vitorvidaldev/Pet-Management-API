@@ -8,11 +8,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.cassandra.core.query.CassandraPageRequest;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -146,5 +149,46 @@ class PetServiceTest {
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         assertEquals("Pet not found", exception.getReason());
+    }
+
+    @Test
+    void shouldGetPetByUserCorrectly() {
+        PetEntity petEntityMock = mock(PetEntity.class);
+        UUID userIdMock = UUID.randomUUID();
+        CassandraPageRequest pageRequestMock = CassandraPageRequest.first(10);
+        List<PetEntity> petEntityList = List.of(petEntityMock);
+        SliceImpl<PetEntity> petEntitySliceMock = new SliceImpl<>(petEntityList);
+
+        UUID petIdMock = UUID.randomUUID();
+        String petNameMock = "pet name";
+        LocalDateTime birthDateMock = LocalDateTime.now();
+        String speciesMock = "species";
+        String breedMock = "breed";
+        LocalDateTime creationDateMock = LocalDateTime.now();
+
+        when(petRepository.findByUserId(userIdMock, pageRequestMock)).thenReturn(petEntitySliceMock);
+        when(petEntityMock.getUserId()).thenReturn(userIdMock);
+        when(petEntityMock.getPetId()).thenReturn(petIdMock);
+        when(petEntityMock.getName()).thenReturn(petNameMock);
+        when(petEntityMock.getBirthDate()).thenReturn(birthDateMock);
+        when(petEntityMock.getSpecies()).thenReturn(speciesMock);
+        when(petEntityMock.getBreed()).thenReturn(breedMock);
+        when(petEntityMock.getCreationDate()).thenReturn(creationDateMock);
+
+        List<PetDTO> petByUser = petService.getPetByUser(userIdMock, 10);
+
+        assertNotNull(petByUser);
+        assertEquals(1, petByUser.size());
+
+        PetDTO petDTO = petByUser.get(0);
+
+        assertEquals(petEntityMock.getUserId(), petDTO.userId());
+        assertEquals(petEntityMock.getPetId(), petDTO.petId());
+        assertEquals(petEntityMock.getName(), petDTO.petName());
+        assertEquals(petEntityMock.getBreed(), petDTO.breed());
+        assertEquals(petEntityMock.getSpecies(), petDTO.species());
+        assertEquals(petEntityMock.getBirthDate(), petDTO.birthDate());
+
+        verify(petRepository).findByUserId(userIdMock, pageRequestMock);
     }
 }

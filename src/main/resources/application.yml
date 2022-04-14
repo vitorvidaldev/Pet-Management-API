@@ -12,5 +12,12 @@ spring:
   main:
     allow-circular-references: true
 
+#logging:
+#  level:
+#    org:
+#      apache: trace
+#    springframework:
+#      web: trace
+
 jwt:
   secret: WzYwLCAtMTE0LCAtMTI4LCAtMTIsIC0xMjgsIDExLCAtODgsIC0xMjAsIDEwNywgMzMsIDY0LCA1OSwgLTcsIDY5LCAxMCwgLTk4LCAtNzUsIDEyMywgMjIsIC0zNSwgNzcsIC0xMTYsIDExMywgOTgsIDExNSwgLTk5LCAtNjMsIC01MiwgMTExLCAtNzMsIC0xMTcsIDQzXQ==

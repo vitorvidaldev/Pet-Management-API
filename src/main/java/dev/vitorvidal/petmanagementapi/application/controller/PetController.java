@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/v1/pet")
+@RequestMapping("/rest/v1/pets")
 public class PetController {
 
     private final PetService petService;

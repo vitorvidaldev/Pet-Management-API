@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/v1/note")
+@RequestMapping("/rest/v1/notes")
 public class NoteController {
     private final NoteService noteService;
 

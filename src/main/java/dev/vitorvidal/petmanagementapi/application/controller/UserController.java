@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rest/v1/user")
+@RequestMapping("/rest/v1/users")
 public class UserController {
 
     private final UserService userService;

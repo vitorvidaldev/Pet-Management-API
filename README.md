@@ -8,6 +8,27 @@ A Pet Management API, developed with:
 - Docker
 - Docker Compose
 
+## Cassandra - Basic concepts and terminology
+
+Cassandra is a distributed database that stores data across a cluster of nodes. It is a NoSQL database that is
+lightweight, open-source, non-relational, and largely distributed. Some main concepts and terminology used in Cassandra
+are:
+
+- Data in Cassandra is stored as a set of rows that are organized into tables.
+- Tables are also called column families.
+- Each row is identified by a primary key value.
+- Data is partitioned by the primary key.
+- Cassandra provides high write and read throughput.
+- A cassandra cluster is made up of one or more nodes.
+- A cassandra node is a single instance of Cassandra.
+- Cassandra nodes store data in a commit log directory.
+- Keyspace is a namespace that defines data replication on nodes.
+- A cassandra cluster can have multiple keyspaces.
+- A keyspace can have multiple tables.
+- A table can have multiple columns.
+- A column is a key-value pair.
+- A column can be indexed.
+
 ## Features
 
 ### User feature

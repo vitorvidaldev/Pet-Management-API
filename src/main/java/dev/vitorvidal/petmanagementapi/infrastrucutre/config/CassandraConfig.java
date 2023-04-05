@@ -1,18 +1,24 @@
 package dev.vitorvidal.petmanagementapi.infrastrucutre.config;
 
+import com.datastax.oss.driver.api.core.CqlSession;
+import com.datastax.oss.driver.api.core.config.DefaultDriverOption;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.cassandra.DriverConfigLoaderBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.cassandra.SessionFactory;
 import org.springframework.data.cassandra.config.CqlSessionFactoryBean;
 import org.springframework.data.cassandra.config.SchemaAction;
+import org.springframework.data.cassandra.config.SessionFactoryFactoryBean;
 import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
+import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
-import org.springframework.data.cassandra.repository.support.CassandraRepositoryFactory;
+import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
 
-import java.util.Objects;
+import java.util.List;
 
 @Configuration
 public class CassandraConfig {
@@ -27,40 +33,55 @@ public class CassandraConfig {
     private String keyspaceName;
 
     @Bean
-    public CassandraMappingContext cassandraMapping() {
-        return new CassandraMappingContext();
-    }
-
-    @Bean
     public CqlSessionFactoryBean session() {
+
         CqlSessionFactoryBean session = new CqlSessionFactoryBean();
         session.setContactPoints(contactPoints);
-        session.setPort(9042);
         session.setKeyspaceName(keyspaceName);
-        session.setSchemaAction(SchemaAction.valueOf(schemaAction.toUpperCase()));
+        session.setKeyspaceCreations(keyspaceActionSpecification());
         session.setLocalDatacenter(localDatacenter);
 
         return session;
     }
 
-    @Bean
-    public CassandraConverter converter() {
-        return new MappingCassandraConverter(cassandraMapping());
-    }
-
-
-    @Bean
-    public CassandraTemplate cassandraTemplate() {
-        return new CassandraTemplate(Objects.requireNonNull(session().getObject()));
+    public List<CreateKeyspaceSpecification> keyspaceActionSpecification() {
+        return List.of(CreateKeyspaceSpecification.createKeyspace(keyspaceName)
+                .ifNotExists()
+                .withSimpleReplication(1));
     }
 
     @Bean
-    public CassandraOperations cassandraOperations() throws Exception {
-        return cassandraTemplate();
+    public DriverConfigLoaderBuilderCustomizer defaultProfile() {
+        return builder -> builder.withString(DefaultDriverOption.METADATA_SCHEMA_REQUEST_TIMEOUT, "30 seconds").build();
     }
 
     @Bean
-    public CassandraRepositoryFactory cassandraRepositoryFactory() throws Exception {
-        return new CassandraRepositoryFactory(cassandraTemplate());
+    public SessionFactoryFactoryBean sessionFactory(CqlSession session, CassandraConverter converter) {
+
+        SessionFactoryFactoryBean sessionFactory = new SessionFactoryFactoryBean();
+        sessionFactory.setSession(session);
+        sessionFactory.setConverter(converter);
+        sessionFactory.setSchemaAction(SchemaAction.valueOf(schemaAction.toUpperCase()));
+
+        return sessionFactory;
+    }
+
+    @Bean
+    public CassandraMappingContext mappingContext(CqlSession cqlSession) {
+
+        CassandraMappingContext mappingContext = new CassandraMappingContext();
+        mappingContext.setUserTypeResolver(new SimpleUserTypeResolver(cqlSession));
+
+        return mappingContext;
+    }
+
+    @Bean
+    public CassandraConverter converter(CassandraMappingContext mappingContext) {
+        return new MappingCassandraConverter(mappingContext);
+    }
+
+    @Bean
+    public CassandraOperations cassandraTemplate(SessionFactory sessionFactory, CassandraConverter converter) {
+        return new CassandraTemplate(sessionFactory, converter);
     }
 }

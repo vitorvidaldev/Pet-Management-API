@@ -29,15 +29,7 @@ public class PetService {
         if (optionalPet.isPresent() && optionalPet.get().getUserId().equals(userId)) {
             PetEntity petEntity = optionalPet.get();
             if (petEntity.getUserId().equals(userId)) {
-                return new PetDTO(
-                        petEntity.getPetId(),
-                        petEntity.getName(),
-                        petEntity.getBirthDate(),
-                        petEntity.getSpecies(),
-                        petEntity.getBreed(),
-                        petEntity.getCreationDate(),
-                        petEntity.getUserId()
-                );
+                return new PetDTO(petEntity.getPetId(), petEntity.getName(), petEntity.getBirthDate(), petEntity.getSpecies(), petEntity.getBreed(), petEntity.getCreationDate(), petEntity.getUserId());
             }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pet not found");
@@ -49,38 +41,16 @@ public class PetService {
         List<PetDTO> petDTOList = new ArrayList<>();
         for (PetEntity petEntity : petEntityList) {
             if (petEntity.getUserId().equals(userId)) {
-                petDTOList.add(new PetDTO(
-                        petEntity.getPetId(),
-                        petEntity.getName(),
-                        petEntity.getBirthDate(),
-                        petEntity.getSpecies(),
-                        petEntity.getBreed(),
-                        petEntity.getCreationDate(),
-                        petEntity.getUserId()
-                ));
+                petDTOList.add(new PetDTO(petEntity.getPetId(), petEntity.getName(), petEntity.getBirthDate(), petEntity.getSpecies(), petEntity.getBreed(), petEntity.getCreationDate(), petEntity.getUserId()));
             }
         }
         return petDTOList;
     }
 
     public PetDTO createPet(CreatePetDTO createPetDTO, UUID userId) {
-        PetEntity petEntity = petRepository.save(new PetEntity(
-                createPetDTO.name(),
-                createPetDTO.birthDate(),
-                createPetDTO.species(),
-                createPetDTO.breed(),
-                userId
-        ));
+        PetEntity petEntity = petRepository.save(new PetEntity(createPetDTO.name(), createPetDTO.birthDate(), createPetDTO.species(), createPetDTO.breed(), userId));
 
-        return new PetDTO(
-                petEntity.getPetId(),
-                petEntity.getName(),
-                petEntity.getBirthDate(),
-                petEntity.getSpecies(),
-                petEntity.getBreed(),
-                petEntity.getCreationDate(),
-                petEntity.getUserId()
-        );
+        return new PetDTO(petEntity.getPetId(), petEntity.getName(), petEntity.getBirthDate(), petEntity.getSpecies(), petEntity.getBreed(), petEntity.getCreationDate(), petEntity.getUserId());
     }
 
     public void deletePet(UUID userId, UUID petId) {

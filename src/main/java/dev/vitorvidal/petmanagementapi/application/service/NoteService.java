@@ -28,35 +28,14 @@ public class NoteService {
 
         if (optionalNote.isPresent() && optionalNote.get().getUserId().equals(userId)) {
             NoteEntity noteEntity = optionalNote.get();
-            return new NoteDTO(
-                    noteEntity.getNoteId(),
-                    noteEntity.getNoteType(),
-                    noteEntity.getNoteTitle(),
-                    noteEntity.getNoteDescription(),
-                    noteEntity.getCreationDate(),
-                    noteEntity.getPetId()
-            );
+            return new NoteDTO(noteEntity.getNoteId(), noteEntity.getNoteType(), noteEntity.getNoteTitle(), noteEntity.getNoteDescription(), noteEntity.getCreationDate(), noteEntity.getPetId());
         }
-        throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND,
-                "Note not found");
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Note not found");
     }
 
     public NoteDTO createNote(CreateNoteDTO createNoteDTO) {
-        NoteEntity noteEntity = noteRepository.save(new NoteEntity(
-                createNoteDTO.noteType(),
-                createNoteDTO.noteTitle(),
-                createNoteDTO.description(),
-                createNoteDTO.userId(),
-                createNoteDTO.petId()));
-        return new NoteDTO(
-                noteEntity.getNoteId(),
-                noteEntity.getNoteType(),
-                noteEntity.getNoteTitle(),
-                noteEntity.getNoteDescription(),
-                noteEntity.getCreationDate(),
-                noteEntity.getPetId()
-        );
+        NoteEntity noteEntity = noteRepository.save(new NoteEntity(createNoteDTO.noteType(), createNoteDTO.noteTitle(), createNoteDTO.description(), createNoteDTO.userId(), createNoteDTO.petId()));
+        return new NoteDTO(noteEntity.getNoteId(), noteEntity.getNoteType(), noteEntity.getNoteTitle(), noteEntity.getNoteDescription(), noteEntity.getCreationDate(), noteEntity.getPetId());
     }
 
     public void deleteNote(UUID userId, UUID noteId) {
@@ -88,14 +67,7 @@ public class NoteService {
     private List<NoteDTO> mapNoteListToDTO(List<NoteEntity> noteEntityList) {
         List<NoteDTO> noteDTOList = new ArrayList<>();
         for (NoteEntity noteEntity : noteEntityList) {
-            NoteDTO noteDTO = new NoteDTO(
-                    noteEntity.getNoteId(),
-                    noteEntity.getNoteType(),
-                    noteEntity.getNoteTitle(),
-                    noteEntity.getNoteDescription(),
-                    noteEntity.getCreationDate(),
-                    noteEntity.getPetId()
-            );
+            NoteDTO noteDTO = new NoteDTO(noteEntity.getNoteId(), noteEntity.getNoteType(), noteEntity.getNoteTitle(), noteEntity.getNoteDescription(), noteEntity.getCreationDate(), noteEntity.getPetId());
             noteDTOList.add(noteDTO);
         }
         return noteDTOList;

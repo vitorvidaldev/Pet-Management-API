@@ -32,14 +32,7 @@ public class PetEntity {
     public PetEntity() {
     }
 
-    public PetEntity(
-            UUID petId,
-            String name,
-            LocalDateTime birthDate,
-            String species,
-            String breed,
-            LocalDateTime creationDate,
-            UUID userId) {
+    public PetEntity(UUID petId, String name, LocalDateTime birthDate, String species, String breed, LocalDateTime creationDate, UUID userId) {
         this.petId = petId;
         this.name = name;
         this.birthDate = birthDate;
@@ -49,13 +42,7 @@ public class PetEntity {
         this.userId = userId;
     }
 
-    public PetEntity(
-            String name,
-            LocalDateTime birthDate,
-            String species,
-            String breed,
-            UUID userId
-    ) {
+    public PetEntity(String name, LocalDateTime birthDate, String species, String breed, UUID userId) {
         this.petId = UUID.randomUUID();
         this.name = name;
         this.birthDate = birthDate;

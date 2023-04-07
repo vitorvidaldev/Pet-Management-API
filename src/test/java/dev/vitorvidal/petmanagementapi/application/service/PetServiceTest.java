@@ -79,7 +79,7 @@ class PetServiceTest {
         verify(petRepository).findById(petIdMock);
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Pet not found", exception.getReason());
     }
 
@@ -147,7 +147,7 @@ class PetServiceTest {
         ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> petService.deletePet(userIdMock, petIdMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Pet not found", exception.getReason());
     }
 

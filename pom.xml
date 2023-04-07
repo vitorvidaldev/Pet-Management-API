@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.1</version>
+		<version>3.0.5</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>dev.vitorvidal</groupId>
@@ -17,8 +17,8 @@
 	</properties>
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-cassandra</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-cassandra</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -48,12 +48,6 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-gson</artifactId>
 			<version>0.11.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.15</version>
 		</dependency>
 
 		<dependency>

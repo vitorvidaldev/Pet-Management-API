@@ -31,10 +31,7 @@ public class UserService implements UserDetailsService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
 
-    public UserService(
-            UserRepository userRepository,
-            @Lazy AuthenticationManager authenticationManager,
-            JwtTokenUtil jwtTokenUtil) {
+    public UserService(UserRepository userRepository, @Lazy AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil) {
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.jwtTokenUtil = jwtTokenUtil;
@@ -44,11 +41,7 @@ public class UserService implements UserDetailsService {
         Optional<UserEntity> optionalUserEntity = userRepository.findByUserId(userId);
         if (optionalUserEntity.isPresent()) {
             UserEntity userEntity = optionalUserEntity.get();
-            return new UserDTO(
-                    userEntity.getUserId(),
-                    userEntity.getEmail(),
-                    userEntity.getIsActive(),
-                    userEntity.getCreationDate());
+            return new UserDTO(userEntity.getUserId(), userEntity.getEmail(), userEntity.getIsActive(), userEntity.getCreationDate());
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
@@ -56,23 +49,13 @@ public class UserService implements UserDetailsService {
     public UserDTO signup(SignupDTO signupDTO) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        UserEntity userEntity = userRepository.save(new UserEntity(
-                signupDTO.username(),
-                signupDTO.email(),
-                passwordEncoder.encode(signupDTO.password())));
-        return new UserDTO(
-                userEntity.getUserId(),
-                userEntity.getEmail(),
-                userEntity.getIsActive(),
-                userEntity.getCreationDate());
+        UserEntity userEntity = userRepository.save(new UserEntity(signupDTO.username(), signupDTO.email(), passwordEncoder.encode(signupDTO.password())));
+        return new UserDTO(userEntity.getUserId(), userEntity.getEmail(), userEntity.getIsActive(), userEntity.getCreationDate());
     }
 
     public JwtResponseDTO login(LoginDTO loginDTO) {
         try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginDTO.email(),
-                            loginDTO.password()));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDTO.email(), loginDTO.password()));
         } catch (DisabledException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User disabled", e);
         } catch (BadCredentialsException e) {
@@ -103,9 +86,6 @@ public class UserService implements UserDetailsService {
         }
 
         UserEntity userEntity = optionalUser.get();
-        return new User(
-                userEntity.getEmail(),
-                userEntity.getPassword(),
-                new ArrayList<>());
+        return new User(userEntity.getEmail(), userEntity.getPassword(), new ArrayList<>());
     }
 }

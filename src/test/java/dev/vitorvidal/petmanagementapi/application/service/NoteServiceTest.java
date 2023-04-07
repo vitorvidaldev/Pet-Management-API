@@ -56,7 +56,7 @@ class NoteServiceTest {
                 () -> noteService.getNoteById(userIdMock, noteIdMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Note not found", exception.getReason());
 
         verify(noteRepository, times(1)).findById(noteIdMock);
@@ -192,7 +192,7 @@ class NoteServiceTest {
         );
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("Note not found", exception.getReason());
 
         verify(noteRepository).findById(noteIdMock);

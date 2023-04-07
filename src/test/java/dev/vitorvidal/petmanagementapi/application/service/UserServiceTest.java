@@ -61,7 +61,7 @@ class UserServiceTest {
                 () -> userService.getUserById(userIdMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("User not found", exception.getReason());
         verify(userRepository, times(1)).findByUserId(userIdMock);
     }
@@ -170,7 +170,7 @@ class UserServiceTest {
                 () -> userService.login(loginDTOMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
         assertEquals("User not found", exception.getReason());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -199,7 +199,7 @@ class UserServiceTest {
                 () -> userService.login(loginDTOMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN, exception.getStatusCode());
         assertEquals("User disabled", exception.getReason());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
@@ -228,7 +228,7 @@ class UserServiceTest {
                 () -> userService.login(loginDTOMock));
 
         assertNotNull(exception);
-        assertEquals(HttpStatus.FORBIDDEN, exception.getStatus());
+        assertEquals(HttpStatus.FORBIDDEN, exception.getStatusCode());
         assertEquals("Invalid credentials", exception.getReason());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));

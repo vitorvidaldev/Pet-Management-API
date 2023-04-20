@@ -14,6 +14,7 @@ import org.springframework.data.cassandra.core.CassandraOperations;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.convert.CassandraConverter;
 import org.springframework.data.cassandra.core.convert.MappingCassandraConverter;
+import org.springframework.data.cassandra.core.cql.CqlTemplate;
 import org.springframework.data.cassandra.core.cql.keyspace.CreateKeyspaceSpecification;
 import org.springframework.data.cassandra.core.mapping.CassandraMappingContext;
 import org.springframework.data.cassandra.core.mapping.SimpleUserTypeResolver;
@@ -83,5 +84,14 @@ public class CassandraConfig {
     @Bean
     public CassandraOperations cassandraTemplate(SessionFactory sessionFactory, CassandraConverter converter) {
         return new CassandraTemplate(sessionFactory, converter);
+    }
+
+    @Bean
+    public CqlTemplate cqlTemplate(CqlSession session) {
+        return new CqlTemplate(session);
+    }
+
+    public CqlTemplate getCqlTemplate() {
+        return cqlTemplate(session().getObject());
     }
 }

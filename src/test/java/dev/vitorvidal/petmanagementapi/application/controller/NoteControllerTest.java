@@ -1,8 +1,9 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
-import dev.vitorvidal.petmanagementapi.application.service.NoteService;
-import dev.vitorvidal.petmanagementapi.model.dto.CreateNoteDTO;
-import dev.vitorvidal.petmanagementapi.model.dto.NoteDTO;
+import dev.vitorvidal.petmanagementapi.controller.NoteController;
+import dev.vitorvidal.petmanagementapi.domain.model.CreateNote;
+import dev.vitorvidal.petmanagementapi.domain.model.Note;
+import dev.vitorvidal.petmanagementapi.service.NoteService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,28 +29,28 @@ class NoteControllerTest {
     void shouldGetNoteByIdCorrectly() {
         UUID noteIdMock = UUID.randomUUID();
         UUID userIdMock = UUID.randomUUID();
-        NoteDTO noteDTOMock = mock(NoteDTO.class);
+        Note noteMock = mock(Note.class);
 
-        when(noteService.getNoteById(userIdMock, noteIdMock)).thenReturn(noteDTOMock);
-        ResponseEntity<NoteDTO> response = noteController.getNoteById(userIdMock, noteIdMock);
+        when(noteService.getNoteById(userIdMock, noteIdMock)).thenReturn(noteMock);
+        ResponseEntity<Note> response = noteController.getNoteById(userIdMock, noteIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(noteDTOMock, response.getBody());
+        assertEquals(noteMock, response.getBody());
     }
 
     @Test
     void shouldCreateNoteCorrectly() {
-        CreateNoteDTO createNoteDTOMock = mock(CreateNoteDTO.class);
-        NoteDTO noteDTOMock = mock(NoteDTO.class);
+        CreateNote createNoteMock = mock(CreateNote.class);
+        Note noteMock = mock(Note.class);
 
-        when(noteService.createNote(createNoteDTOMock)).thenReturn(noteDTOMock);
-        ResponseEntity<NoteDTO> response = noteController.createNote(createNoteDTOMock);
+        when(noteService.createNote(createNoteMock)).thenReturn(noteMock);
+        ResponseEntity<Note> response = noteController.createNote(createNoteMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(noteDTOMock, response.getBody());
+        assertEquals(noteMock, response.getBody());
     }
 
     @Test
@@ -68,17 +69,17 @@ class NoteControllerTest {
     @Test
     void shouldGetNoteByPetCorrectly() {
         UUID petIdMock = UUID.randomUUID();
-        NoteDTO noteDTOMock = mock(NoteDTO.class);
-        List<NoteDTO> noteDTOList = List.of(noteDTOMock);
+        Note noteMock = mock(Note.class);
+        List<Note> noteList = List.of(noteMock);
 
-        when(noteService.getNoteByPet(petIdMock, 10)).thenReturn(noteDTOList);
+        when(noteService.getNoteByPet(petIdMock, 10)).thenReturn(noteList);
 
-        ResponseEntity<List<NoteDTO>> response = noteController.getNoteByPet(petIdMock, 10);
+        ResponseEntity<List<Note>> response = noteController.getNoteByPet(petIdMock, 10);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(noteDTOList, response.getBody());
+        assertEquals(noteList, response.getBody());
 
         verify(noteService).getNoteByPet(petIdMock, 10);
     }
@@ -86,17 +87,17 @@ class NoteControllerTest {
     @Test
     void shouldGetNoteByUserCorrectly() {
         UUID userIdMock = UUID.randomUUID();
-        NoteDTO noteDTOMock = mock(NoteDTO.class);
-        List<NoteDTO> noteDTOList = List.of(noteDTOMock);
+        Note noteMock = mock(Note.class);
+        List<Note> noteList = List.of(noteMock);
 
-        when(noteService.getNoteByUser(userIdMock, 0)).thenReturn(noteDTOList);
+        when(noteService.getNoteByUser(userIdMock, 0)).thenReturn(noteList);
 
-        ResponseEntity<List<NoteDTO>> response = noteController.getNoteByUser(userIdMock, 0);
+        ResponseEntity<List<Note>> response = noteController.getNoteByUser(userIdMock, 0);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(noteDTOList, response.getBody());
+        assertEquals(noteList, response.getBody());
 
         verify(noteService).getNoteByUser(userIdMock, 0);
     }

@@ -1,10 +1,11 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
-import dev.vitorvidal.petmanagementapi.application.service.UserService;
-import dev.vitorvidal.petmanagementapi.model.dto.JwtResponseDTO;
-import dev.vitorvidal.petmanagementapi.model.dto.LoginDTO;
-import dev.vitorvidal.petmanagementapi.model.dto.SignupDTO;
-import dev.vitorvidal.petmanagementapi.model.dto.UserDTO;
+import dev.vitorvidal.petmanagementapi.controller.UserController;
+import dev.vitorvidal.petmanagementapi.domain.model.JwtResponse;
+import dev.vitorvidal.petmanagementapi.domain.model.Login;
+import dev.vitorvidal.petmanagementapi.domain.model.Signup;
+import dev.vitorvidal.petmanagementapi.domain.model.User;
+import dev.vitorvidal.petmanagementapi.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,11 +31,11 @@ class UserControllerTest {
 
     @Test
     void shouldGetUserByIdCorrectly() {
-        UserDTO userDTOMock = mock(UserDTO.class);
+        User userMock = mock(User.class);
         // when
-        when(userService.getUserById(userIdMock)).thenReturn(userDTOMock);
+        when(userService.getUserById(userIdMock)).thenReturn(userMock);
         // then
-        ResponseEntity<UserDTO> response = userController.getUserById(userIdMock);
+        ResponseEntity<User> response = userController.getUserById(userIdMock);
         // assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
@@ -42,12 +43,12 @@ class UserControllerTest {
 
     @Test
     void shouldSignupCorrectly() {
-        UserDTO userDTOMock = mock(UserDTO.class);
-        SignupDTO signupDTOMock = mock(SignupDTO.class);
+        User userMock = mock(User.class);
+        Signup signupMock = mock(Signup.class);
 
-        when(userService.signup(signupDTOMock)).thenReturn(userDTOMock);
+        when(userService.signup(signupMock)).thenReturn(userMock);
 
-        ResponseEntity<UserDTO> response = userController.signup(signupDTOMock);
+        ResponseEntity<User> response = userController.signup(signupMock);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
     }
@@ -55,12 +56,12 @@ class UserControllerTest {
     @Test
     void shouldLoginCorrectly() {
         String tokenMock = "token mock";
-        LoginDTO loginDTOMock = mock(LoginDTO.class);
+        Login loginMock = mock(Login.class);
         UUID userIdMock = UUID.randomUUID();
 
-        when(userService.login(loginDTOMock)).thenReturn(new JwtResponseDTO(tokenMock, userIdMock));
+        when(userService.login(loginMock)).thenReturn(new JwtResponse(tokenMock, userIdMock));
 
-        ResponseEntity<JwtResponseDTO> response = userController.login(loginDTOMock);
+        ResponseEntity<JwtResponse> response = userController.login(loginMock);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals(tokenMock, response.getBody().token());

@@ -1,18 +1,65 @@
 version: '3.9'
 services:
-  cassandra:
+  user-cassandra:
     image: cassandra:4.0
     ports:
       - "9042:9042"
     volumes:
       - db:/var/lib/cassandra
     environment:
-      - CASSANDRA_CLUSTER_NAME=petmanagementapi
+      - CASSANDRA_CLUSTER_NAME=user-cluster
     networks:
       - cassandra
 
+  pet-cassandra:
+    image: cassandra:4.0
+    ports:
+      - "9142:9042"
+    volumes:
+      - db:/var/lib/cassandra
+    environment:
+      - CASSANDRA_CLUSTER_NAME=pet-cluster
+    networks:
+      - cassandra
+
+  notes-mysql:
+    image: 'bitnami/mysql:latest'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql:/bitnami/mysql/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_USER=usr_notes
+      - MYSQL_PASSWORD=usr_notes
+      - MYSQL_DATABASE=notes
+    networks:
+      - notes-mysql
+
+  login-redis:
+    image: 'bitnami/redis:latest'
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=password123
+    volumes:
+      - redis:/bitnami/redis/data
+    networks:
+      - login-redis
+
+#  calendar-influxdb:
+#    image: bitnami/influxdb:latest
+#    environment:
+#      - INFLUXDB_HTTP_AUTH_ENABLED=false
+#    networks:
+#      - my-network
+
 volumes:
   db:
+  redis:
+  mysql:
 
 networks:
   cassandra:
+  notes-mysql:
+  login-redis:

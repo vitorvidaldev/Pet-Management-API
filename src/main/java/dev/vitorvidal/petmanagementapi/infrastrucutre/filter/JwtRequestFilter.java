@@ -1,7 +1,7 @@
 package dev.vitorvidal.petmanagementapi.infrastrucutre.filter;
 
-import dev.vitorvidal.petmanagementapi.application.service.UserService;
 import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
+import dev.vitorvidal.petmanagementapi.service.UserService;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -61,7 +61,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-            UserDetails userDetails = this.userService.loadUserByUsername(username);
+            UserDetails userDetails = null;
 
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

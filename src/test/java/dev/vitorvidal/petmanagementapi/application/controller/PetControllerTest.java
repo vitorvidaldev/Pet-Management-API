@@ -1,8 +1,9 @@
 package dev.vitorvidal.petmanagementapi.application.controller;
 
-import dev.vitorvidal.petmanagementapi.application.service.PetService;
-import dev.vitorvidal.petmanagementapi.model.dto.CreatePetDTO;
-import dev.vitorvidal.petmanagementapi.model.dto.PetDTO;
+import dev.vitorvidal.petmanagementapi.controller.PetController;
+import dev.vitorvidal.petmanagementapi.domain.model.CreatePet;
+import dev.vitorvidal.petmanagementapi.domain.model.Pet;
+import dev.vitorvidal.petmanagementapi.service.PetService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,47 +29,47 @@ class PetControllerTest {
     void shouldGetPetByIdCorrectly() {
         UUID petIdMock = UUID.randomUUID();
         UUID userIdMock = UUID.randomUUID();
-        PetDTO petDTOMock = mock(PetDTO.class);
+        Pet petMock = mock(Pet.class);
 
-        when(petService.getPetById(userIdMock, petIdMock)).thenReturn(petDTOMock);
-        ResponseEntity<PetDTO> response = petController.getPetById(userIdMock, petIdMock);
+        when(petService.getPetById(userIdMock, petIdMock)).thenReturn(petMock);
+        ResponseEntity<Pet> response = petController.getPetById(userIdMock, petIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(petDTOMock, response.getBody());
+        assertEquals(petMock, response.getBody());
     }
 
     @Test
     void shouldGetPetByUserCorrectly() {
         UUID userIdMock = UUID.randomUUID();
-        PetDTO petDTOMock = mock(PetDTO.class);
-        List<PetDTO> petDTOList = List.of(petDTOMock);
+        Pet petMock = mock(Pet.class);
+        List<Pet> petList = List.of(petMock);
 
-        when(petService.getPetByUser(userIdMock, 10)).thenReturn(petDTOList);
-        ResponseEntity<List<PetDTO>> response = petController.getPetByUser(userIdMock, 10);
+        when(petService.getPetByUser(userIdMock, 10)).thenReturn(petList);
+        ResponseEntity<List<Pet>> response = petController.getPetByUser(userIdMock, 10);
 
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(petDTOMock, response.getBody().get(0));
+        assertEquals(petMock, response.getBody().get(0));
     }
 
     @Test
     void shouldCreatePetCorrectly() {
         UUID userIdMock = UUID.randomUUID();
-        CreatePetDTO createPetDTOMock = mock(CreatePetDTO.class);
-        PetDTO petDTOMock = mock(PetDTO.class);
+        CreatePet createPetMock = mock(CreatePet.class);
+        Pet petMock = mock(Pet.class);
 
-        when(petService.createPet(createPetDTOMock, userIdMock))
-                .thenReturn(petDTOMock);
+        when(petService.createPet(createPetMock, userIdMock))
+                .thenReturn(petMock);
 
-        ResponseEntity<PetDTO> response =
-                petController.createPet(createPetDTOMock, userIdMock);
+        ResponseEntity<Pet> response =
+                petController.createPet(createPetMock, userIdMock);
 
         assertNotNull(response);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(petDTOMock, response.getBody());
+        assertEquals(petMock, response.getBody());
     }
 
     @Test

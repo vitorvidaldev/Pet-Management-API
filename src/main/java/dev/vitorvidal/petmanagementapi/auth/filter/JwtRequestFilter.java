@@ -1,7 +1,7 @@
-package dev.vitorvidal.petmanagementapi.infrastrucutre.filter;
+package dev.vitorvidal.petmanagementapi.auth.filter;
 
-import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
-import dev.vitorvidal.petmanagementapi.service.UserService;
+import dev.vitorvidal.petmanagementapi.auth.JwtToken;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,12 +23,12 @@ import java.util.Objects;
 @Slf4j
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private final UserService userService;
-    private final JwtTokenUtil jwtTokenUtil;
+    private final UserServiceImpl userServiceImpl;
+    private final JwtToken jwtToken;
 
-    public JwtRequestFilter(@Lazy UserService userService, JwtTokenUtil jwtTokenUtil) {
-        this.userService = userService;
-        this.jwtTokenUtil = jwtTokenUtil;
+    public JwtRequestFilter(@Lazy UserServiceImpl userServiceImpl, JwtToken jwtToken) {
+        this.userServiceImpl = userServiceImpl;
+        this.jwtToken = jwtToken;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
-                username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+                username = jwtToken.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
                 log.error("Unable to get JWT token");
                 return;
@@ -63,7 +63,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (Objects.nonNull(username) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             UserDetails userDetails = null;
 
-            if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+            if (jwtToken.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

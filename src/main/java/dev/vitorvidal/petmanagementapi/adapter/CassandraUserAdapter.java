@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.infrastrucutre.config;
+package dev.vitorvidal.petmanagementapi.adapter;
 
 import com.datastax.oss.driver.api.core.CqlSession;
 import com.datastax.oss.driver.api.core.config.DefaultDriverOption;
@@ -24,7 +24,7 @@ import java.util.List;
 
 @Configuration
 @EnableCassandraRepositories
-public class CassandraUserConfig {
+public class CassandraUserAdapter {
     @Value("${cassandra.schema-action}")
     private String schemaAction;
     @Value("${cassandra.local-datacenter}")

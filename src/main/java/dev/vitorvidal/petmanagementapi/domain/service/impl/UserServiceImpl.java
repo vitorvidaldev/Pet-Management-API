@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.service;
+package dev.vitorvidal.petmanagementapi.domain.service.impl;
 
 import dev.vitorvidal.petmanagementapi.domain.model.JwtResponse;
 import dev.vitorvidal.petmanagementapi.domain.model.Login;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class UserService {
+public class UserServiceImpl {
 
     public User getUserById(UUID userId) {
         return null;

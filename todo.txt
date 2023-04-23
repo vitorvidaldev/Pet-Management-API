@@ -1,0 +1,1 @@
+- What's an adapter class (definition)? Am I using them correctly?

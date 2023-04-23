@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.infrastrucutre.util;
+package dev.vitorvidal.petmanagementapi.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtToken implements Serializable {
     private static final long JWT_TOKEN_VALIDITY = 7 * 24 * 60 * 60;
 
     @Value("${jwt.secret}")

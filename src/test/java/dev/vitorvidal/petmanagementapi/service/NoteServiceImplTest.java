@@ -1,9 +1,10 @@
 package dev.vitorvidal.petmanagementapi.service;
 
-import dev.vitorvidal.petmanagementapi.domain.entity.NoteEntity;
+import dev.vitorvidal.petmanagementapi.entity.NoteEntity;
 import dev.vitorvidal.petmanagementapi.domain.model.CreateNote;
 import dev.vitorvidal.petmanagementapi.domain.model.Note;
 import dev.vitorvidal.petmanagementapi.domain.repository.NoteRepository;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.NoteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-class NoteServiceTest {
+class NoteServiceImplTest {
     @InjectMocks
-    private NoteService noteService;
+    private NoteServiceImpl noteServiceImpl;
     @Mock
     private NoteRepository noteRepository;
 
@@ -39,7 +40,7 @@ class NoteServiceTest {
         when(noteRepository.findById(noteIdMock)).thenReturn(optionalNote);
         when(optionalNote.get().getUserId()).thenReturn(userIdMock);
 
-        Note note = noteService.getNoteById(userIdMock, noteIdMock);
+        Note note = noteServiceImpl.getNoteById(userIdMock, noteIdMock);
 
         assertNotNull(note);
         verify(noteRepository, times(1)).findById(noteIdMock);
@@ -53,7 +54,7 @@ class NoteServiceTest {
         when(noteRepository.findById(noteIdMock)).thenReturn(Optional.empty());
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> noteService.getNoteById(userIdMock, noteIdMock));
+                () -> noteServiceImpl.getNoteById(userIdMock, noteIdMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
@@ -87,7 +88,7 @@ class NoteServiceTest {
 
         when(noteRepository.save(any(NoteEntity.class))).thenReturn(noteEntityMock);
 
-        Note note = noteService.createNote(createNoteMock);
+        Note note = noteServiceImpl.createNote(createNoteMock);
 
         assertNotNull(note);
         assertEquals(noteIdMock, note.id());
@@ -111,7 +112,7 @@ class NoteServiceTest {
         when(noteRepository.findById(noteIdMock)).thenReturn(optionalNoteEntityMock);
         when(noteEntityMock.getUserId()).thenReturn(userIdMock);
 
-        assertDoesNotThrow(() -> noteService.deleteNote(userIdMock, noteIdMock));
+        assertDoesNotThrow(() -> noteServiceImpl.deleteNote(userIdMock, noteIdMock));
         verify(noteRepository).deleteById(noteIdMock);
     }
 
@@ -139,7 +140,7 @@ class NoteServiceTest {
         when(noteEntityMock.getCreationDate()).thenReturn(noteCreationDateMock);
         when(noteEntityMock.getPetId()).thenReturn(petIdMock);
 
-        List<Note> noteList = noteService.getNoteByPet(petIdMock, 10);
+        List<Note> noteList = noteServiceImpl.getNoteByPet(petIdMock, 10);
 
         assertNotNull(noteList);
         assertEquals(noteEntityList.size(), noteList.size());
@@ -171,7 +172,7 @@ class NoteServiceTest {
         when(noteEntityMock.getCreationDate()).thenReturn(noteCreationDateMock);
         when(noteEntityMock.getUserId()).thenReturn(userIdMock);
 
-        List<Note> noteList = noteService.getNoteByUser(userIdMock, 10);
+        List<Note> noteList = noteServiceImpl.getNoteByUser(userIdMock, 10);
 
         assertNotNull(noteList);
         assertEquals(noteEntityList.size(), noteList.size());
@@ -188,7 +189,7 @@ class NoteServiceTest {
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> noteService.deleteNote(userIdMock, noteIdMock)
+                () -> noteServiceImpl.deleteNote(userIdMock, noteIdMock)
         );
 
         assertNotNull(exception);

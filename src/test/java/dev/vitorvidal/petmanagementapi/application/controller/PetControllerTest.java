@@ -3,7 +3,7 @@ package dev.vitorvidal.petmanagementapi.application.controller;
 import dev.vitorvidal.petmanagementapi.controller.PetController;
 import dev.vitorvidal.petmanagementapi.domain.model.CreatePet;
 import dev.vitorvidal.petmanagementapi.domain.model.Pet;
-import dev.vitorvidal.petmanagementapi.service.PetService;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.PetServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +23,7 @@ class PetControllerTest {
     @InjectMocks
     private PetController petController;
     @Mock
-    private PetService petService;
+    private PetServiceImpl petServiceImpl;
 
     @Test
     void shouldGetPetByIdCorrectly() {
@@ -31,7 +31,7 @@ class PetControllerTest {
         UUID userIdMock = UUID.randomUUID();
         Pet petMock = mock(Pet.class);
 
-        when(petService.getPetById(userIdMock, petIdMock)).thenReturn(petMock);
+        when(petServiceImpl.getPetById(userIdMock, petIdMock)).thenReturn(petMock);
         ResponseEntity<Pet> response = petController.getPetById(userIdMock, petIdMock);
 
         assertNotNull(response);
@@ -46,7 +46,7 @@ class PetControllerTest {
         Pet petMock = mock(Pet.class);
         List<Pet> petList = List.of(petMock);
 
-        when(petService.getPetByUser(userIdMock, 10)).thenReturn(petList);
+        when(petServiceImpl.getPetByUser(userIdMock, 10)).thenReturn(petList);
         ResponseEntity<List<Pet>> response = petController.getPetByUser(userIdMock, 10);
 
         assertNotNull(response);
@@ -61,7 +61,7 @@ class PetControllerTest {
         CreatePet createPetMock = mock(CreatePet.class);
         Pet petMock = mock(Pet.class);
 
-        when(petService.createPet(createPetMock, userIdMock))
+        when(petServiceImpl.createPet(createPetMock, userIdMock))
                 .thenReturn(petMock);
 
         ResponseEntity<Pet> response =
@@ -77,7 +77,7 @@ class PetControllerTest {
         UUID petIdMock = UUID.randomUUID();
         UUID userIdMock = UUID.randomUUID();
 
-        doNothing().when(petService).deletePet(userIdMock, petIdMock);
+        doNothing().when(petServiceImpl).deletePet(userIdMock, petIdMock);
         ResponseEntity<Void> response = petController.deletePet(userIdMock, petIdMock);
 
         assertNotNull(response);

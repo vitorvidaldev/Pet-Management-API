@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.infrastrucutre.config;
+package dev.vitorvidal.petmanagementapi.auth;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

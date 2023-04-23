@@ -1,9 +1,10 @@
 package dev.vitorvidal.petmanagementapi.service;
 
-import dev.vitorvidal.petmanagementapi.domain.entity.PetEntity;
+import dev.vitorvidal.petmanagementapi.entity.PetEntity;
 import dev.vitorvidal.petmanagementapi.domain.model.CreatePet;
 import dev.vitorvidal.petmanagementapi.domain.model.Pet;
 import dev.vitorvidal.petmanagementapi.domain.repository.PetRepository;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.PetServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,9 +24,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-class PetServiceTest {
+class PetServiceImplTest {
     @InjectMocks
-    private PetService petService;
+    private PetServiceImpl petServiceImpl;
     @Mock
     private PetRepository petRepository;
 
@@ -51,7 +52,7 @@ class PetServiceTest {
 
         when(petRepository.findById(petIdMock)).thenReturn(Optional.of(petEntityMock));
 
-        Pet pet = petService.getPetById(userIdMock, petIdMock);
+        Pet pet = petServiceImpl.getPetById(userIdMock, petIdMock);
 
         verify(petRepository).findById(petIdMock);
 
@@ -74,7 +75,7 @@ class PetServiceTest {
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> petService.getPetById(userIdMock, petIdMock));
+                () -> petServiceImpl.getPetById(userIdMock, petIdMock));
 
         verify(petRepository).findById(petIdMock);
 
@@ -106,7 +107,7 @@ class PetServiceTest {
 
         when(petRepository.save(any(PetEntity.class))).thenReturn(petEntityMock);
 
-        Pet pet = petService.createPet(createPetMock, userIdMock);
+        Pet pet = petServiceImpl.createPet(createPetMock, userIdMock);
 
         assertNotNull(pet);
         assertEquals(petIdMock, pet.petId());
@@ -131,7 +132,7 @@ class PetServiceTest {
         when(optionalPet.get().getUserId()).thenReturn(userIdMock);
         doNothing().when(petRepository).deleteById(petIdMock);
 
-        assertDoesNotThrow(() -> petService.deletePet(userIdMock, petIdMock));
+        assertDoesNotThrow(() -> petServiceImpl.deletePet(userIdMock, petIdMock));
 
         verify(petRepository).findById(petIdMock);
     }
@@ -144,7 +145,7 @@ class PetServiceTest {
         when(petRepository.findById(petIdMock)).thenReturn(Optional.empty());
         doNothing().when(petRepository).deleteById(petIdMock);
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> petService.deletePet(userIdMock, petIdMock));
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> petServiceImpl.deletePet(userIdMock, petIdMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
@@ -175,7 +176,7 @@ class PetServiceTest {
         when(petEntityMock.getBreed()).thenReturn(breedMock);
         when(petEntityMock.getCreationDate()).thenReturn(creationDateMock);
 
-        List<Pet> petByUser = petService.getPetByUser(userIdMock, 10);
+        List<Pet> petByUser = petServiceImpl.getPetByUser(userIdMock, 10);
 
         assertNotNull(petByUser);
         assertEquals(1, petByUser.size());

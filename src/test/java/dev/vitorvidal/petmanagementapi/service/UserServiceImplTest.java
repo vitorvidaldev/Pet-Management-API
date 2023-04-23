@@ -1,12 +1,13 @@
 package dev.vitorvidal.petmanagementapi.service;
 
-import dev.vitorvidal.petmanagementapi.domain.entity.UserEntity;
+import dev.vitorvidal.petmanagementapi.entity.UserEntity;
 import dev.vitorvidal.petmanagementapi.domain.model.JwtResponse;
 import dev.vitorvidal.petmanagementapi.domain.model.Login;
 import dev.vitorvidal.petmanagementapi.domain.model.Signup;
 import dev.vitorvidal.petmanagementapi.domain.model.User;
 import dev.vitorvidal.petmanagementapi.domain.repository.UserRepository;
-import dev.vitorvidal.petmanagementapi.infrastrucutre.util.JwtTokenUtil;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.UserServiceImpl;
+import dev.vitorvidal.petmanagementapi.auth.JwtToken;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,15 +29,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
-class UserServiceTest {
+class UserServiceImplTest {
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
     @Mock
     private UserRepository userRepository;
     @Mock
     private AuthenticationManager authenticationManager;
     @Mock
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtToken jwtToken;
 
     @Test
     void shouldGetUserByIdCorrectly() {
@@ -45,7 +46,7 @@ class UserServiceTest {
 
         when(userRepository.findByUserId(userIdMock)).thenReturn(Optional.of(userEntityMock));
 
-        User user = userService.getUserById(userIdMock);
+        User user = userServiceImpl.getUserById(userIdMock);
 
         assertNotNull(user);
         verify(userRepository, times(1)).findByUserId(userIdMock);
@@ -58,7 +59,7 @@ class UserServiceTest {
         when(userRepository.findByUserId(userIdMock)).thenReturn(Optional.empty());
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> userService.getUserById(userIdMock));
+                () -> userServiceImpl.getUserById(userIdMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
@@ -89,7 +90,7 @@ class UserServiceTest {
 
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntityMock);
 
-        User signup = userService.signup(signupMock);
+        User signup = userServiceImpl.signup(signupMock);
 
         verify(userRepository, times(1)).save(any(UserEntity.class));
 
@@ -110,7 +111,7 @@ class UserServiceTest {
         when(userEntityMock.getEmail()).thenReturn(emailMock);
         doNothing().when(userRepository).deleteById(emailMock);
 
-        userService.deleteUser(userIdMock);
+        userServiceImpl.deleteUser(userIdMock);
 
         verify(userRepository, times(1)).findByUserId(userIdMock);
         verify(userRepository, times(1)).deleteById(emailMock);
@@ -136,16 +137,16 @@ class UserServiceTest {
                         loginMock.password()
                 )
         )).thenReturn(null);
-        when(jwtTokenUtil.generateToken(any(UserDetails.class))).thenReturn(jwtTokenMock);
+        when(jwtToken.generateToken(any(UserDetails.class))).thenReturn(jwtTokenMock);
 
-        JwtResponse loginData = userService.login(loginMock);
+        JwtResponse loginData = userServiceImpl.login(loginMock);
 
         assertNotNull(loginData);
         assertEquals(jwtTokenMock, loginData.token());
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userRepository, times(2)).findById(emailMock);
-        verify(jwtTokenUtil).generateToken(any(UserDetails.class));
+        verify(jwtToken).generateToken(any(UserDetails.class));
     }
 
     @Test
@@ -167,7 +168,7 @@ class UserServiceTest {
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> userService.login(loginMock));
+                () -> userServiceImpl.login(loginMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
@@ -175,7 +176,7 @@ class UserServiceTest {
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userRepository).findById(emailMock);
-        verify(jwtTokenUtil, times(0)).generateToken(any(UserDetails.class));
+        verify(jwtToken, times(0)).generateToken(any(UserDetails.class));
     }
 
     @Test
@@ -196,7 +197,7 @@ class UserServiceTest {
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> userService.login(loginMock));
+                () -> userServiceImpl.login(loginMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.FORBIDDEN, exception.getStatusCode());
@@ -204,7 +205,7 @@ class UserServiceTest {
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userRepository, times(0)).findById(emailMock);
-        verify(jwtTokenUtil, times(0)).generateToken(any(UserDetails.class));
+        verify(jwtToken, times(0)).generateToken(any(UserDetails.class));
     }
 
     @Test
@@ -225,7 +226,7 @@ class UserServiceTest {
 
         ResponseStatusException exception = assertThrows(
                 ResponseStatusException.class,
-                () -> userService.login(loginMock));
+                () -> userServiceImpl.login(loginMock));
 
         assertNotNull(exception);
         assertEquals(HttpStatus.FORBIDDEN, exception.getStatusCode());
@@ -233,6 +234,6 @@ class UserServiceTest {
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(userRepository, times(0)).findById(emailMock);
-        verify(jwtTokenUtil, times(0)).generateToken(any(UserDetails.class));
+        verify(jwtToken, times(0)).generateToken(any(UserDetails.class));
     }
 }

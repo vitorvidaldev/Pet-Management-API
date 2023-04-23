@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.service;
+package dev.vitorvidal.petmanagementapi.domain.service.impl;
 
 import dev.vitorvidal.petmanagementapi.domain.model.CreateNote;
 import dev.vitorvidal.petmanagementapi.domain.model.Note;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class NoteService {
+public class NoteServiceImpl {
 
     public Note getNoteById(UUID userId, UUID noteId) {
         return null;

@@ -1,11 +1,10 @@
-package dev.vitorvidal.petmanagementapi.infrastrucutre.config;
+package dev.vitorvidal.petmanagementapi.auth;
 
-import dev.vitorvidal.petmanagementapi.infrastrucutre.filter.JwtRequestFilter;
+import dev.vitorvidal.petmanagementapi.auth.filter.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,14 +18,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class HttpSecurityConfig {
+public class HttpSecurity {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtRequestFilter jwtRequestFilter;
     private final UserDetailsService userService;
 
-    public HttpSecurityConfig(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtRequestFilter jwtRequestFilter,
-                              UserDetailsService userService) {
+    public HttpSecurity(JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtRequestFilter jwtRequestFilter,
+                        UserDetailsService userService) {
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
         this.jwtRequestFilter = jwtRequestFilter;
         this.userService = userService;
@@ -45,7 +44,7 @@ public class HttpSecurityConfig {
     // TODO Configure authentication manager
 
     @Bean
-    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
+    public SecurityFilterChain configure(org.springframework.security.config.annotation.web.builders.HttpSecurity http) throws Exception {
         http.cors()
                 .and().authorizeHttpRequests().requestMatchers("/rest/v1/user/**").permitAll()
                 .anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)

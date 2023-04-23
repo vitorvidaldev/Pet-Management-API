@@ -3,7 +3,7 @@ package dev.vitorvidal.petmanagementapi.application.controller;
 import dev.vitorvidal.petmanagementapi.controller.NoteController;
 import dev.vitorvidal.petmanagementapi.domain.model.CreateNote;
 import dev.vitorvidal.petmanagementapi.domain.model.Note;
-import dev.vitorvidal.petmanagementapi.service.NoteService;
+import dev.vitorvidal.petmanagementapi.domain.service.impl.NoteServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,7 +23,7 @@ class NoteControllerTest {
     @InjectMocks
     private NoteController noteController;
     @Mock
-    private NoteService noteService;
+    private NoteServiceImpl noteServiceImpl;
 
     @Test
     void shouldGetNoteByIdCorrectly() {
@@ -31,7 +31,7 @@ class NoteControllerTest {
         UUID userIdMock = UUID.randomUUID();
         Note noteMock = mock(Note.class);
 
-        when(noteService.getNoteById(userIdMock, noteIdMock)).thenReturn(noteMock);
+        when(noteServiceImpl.getNoteById(userIdMock, noteIdMock)).thenReturn(noteMock);
         ResponseEntity<Note> response = noteController.getNoteById(userIdMock, noteIdMock);
 
         assertNotNull(response);
@@ -45,7 +45,7 @@ class NoteControllerTest {
         CreateNote createNoteMock = mock(CreateNote.class);
         Note noteMock = mock(Note.class);
 
-        when(noteService.createNote(createNoteMock)).thenReturn(noteMock);
+        when(noteServiceImpl.createNote(createNoteMock)).thenReturn(noteMock);
         ResponseEntity<Note> response = noteController.createNote(createNoteMock);
 
         assertNotNull(response);
@@ -58,7 +58,7 @@ class NoteControllerTest {
         UUID noteIdMock = UUID.randomUUID();
         UUID userIdMock = UUID.randomUUID();
 
-        doNothing().when(noteService).deleteNote(userIdMock, noteIdMock);
+        doNothing().when(noteServiceImpl).deleteNote(userIdMock, noteIdMock);
         ResponseEntity<Void> response = noteController.deleteNote(userIdMock, noteIdMock);
 
         assertNotNull(response);
@@ -72,7 +72,7 @@ class NoteControllerTest {
         Note noteMock = mock(Note.class);
         List<Note> noteList = List.of(noteMock);
 
-        when(noteService.getNoteByPet(petIdMock, 10)).thenReturn(noteList);
+        when(noteServiceImpl.getNoteByPet(petIdMock, 10)).thenReturn(noteList);
 
         ResponseEntity<List<Note>> response = noteController.getNoteByPet(petIdMock, 10);
 
@@ -81,7 +81,7 @@ class NoteControllerTest {
         assertNotNull(response.getBody());
         assertEquals(noteList, response.getBody());
 
-        verify(noteService).getNoteByPet(petIdMock, 10);
+        verify(noteServiceImpl).getNoteByPet(petIdMock, 10);
     }
 
     @Test
@@ -90,7 +90,7 @@ class NoteControllerTest {
         Note noteMock = mock(Note.class);
         List<Note> noteList = List.of(noteMock);
 
-        when(noteService.getNoteByUser(userIdMock, 0)).thenReturn(noteList);
+        when(noteServiceImpl.getNoteByUser(userIdMock, 0)).thenReturn(noteList);
 
         ResponseEntity<List<Note>> response = noteController.getNoteByUser(userIdMock, 0);
 
@@ -99,6 +99,6 @@ class NoteControllerTest {
         assertNotNull(response.getBody());
         assertEquals(noteList, response.getBody());
 
-        verify(noteService).getNoteByUser(userIdMock, 0);
+        verify(noteServiceImpl).getNoteByUser(userIdMock, 0);
     }
 }

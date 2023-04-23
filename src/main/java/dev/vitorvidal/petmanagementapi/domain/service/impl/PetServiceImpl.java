@@ -1,4 +1,4 @@
-package dev.vitorvidal.petmanagementapi.service;
+package dev.vitorvidal.petmanagementapi.domain.service.impl;
 
 import dev.vitorvidal.petmanagementapi.domain.model.CreatePet;
 import dev.vitorvidal.petmanagementapi.domain.model.Pet;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PetService {
+public class PetServiceImpl {
 
     public Pet getPetById(UUID userId, UUID petId) {
         return null;

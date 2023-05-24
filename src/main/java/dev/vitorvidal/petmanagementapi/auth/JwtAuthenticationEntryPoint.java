@@ -18,3 +18,4 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
     }
 }
+
